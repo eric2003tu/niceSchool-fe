@@ -30,7 +30,7 @@ const Footer = () => {
             Phone: <span className="font-normal">+1 5589 55488 55</span>
           </p>
           <p className="font-semibold">
-            Email: <span className="font-normal">info@example.com</span>
+            Email: <span className="font-normal">info.com</span>
           </p>
           <div className="flex items-center gap-3 mt-5">
             {[Twitter, Facebook, Instagram, Linkedin].map((Icon, i) => (
