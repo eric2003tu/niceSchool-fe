@@ -14,11 +14,11 @@ import React from "react";
 export default function Home() {
   return (
     <div className="min-h-screen max-w-screen  overflow-x-hidden ">
-      <header className="fixed top-0 w-full z-50 mb-6">
+      <header className="fixed top-0 w-full h-full z-50 mb-6">
         <Header />
       </header>
 
-      <section className="relative h-screen max-w-full">
+      <section className="relative lg:h-screen min-h-screen max-w-full">
         {/* Background Video */}
         <video
           autoPlay
