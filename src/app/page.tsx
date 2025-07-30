@@ -1,15 +1,16 @@
-import Card from "@/components/ui/Card";
-import Event from "@/components/ui/Events";
-import Excellency from "@/components/ui/Excellency";
-import Footer from "@/components/ui/Footer";
-import Header from "@/components/ui/Header";
-import Hero from "@/components/ui/Hero";
-import Life from "@/components/ui/Life";
-import Main from "@/components/ui/Main";
-import News from "@/components/ui/News";
-import Program from "@/components/ui/Program";
-import Testimanial from "@/components/ui/Testimanial";
+
 import React from "react";
+import Main from "../components/ui/Main";
+import Card from "../components/ui/Card";
+import Program from "../components/ui/Program";
+import Life from "../components/ui/Life";
+import Testimanial from "../components/ui/Testimanial";
+import Excellency from "../components/ui/Excellency";
+import News from "../components/ui/News";
+import Event from "../components/ui/Events";
+import Footer from "../components/ui/Footer";
+import Hero from "../components/ui/Hero";
+import Header from "../components/ui/Header";
 
 export default function Home() {
   return (
@@ -42,7 +43,7 @@ export default function Home() {
 
       {/* Main content section */}
       <section className="w-full pt-[header-height]">
-        <Main />
+        <Main/>
         <Card/>
         <Program/>
         <Life/>
