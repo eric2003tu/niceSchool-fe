@@ -20,7 +20,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Grid */}
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10 items-center-safe">
         {/* Logo & Contact */}
         <div>
           <h2 className="text-2xl font-bold mb-4">NiceSchool</h2>
