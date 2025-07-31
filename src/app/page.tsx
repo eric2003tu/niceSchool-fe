@@ -15,9 +15,6 @@ import Header from "../components/ui/Header";
 export default function Home() {
   return (
     <div className="min-h-screen max-w-screen  overflow-x-hidden ">
-      <header className="fixed top-0 w-full h-full z-50 mb-6">
-        <Header />
-      </header>
 
       <section className="relative lg:h-screen min-h-screen max-w-full">
         {/* Background Video */}
@@ -52,9 +49,6 @@ export default function Home() {
         <News/>
         <Event/>
       </section>
-      <footer>
-        <Footer/>
-      </footer>
     </div>
   );
 }

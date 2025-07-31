@@ -21,7 +21,7 @@ const Excellency = () => {
   },
 ];
   return (
-    <div className='w-full lg:lg:px-30 px-4 px-4 my-10'>
+    <div className='w-full lg:lg:px-30 px-4 my-10'>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full text-[#0a0a40]">
         <div className="w-full grid grid-cols-1 gap-6 h-fit mt-18">
             <h1 className='text-4xl font-bold'>Excellence in Education for Over 50 Years</h1>
@@ -32,22 +32,22 @@ const Excellency = () => {
             </div>
         </div>
         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 w-full gap-8">
-            <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-green-100/50 group transition duration-300 transform hover:scale-[1.02]">
+            <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-white group transition duration-300 transform hover:scale-[1.02]">
                 <Users2 size={40} className="text-[#0F9255]"/>
                 <h1 className="text-4xl font-bold">92%</h1>
                 <p className="font-bold">Graduation Rate</p>
             </div>
-                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-green-100/50 group transition duration-300 transform hover:scale-[1.02]">
+                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-white group transition duration-300 transform hover:scale-[1.02]">
                 <User size={40} className="textg-"/>
                 <h1 className="text-4xl font-bold">15:1</h1>
                 <p className="font-bold">Student-Faculty Ratio</p>
             </div>
-                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-green-100/50 group transition duration-300 transform hover:scale-[1.02]">
+                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-white group transition duration-300 transform hover:scale-[1.02]">
                 <Watch size={40} className="text-[#0F9255]"/>
                 <h1 className="text-4xl font-bold">125+</h1>
                 <p className="font-bold">Academic Programs</p>
             </div>
-                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-green-100/50 group transition duration-300 transform hover:scale-[1.02]">
+                <div className="grid grid-cols-1 p-3 justify-items-center h-50 gap-2 hover:shadow-2xl rounded-md shadow-xl bg-white group transition duration-300 transform hover:scale-[1.02]">
                 <Camera size={40} className="text-[#0F9255]"/>
                 <h1 className="text-4xl font-bold">$42M</h1>
                 <p className="font-bold">Research Funding</p>

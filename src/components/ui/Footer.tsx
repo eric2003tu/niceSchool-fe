@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-black text-white pt-16 pb-6 mt-16">
+    <footer className="relative bg-black text-white pt-16 pb-6 mt-16 max-w-screen">
       {/* Back to Top Button */}
       <div className="fixed bottom-4 right-6 z-50 bg-[#0F9255] p-3 rounded-full hover:bg-[#0c7b47] transition shadow-lg">
         <Link href="/">
