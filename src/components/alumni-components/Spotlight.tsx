@@ -1,42 +1,88 @@
-import React from 'react'
+import React from 'react';
 
 const Spotlight = () => {
-    const spot=[
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus.", name:"Ketia ISIMBI", job:"Tech Entrepreneur & VC Partner", year: 2015, photo:"person-f-5.webp", trophy: "Tech Visionary of the Year"},
+  const spot = [
+    {
+      title: "Ketia has pioneered inclusive tech solutions to uplift youth-led startups across Africa.",
+      name: "Ketia ISIMBI",
+      job: "Tech Entrepreneur & VC Partner",
+      year: 2015,
+      photo: "person-f-5.webp",
+      trophy: "Tech Visionary of the Year",
+    },
+    {
+      title: "Sophia is a globally recognized educator who redefined digital learning standards.",
+      name: "Sophia Lin",
+      job: "Innovative Educator & Author",
+      year: 2025,
+      photo: "person-f-2.webp",
+      trophy: "Teacher of the Year",
+    },
+    {
+      title: "Michael has built AI solutions that serve communities in developing regions.",
+      name: "Michael Osei",
+      job: "AI Developer & Humanitarian",
+      year: 2018,
+      photo: "person-m-5.webp",
+      trophy: "Tech Impact Leader",
+    },
+    {
+      title: "Jane is leading green tech revolutions through sustainable energy ventures.",
+      name: "Jane Doe",
+      job: "Green Tech Engineer",
+      year: 2020,
+      photo: "person-f-2.webp",
+      trophy: "Eco Innovator Award",
+    },
+    {
+      title: "Emmanuel mentors thousands of youth through his STEM empowerment foundation.",
+      name: "Emmanuel N.",
+      job: "STEM Advocate",
+      year: 2019,
+      photo: "person-m-11.webp",
+      trophy: "Youth Mentor of the Year",
+    },
+    {
+      title: "David is the creator of multiple tools used by modern software engineers worldwide.",
+      name: "David Kim",
+      job: "Open Source Contributor",
+      year: 2022,
+      photo: "person-m-6.webp",
+      trophy: "Tech Builder Award",
+    },
+  ];
 
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus lacinia.", name:"Sophia Lin", job:"Tech Entrepreneur & VC Partner", year: 2025, photo:"person-f-2.webp", trophy: "The teacher of the Year"},
-
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus.", name:"Sophia Lin", job:"Tech Entrepreneur & VC Partner", year: 2015, photo:"person-m-5.webp", trophy: "Tech Visionary of the Year"},
-
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus.", name:"Sophia Lin", job:"Tech Entrepreneur & VC Partner", year: 2015, photo:"person-f-2.webp", trophy: "Tech Visionary of the Year"},
-
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus", name:"Sophia Lin", job:"Tech Entrepreneur & VC Partner", year: 2015, photo:"person-m-11.webp", trophy: "Tech Visionary of the Year"},
-
-        {title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis velit a enim tincidunt, sed tincidunt nulla feugiat. Cras efficitur magna in metus.", name:"Sophia Lin", job:"Tech Entrepreneur & VC Partner", year: 2015, photo:"person-m-6.webp", trophy: "Tech Visionary of the Year"},
-
-    ]
   return (
-    <div className="w-full  lg:px-30 px-4 text-[#0a0a40] text-center ">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Notable Alumni Spotlights</h2>
-        <div className="w-40 h-1 bg-[#0F9255] mx-auto mb-5 rounded"></div>
-        <p>Extraordinary graduates making an impact in their fields</p>
-        <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 py-7">
-            {spot.map((spot,index)=>(
-                <div key={index} className="w-full grid grid-cols-1 rounded-md ">
-                    <div style={{backgroundImage:`url(${spot.photo})`}} className="w-full h-80 p-3 bg-cover bg-no-repeat rounded-t-md">
-                        <h1 className="bg-[#0F9255] text-white text-center font-bold text-xl rounded-full w-fit px-3 py-1"> {spot.year}</h1>
-                    </div>
-                    <div className="w-full p-3 flex flex-col gap-3 bg-white py-4 rounded-b-md">
-                        <h1 className="text-2xl font-bold">{spot.name}</h1>
-                        <p className="font-bold text-[#0F9255]">{spot.job}</p>
-                        <p>{spot.title}</p>
-                        <button className="text-[#0F9255]">View Profile </button>
-                    </div>
-                </div>
-            ))}
-        </div>
-    </div>
-  )
-}
+    <div className="w-full px-4 lg:px-32 text-[#0a0a40] text-center">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-2">Why Choose Us</h2>
+      <div className="w-20 h-1 bg-[#0F9255] mx-auto mb-5 rounded"></div>
+      <p className="text-gray-600">Extraordinary graduates making an impact in their fields</p>
 
-export default Spotlight
+      <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 py-8">
+        {spot.map((s, index) => (
+          <div key={index} className="rounded-md overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+            <div className="relative h-72 w-full">
+              <img
+                src={s.photo}
+                alt={`${s.name} photo`}
+                className="h-full w-full object-cover"
+              />
+              <span className="absolute top-3 left-3 bg-[#0F9255] text-white text-sm font-bold px-3 py-1 rounded-full">
+                {s.year}
+              </span>
+            </div>
+            <div className="p-5 flex flex-col gap-2 text-left">
+              <h3 className="text-xl font-semibold">{s.name}</h3>
+              <p className="text-[#0F9255] font-semibold">{s.job}</p>
+              <p className="text-sm text-gray-700">{s.title}</p>
+              <p className="italic text-xs text-gray-500 mt-1">{s.trophy}</p>
+              <button className="text-[#0F9255] font-medium mt-3 hover:underline w-fit">View Profile</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Spotlight;
