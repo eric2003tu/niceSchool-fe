@@ -9,8 +9,11 @@ interface NavItem {
   href?: string;
   subItems?: NavItem[];
 }
+interface currentPage{
+  name: string;
+}
 
-const Header = () => {
+const Header = ({ name }: currentPage) => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileItems, setExpandedMobileItems] = useState<number[]>([]);
@@ -108,7 +111,7 @@ const Header = () => {
             >
               {nav.subItems ? (
                 <button
-                  className="flex items-center gap-1 hover:text-green-400 transition-colors"
+                  className={`flex items-center gap-1 ${nav.title === name ? "text-green-500" : ''} hover:text-green-400 transition-colors`}
                   aria-expanded={openDropdown === index}
                   onClick={() =>
                     setOpenDropdown(openDropdown === index ? null : index)
@@ -124,7 +127,7 @@ const Header = () => {
               ) : (
                 <Link
                   href={nav.href || "#"}
-                  className="hover:text-green-400 transition-colors"
+                  className={`${nav.title === name ? "text-green-500" : ''}hover:text-green-400 transition-colors`}
                 >
                   {nav.title}
                 </Link>

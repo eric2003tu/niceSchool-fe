@@ -75,7 +75,7 @@ const Spotlight = () => {
               <h3 className="text-xl font-semibold">{s.name}</h3>
               <p className="text-[#0F9255] font-semibold">{s.job}</p>
               <p className="text-sm text-gray-700">{s.title}</p>
-              <p className="italic text-xs text-gray-500 mt-1">{s.trophy}</p>
+              <p className="italic text-xs text-gray-500 font-bold mt-1">{s.trophy}</p>
               <button className="text-[#0F9255] font-medium mt-3 hover:underline w-fit">View Profile</button>
             </div>
           </div>
