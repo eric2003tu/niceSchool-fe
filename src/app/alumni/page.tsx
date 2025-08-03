@@ -9,7 +9,7 @@ import React from 'react'
 const page = () => {
   return (
     <div className='w-screen max-w-screen flex flex-col gap-20'>
-      <AlumniHero/>
+      <AlumniHero name='Alumni'/>
       <MainAlumni/>
       <Spotlight/>
       <StayConnected/>
