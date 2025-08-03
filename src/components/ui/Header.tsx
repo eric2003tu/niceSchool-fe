@@ -13,7 +13,7 @@ interface currentPage{
   name: string;
 }
 
-const Header = ({ name }: currentPage) => {
+const Header = () => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileItems, setExpandedMobileItems] = useState<number[]>([]);
@@ -111,7 +111,7 @@ const Header = ({ name }: currentPage) => {
             >
               {nav.subItems ? (
                 <button
-                  className={`flex items-center gap-1 ${nav.title === name ? "text-green-500" : ''} hover:text-green-400 transition-colors`}
+                  className={`flex items-center gap-1 hover:text-green-400 transition-colors`}
                   aria-expanded={openDropdown === index}
                   onClick={() =>
                     setOpenDropdown(openDropdown === index ? null : index)
@@ -127,7 +127,7 @@ const Header = ({ name }: currentPage) => {
               ) : (
                 <Link
                   href={nav.href || "#"}
-                  className={`${nav.title === name ? "text-green-500" : ''}hover:text-green-400 transition-colors`}
+                  className={`hover:text-green-400 transition-colors`}
                 >
                   {nav.title}
                 </Link>
