@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
-        <header className="fixed top-0 w-full h-full z-50 mb-6">
+        <header className="fixed top-0 w-full z-50 mb-6">
         <Header/>
       </header>
         {children}
