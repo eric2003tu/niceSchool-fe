@@ -34,10 +34,10 @@ const Facilities = () => {
     <div className="px-6 py-10 max-w-screen-xl mx-auto grid lg:grid-cols-2 gap-10 items-start">
       {/* Left: Image Grid */}
       <div className="grid grid-cols-2 grid-rows-2 gap-4">
-        <img src="campus.webp" alt="campus-1" className="rounded-lg w-full h-full object-cover" />
-        <img src="education-2.webp" alt="campus-2" className="rounded-lg w-full h-full object-cover" />
-        <img src="blog-post-3.webp" alt="campus-3" className="rounded-lg w-full h-full object-cover" />
-        <img src="education-9.webp" alt="campus-4" className="rounded-lg w-full h-full object-cover" />
+        <img src="campus-1.webp" alt="campus-1" className="rounded-lg w-full h-full object-cover" />
+        <img src="campus-2.webp" alt="campus-2" className="rounded-lg w-full h-full object-cover" />
+        <img src="campus-3.webp" alt="campus-3" className="rounded-lg w-full h-full object-cover" />
+        <img src="campus-4.webp" alt="campus-4" className="rounded-lg w-full h-full object-cover" />
       </div>
 
       {/* Right: Content */}

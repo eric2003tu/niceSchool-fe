@@ -4,17 +4,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
-  { name: 'Tennis', src: 'education-1.webp' },
-  { name: 'Volleyball', src: 'education-2.webp' },
-  { name: 'Swimming', src: 'education-3.webp' },
-  { name: 'Basketball', src: 'blog-post-3.webp' },
-  { name: 'Scouts', src: 'blog-post-4.webp' },
-  { name: 'Drama', src: 'blog-post-5.webp' },
-  { name: 'Track', src: 'blog-post-6.webp' },
-  { name: 'Hiking', src: 'blog-post-7.webp' },
-  { name: 'Coding', src: 'blog-post-9.webp' },
+  { name: 'Tennis', src: 'activities-2.webp' },
+  { name: 'Volleyball', src: 'activities-4.webp' },
+  { name: 'Swimming', src: 'activities-6.webp' },
+  { name: 'Basketball', src: 'activities-8.webp' },
+  { name: 'Scouts', src: 'activities-10.webp' },
+  { name: 'Drama', src: 'students-3.webp' },
+  { name: 'Track', src: 'students-4.webp' },
+  { name: 'Hiking', src: 'students-5.webp' },
+  { name: 'Coding', src: 'events-5.webp' },
   { name: 'Campus Life', src: 'campus.webp' },
-  { name: 'Leadership', src: 'education-9.webp' },
+  { name: 'Leadership', src: 'campus-7.webp' },
 ];
 
 const itemsPerSlide = 4;
@@ -83,7 +83,7 @@ const Athletics = () => {
                 alt={item.name}
                 className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 p-3 text-white">
+              <div className="absolute bottom-0 left-0 right-0 bg-gray-600/66 bg-opacity-60 p-3 text-white">
                 <h3 className="text-lg font-semibold">{item.name}</h3>
                 <span className="text-sm bg-green-600 px-2 py-1 rounded mt-1 inline-block">Varsity</span>
               </div>
