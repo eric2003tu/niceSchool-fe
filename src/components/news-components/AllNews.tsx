@@ -18,8 +18,8 @@ function highlightText(text: string, keyword: string) {
 
 const AllNews = () => {
   const blog = [
-    { photo: 'blog-post-1.webp', field: "Entertainment", title: "Possimus soluta ut id suscipit ea ut in quo quia et soluta", profile: "person-f-10.webp", name: "Mark Dower", date: "2022-06-22" },
-    { photo: 'blog-post-2.webp', field: "Politics", title: "Dolorum optio tempore voluptas dignissimos", profile: "person-m-11.webp", name: "Maria Doe", date: "2022-01-01" },
+    { photo: 'blog-post-5.webp', field: "Entertainment", title: "Possimus soluta ut id suscipit ea ut in quo quia et soluta", profile: "person-f-10.webp", name: "Mark Dower", date: "2022-06-22" },
+    { photo: 'blog-post-1.webp', field: "Politics", title: "Dolorum optio tempore voluptas dignissimos", profile: "person-m-11.webp", name: "Maria Doe", date: "2022-01-01" },
     { photo: 'blog-post-3.webp', field: "Sports", title: "Nisi magni odit consequatur autem nulla dolorem", profile: "person-m-13.webp", name: "Eric Tuyishime", date: "2022-06-05" },
     { photo: 'blog-hero-1.webp', field: "Entertainment", title: "New movies dropping this month", profile: "person-f-2.webp", name: "Mark Dower", date: "2022-07-01" },
     { photo: 'blog-hero-2.webp', field: "Politics", title: "The rise of local elections", profile: "person-m-2.webp", name: "Maria Doe", date: "2022-02-15" },
@@ -27,7 +27,7 @@ const AllNews = () => {
     { photo: 'blog-post-5.webp', field: "Entertainment", title: "Behind the scenes of your favorite show", profile: "person-f-10.webp", name: "Mark Dower", date: "2022-08-22" },
     { photo: 'blog-post-6.webp', field: "Politics", title: "How laws are changing globally", profile: "person-m-11.webp", name: "Maria Doe", date: "2022-03-03" },
     { photo: 'blog-post-7.webp', field: "Sports", title: "Training routines of top athletes", profile: "person-m-13.webp", name: "Eric Tuyishime", date: "2022-04-05" },
-    { photo: 'blog-post-8.webp', field: "Entertainment", title: "Rising stars in the music industry", profile: "person-f-5.webp", name: "Alice Ray", date: "2022-05-12" },
+    { photo: 'blog-post-3.webp', field: "Entertainment", title: "Rising stars in the music industry", profile: "person-f-5.webp", name: "Alice Ray", date: "2022-05-12" },
     { photo: 'blog-post-9.webp', field: "Politics", title: "Leaders on the global stage", profile: "person-m-6.webp", name: "Jonathan Dee", date: "2021-11-04" },
     { photo: 'blog-post-10.webp', field: "Sports", title: "2022 Olympics highlights", profile: "person-f-7.webp", name: "Sandra Kim", date: "2022-12-30" },
   ];

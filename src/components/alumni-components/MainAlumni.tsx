@@ -2,9 +2,9 @@ import React from 'react'
 
 const MainAlumni = () => {
   return (
-    <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 lg:px-30 px-4 text-[#0a0a40] w-full max-w-screen">
+    <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-1 lg:px-30 px-4 text-[#0a0a40] w-full">
     <div className="w-full grid justify-items-start grid-cols-1 lg:gap-5 gap-4">
-      <h1 className="bg-gray-300 text-[#0F9255] rounded-full text-center lg:p-2 font-bold p-3">Alumni Community</h1>
+      <h1 className="bg-gray-300 text-[#0F9255] rounded-full text-center font-bold p-3">Alumni Community</h1>
       <h1 className="text-4xl font-bold">Join Our Global Network of Changemakers</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempus
         , velit vel fringilla venenatis, urna risus volutpat nisi, 
