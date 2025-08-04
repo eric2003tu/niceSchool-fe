@@ -37,9 +37,9 @@ const LastingImpact = () => {
             alt="Education"
             width={500}
             height={300}
-            className="rounded-xl shadow-lg object-cover w-full h-auto"
+            className="rounded-xl shadow-lg object-cover w-full h-auto group transition duration-300 transform hover:scale-[1.02]"
           />
-          <div className="absolute bottom-4 right-4 bg-emerald-600 text-white rounded-xl px-4 py-3 shadow-md text-sm w-56">
+          <div className="absolute bottom-4 right-4 bg-emerald-600 text-white rounded-xl px-4 py-3 shadow-md text-sm w-56 group transition duration-300 transform hover:scale-[1.02]">
             <div className="text-xl font-bold">$2.4M</div>
             in scholarships funded by alumni last year
           </div>

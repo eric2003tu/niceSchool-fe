@@ -55,7 +55,7 @@ const StayConnected = () => {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
 
-            <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+            <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg  group transition duration-300 transform hover:scale-[1.02]">
               <div className="bg-emerald-50 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center hover:bg-[#0F9255] hover:text-white">
                 {item.icon}
               </div>

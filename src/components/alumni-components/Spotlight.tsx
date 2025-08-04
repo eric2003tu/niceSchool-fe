@@ -60,7 +60,7 @@ const Spotlight = () => {
 
       <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 py-8">
         {spot.map((s, index) => (
-          <div key={index} className="rounded-md overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+          <div key={index} className="rounded-md overflow-hidden shadow-lg hover:shadow-xl bg-white group transition duration-300 transform hover:scale-[1.02]">
             <div className="relative h-72 w-full">
               <img
                 src={s.photo}
