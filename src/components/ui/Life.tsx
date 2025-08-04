@@ -1,4 +1,5 @@
 import { Globe, Music, Trophy, Users2 } from 'lucide-react'
+import Link from "next/link";
 import React from 'react'
 
 const Life = () => {
@@ -96,9 +97,9 @@ const Life = () => {
                 </p>
               </div>
             </div>
-                <button className='text-white font-semibold bg-[#0F9255] text-center px-3  py-2 rounded-md text-xl cursor-pointer hover:bg-green-600 transition-all  ease-in-out group duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
+                <Link href='students-life' className='text-white font-semibold bg-[#0F9255] text-center px-3  py-2 rounded-md text-xl cursor-pointer hover:bg-green-600 transition-all  ease-in-out group duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
                 View All Students Activities
-            </button>
+            </Link>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from "next/link";
 
 const News = () => {
     const blog =[
@@ -10,7 +11,7 @@ const News = () => {
     <div className="text-[#0a0a40] lg:px-30 px-4 w-full lg:justify-items-center">
       <h1 className='text-4xl font-bold'>Recent News</h1>
       <p className=''>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mt-5 rounded-lg">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mt-5 rounded-lg py-3">
         {blog.map((blo,index)=>(
             <div key={index} className="w-full grid grid-cols-1 shadow-2xl group transition duration-300 transform hover:scale-[1.02]">
             <div style={{backgroundImage: `url(${blo.photo})`}} className="w-full bg-cover bg-no-repeat rounded-t-lg h-64"></div>
@@ -24,7 +25,9 @@ const News = () => {
             </div>
             </div>
         ))}
+        <Link href="/news" className="text-center text-xl bg-[#0F9255] rounded-lg p-3 text-white font-semibold"> View More</Link>
       </div>
+      
     </div>
   )
 }
