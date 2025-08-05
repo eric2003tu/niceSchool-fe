@@ -81,7 +81,7 @@ const Athletics = () => {
               <img
                 src={item.src}
                 alt={item.name}
-                className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-52 object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gray-600/66 bg-opacity-60 p-3 text-white">
                 <h3 className="text-lg font-semibold">{item.name}</h3>
@@ -111,7 +111,7 @@ const Athletics = () => {
         {Array.from({ length: totalSlides }).map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 rounded-full transition-all duration-700 ${
               currentSlide === idx ? 'bg-green-600 scale-110' : 'bg-gray-300'
             }`}
             onClick={() => goToSlide(idx)}

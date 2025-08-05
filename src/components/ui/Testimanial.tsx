@@ -18,7 +18,7 @@ const Testimanial = () => {
       <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-7 my-7'>
         {testimonial.map((testimal,index)=>(
-            <div key={index} className={`relative grid grid-cols-1 gap-3 border border-[#0F9255] ${testimal.id %2 === 0 ? 'bg-green-100' : 'bg-white'} text-[#0a0a40] rounded-lg p-6 justify-items-start group transition duration-300 transform hover:scale-[1.02] hover:shadow-xl`}>
+            <div key={index} className={`relative grid grid-cols-1 gap-3 border border-[#0F9255] ${testimal.id %2 === 0 ? 'bg-green-100' : 'bg-white'} text-[#0a0a40] rounded-lg p-6 justify-items-start group transition duration-700 transform hover:scale-[1.02] hover:shadow-xl`}>
                 <p>{testimal.message}</p>
                 <div className="flex flex-row gap-6">
                     <img src={testimal.photo} alt={testimal.name} className="rounded-full w-10 h-10"/>
@@ -27,7 +27,7 @@ const Testimanial = () => {
                         <p className="text-gray-600">{testimal.position}</p>
                     </div>
                 </div>
-                <div className='absolute top-[-15px] left-2 text-white bg-green-500 rounded-full justify-items-center p-2 group transition duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
+                <div className='absolute top-[-15px] left-2 text-white bg-green-500 rounded-full justify-items-center p-2 group transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
                 <PiQuotes size={20} />
                 </div>
             </div>

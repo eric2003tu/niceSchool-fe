@@ -8,16 +8,16 @@ const Life = () => {
         <h1 className="text-4xl font-bold">Student's Life</h1>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
         <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-6 gap-5 justify-self-center h-fit">
-            <img src="education-square-11.webp" alt="education" className=' rounded-lg group transition duration-300 transform hover:scale-[1.02]'/>
+            <img src="education-square-11.webp" alt="education" className=' rounded-lg group transition duration-700 transform hover:scale-[1.02]'/>
         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-5 pt-16 h-fit">
-            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white group transition duration-300 transform h-fit hover:scale-[1.02] hover:shadow-xl">
+            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white group transition duration-700 transform h-fit hover:scale-[1.02] hover:shadow-xl">
               {/* Background overlay */}
               <div className="absolute inset-0  translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0" />
             
               {/* Content layer */}
-              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-300 group-hover:scale-[1.01]">
+              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-700 group-hover:scale-[1.01]">
                 
-                <div className="bg-green-200 rounded-full w-fit p-4 text-center  text-[#0F9255] transition-all duration-300 group-hover:bg-[#0F9255] group-hover:text-white">
+                <div className="bg-green-200 rounded-full w-fit p-4 text-center  text-[#0F9255] transition-all duration-700 group-hover:bg-[#0F9255] group-hover:text-white">
                   <Users2 size={32} />
                 </div>
             
@@ -33,14 +33,14 @@ const Life = () => {
               </div>
             </div>
             
-            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition duration-300 h-fit transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition duration-700 h-fit transform hover:scale-[1.02] hover:shadow-xl">
               {/* Background overlay */}
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0" />
             
               {/* Content layer */}
-              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-300 group-hover:scale-[1.01]">
+              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-700 group-hover:scale-[1.01]">
                 
-                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-300 group-hover:bg-[#0F9255] group-hover:text-white">
+                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-700 group-hover:bg-[#0F9255] group-hover:text-white">
                   <Trophy size={32} />
                 </div>
             
@@ -55,14 +55,14 @@ const Life = () => {
               </div>
             </div>
             
-            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition h-fit duration-300 transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition h-fit duration-700 transform hover:scale-[1.02] hover:shadow-xl">
               {/* Background overlay */}
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0" />
             
               {/* Content layer */}
-              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-300 group-hover:scale-[1.01]">
+              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-700 group-hover:scale-[1.01]">
                 
-                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-300 group-hover:bg-[#0F9255] group-hover:text-white">
+                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-700 group-hover:bg-[#0F9255] group-hover:text-white">
                   <Music size={32} />
                 </div>
             
@@ -76,14 +76,14 @@ const Life = () => {
                 </p>
               </div>
             </div>
-            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition duration-300 h-fit transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white  group transition duration-700 h-fit transform hover:scale-[1.02] hover:shadow-xl">
               {/* Background overlay */}
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0" />
             
               {/* Content layer */}
-              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-300 group-hover:scale-[1.01]">
+              <div className="relative z-10 grid grid-cols-1 gap-3 transition-all duration-700 group-hover:scale-[1.01]">
                 
-                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-300 group-hover:bg-[#0F9255] group-hover:text-white">
+                <div className="bg-green-200 rounded-full w-fit p-4 text-center text-[#0F9255] transition-all duration-700 group-hover:bg-[#0F9255] group-hover:text-white">
                   <Globe size={32} />
                 </div>
             
@@ -97,7 +97,7 @@ const Life = () => {
                 </p>
               </div>
             </div>
-                <Link href='students-life' className='text-white font-semibold bg-[#0F9255] text-center px-3  py-2 rounded-md text-xl cursor-pointer hover:bg-green-600 transition-all  ease-in-out group duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
+                <Link href='students-life' className='text-white font-semibold bg-[#0F9255] text-center px-3  py-2 rounded-md text-xl cursor-pointer hover:bg-green-600 transition-all  ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
                 View All Students Activities
             </Link>
             </div>

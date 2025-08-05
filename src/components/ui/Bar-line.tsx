@@ -11,7 +11,7 @@ const Bar = () => {
         <div key={index} className="flex flex-col sm:flex-row items-center gap-2 bg-[#0F9255]">
           <p className="border border-white rounded-md px-3 py-2 font-bold">{event.date}</p>
           <p className="px-3 py-2 text-center sm:text-left">{event.title}</p>
-          <button className="bg-[#42b883] hover:bg-white hover:text-[#0F9255] transition-all duration-300 px-3 py-2 cursor-pointer rounded-md">
+          <button className="bg-[#42b883] hover:bg-white hover:text-[#0F9255] transition-all duration-700 px-3 py-2 cursor-pointer rounded-md">
             Register
           </button>
         </div>

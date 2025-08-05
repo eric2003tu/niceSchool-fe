@@ -30,12 +30,12 @@ const LifeOnCampus = () => {
   </p>
   <div className="flex flex-wrap justify-center gap-4">
     <button
-      className="px-6 py-3 bg-white/20 hover:bg-white/30 hover:ring-2 hover:ring-white/60 text-white font-semibold rounded-md transition-all duration-300 ease-in-out backdrop-blur-md min-w-[150px] text-sm sm:text-base shadow-md transform hover:scale-105"
+      className="px-6 py-3 bg-white/20 hover:bg-white/30 hover:ring-2 hover:ring-white/60 text-white font-semibold rounded-md transition-all duration-700 ease-in-out backdrop-blur-md min-w-[150px] text-sm sm:text-base shadow-md transform hover:scale-105"
     >
       Schedule a Visit
     </button>
     <button
-      className="px-6 py-3 bg-white/20 hover:bg-white/30 hover:ring-2 hover:ring-white/60 text-white font-semibold rounded-md transition-all duration-300 ease-in-out backdrop-blur-md min-w-[150px] text-sm sm:text-base shadow-md transform hover:scale-105"
+      className="px-6 py-3 bg-white/20 hover:bg-white/30 hover:ring-2 hover:ring-white/60 text-white font-semibold rounded-md transition-all duration-700 ease-in-out backdrop-blur-md min-w-[150px] text-sm sm:text-base shadow-md transform hover:scale-105"
     >
       Apply Now
     </button>

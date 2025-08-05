@@ -67,7 +67,7 @@ const Program = () => {
           {['all', "Bachelor's Degree", "Master's Degree", 'Certificate'].map(type => (
             <button
               key={type}
-              className={`text-white lg:px-5 px-2 py-2 rounded-full cursor-pointer group transition duration-300 transform hover:scale-[1.02] ${
+              className={`text-white lg:px-5 px-2 py-2 rounded-full cursor-pointer group transition duration-700 transform hover:scale-[1.02] ${
                 filter === type
                   ? 'bg-[#0F9255]'
                   : 'bg-gray-400 hover:bg-[#0F9255]'
@@ -84,7 +84,7 @@ const Program = () => {
         {filteredPrograms.map((pro, index) => (
           <div
             key={index}
-            className="group transition duration-300 transform hover:scale-[1.02] hover:shadow-2xl shadow-xl grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 bg-white rounded-xl overflow-hidden"
+            className="group transition duration-700 transform hover:scale-[1.02] hover:shadow-2xl shadow-xl grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 bg-white rounded-xl overflow-hidden"
           >
             <div className="overflow-hidden">
               <img
@@ -96,10 +96,10 @@ const Program = () => {
 
             <div className="p-4 flex flex-col justify-between">
               <div className="flex justify-between items-center mb-2">
-                <h1 className="text-[#0a0a40] group-hover:text-[#0F9255] text-lg font-semibold transition duration-300">
+                <h1 className="text-[#0a0a40] group-hover:text-[#0F9255] text-lg font-semibold transition duration-700">
                   {pro.title}
                 </h1>
-                <span className="text-white font-semibold bg-[#0F9255] rounded-lg text-sm px-2 py-1 group-hover:brightness-110 transition duration-300">
+                <span className="text-white font-semibold bg-[#0F9255] rounded-lg text-sm px-2 py-1 group-hover:brightness-110 transition duration-700">
                   {pro.type}
                 </span>
               </div>

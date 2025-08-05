@@ -47,7 +47,7 @@ const AlumniEvents = () => {
           {events.map((event, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-start justify-between gap-4 w-full group transition duration-300 transform hover:scale-[1.02]"
+              className="bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-start justify-between gap-4 w-full group transition duration-700 transform hover:scale-[1.02]"
             >
               {/* Date */}
               <div className="bg-emerald-100 text-emerald-800 font-bold text-center w-16 py-2 hover:bg-[#0F9255] hover:text-white rounded-lg flex-shrink-0">

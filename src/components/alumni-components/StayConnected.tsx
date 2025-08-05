@@ -9,7 +9,7 @@ import {
 
 const items = [
   {
-    icon: <Users2 className="h-8 w-8 text-emerald-600" />,
+    icon: <Users2 className="h-8 w-8" />,
     title: "Mentorship Program",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada.",
@@ -17,7 +17,7 @@ const items = [
     href: "#",
   },
   {
-    icon: <CalendarDays className="h-8 w-8 text-emerald-600" />,
+    icon: <CalendarDays className="h-8 w-8" />,
     title: "Alumni Events",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada.",
@@ -25,7 +25,7 @@ const items = [
     href: "#",
   },
   {
-    icon: <Gift className="h-8 w-8 text-emerald-600" />,
+    icon: <Gift className="h-8 w-8 " />,
     title: "Give Back",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada.",
@@ -33,7 +33,7 @@ const items = [
     href: "#",
   },
   {
-    icon: <Briefcase className="h-8 w-8 text-emerald-600" />,
+    icon: <Briefcase className="h-8 w-8" />,
     title: "Career Network",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada.",
@@ -55,8 +55,8 @@ const StayConnected = () => {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
 
-            <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg  group transition duration-300 transform hover:scale-[1.02]">
-              <div className="bg-emerald-50 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center hover:bg-[#0F9255] hover:text-white">
+            <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg  group transition duration-700 transform hover:scale-[1.02]">
+              <div className="bg-emerald-50 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center text-[#0F9255] justify-center hover:bg-[#0F9255] hover:text-white hover:items-white">
                 {item.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">

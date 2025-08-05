@@ -23,9 +23,9 @@ const MainAlumni = () => {
             <span className="font-bold">Years of Legacy</span>
         </h1>
         </div>
-        <button className="text-white font bold text-center text-xl md:mt-3 sm:tm-3 rounded-full p-3 bg-[#0F9255] group transition duration-300 transform hover:scale-[1.02]">Discover Network Benefits</button>
+        <button className="text-white font bold text-center text-xl md:mt-3 sm:tm-3 rounded-full p-3 bg-[#0F9255] group transition duration-700 transform hover:scale-[1.02]">Discover Network Benefits</button>
       </div>
-      <img src="campus-5.webp" alt="campus" className="w-full rounded-md group transition duration-300 transform hover:scale-[1.02]"/>
+      <img src="campus-5.webp" alt="campus" className="w-full rounded-md group transition duration-700 transform hover:scale-[1.02]"/>
     </div>
   )
 }

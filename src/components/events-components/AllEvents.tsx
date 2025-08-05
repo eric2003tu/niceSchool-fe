@@ -78,7 +78,7 @@ const allEvents = [
     description: "Learn about resume building, interview skills, and internship opportunities.",
   },
   {
-    date: new Date(2023, 7, 23),
+    date: new Date(2025, 5, 6),
     title: "Diversity and Inclusion Forum",
     time: "03:00 PM - 05:00 PM",
     location: "Diversity Center",

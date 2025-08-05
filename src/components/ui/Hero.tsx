@@ -15,17 +15,17 @@ const Hero = () => {
             eu viverra risus egestas.
           </p>
           <div className='flex flex-wrap gap-3'>
-            <button className='text-white font-bold bg-[#0F9255] px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-green-600 transition duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
+            <button className='text-white font-bold bg-[#0F9255] px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-green-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
               Start Your Journey
             </button>
-            <button className='text-white font-bold bg-gray-700/80 px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-gray-600 transition duration-300 transform hover:scale-[1.02] hover:shadow-xl'>
+            <button className='text-white font-bold bg-gray-700/80 px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-gray-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
               Discover programs
             </button>
           </div>
         </div>
 
         {/* Right Section: Stats */}
-        <div className="bg-gray-800/40 lg:py-10 py-5 px-6 text-center rounded-md text-white group transition duration-300 transform hover:scale-[1.02]">
+        <div className="bg-gray-800/40 lg:py-10 py-5 px-6 text-center rounded-md text-white group transition duration-700 transform hover:scale-[1.02]">
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">Why Choose Us</h2>
           <div className="w-20 h-1 bg-[#0F9255] mx-auto mb-8 rounded"></div>
 

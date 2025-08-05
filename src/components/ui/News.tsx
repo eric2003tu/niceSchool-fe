@@ -13,7 +13,7 @@ const News = () => {
       <p className=''>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mt-5 rounded-lg py-3">
         {blog.map((blo,index)=>(
-            <div key={index} className="w-full grid grid-cols-1 shadow-2xl group transition duration-300 transform hover:scale-[1.02]">
+            <div key={index} className="w-full grid grid-cols-1 shadow-2xl group transition duration-700 transform hover:scale-[1.02]">
             <div style={{backgroundImage: `url(${blo.photo})`}} className="w-full bg-cover bg-no-repeat rounded-t-lg h-64"></div>
             <div className="w-full p-3  flex flex-col gap-3 rounded-b-lg">
                 <p className="text-gray-500">{blo.field}</p>

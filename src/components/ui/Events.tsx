@@ -72,7 +72,7 @@ export default function Event() {
       {/* Event Cards */}
       <div className="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto">
         {events.map((event, idx) => (
-          <div key={idx} className="bg-white rounded-xl shadow-sm flex overflow-hidden group transition duration-300 transform hover:scale-[1.02]">
+          <div key={idx} className="bg-white rounded-xl shadow-sm flex overflow-hidden group transition duration-700 transform hover:scale-[1.02]">
             {/* Date Side */}
             <div className="bg-green-700 text-white px-4 py-6 flex flex-col items-center justify-center w-24">
               <span className="text-sm font-semibold">{event.month}</span>
@@ -113,7 +113,7 @@ export default function Event() {
 
       {/* View All Events Button */}
       <div className="flex justify-center mt-10">
-        <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full shadow-md group transition duration-300 transform hover:scale-[1.02]">
+        <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full shadow-md group transition duration-700 transform hover:scale-[1.02]">
           View All Events
         </button>
       </div>

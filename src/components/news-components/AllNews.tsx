@@ -155,7 +155,7 @@ const blog = [
           <p className="text-gray-600 col-span-full text-center">No blog posts found.</p>
         ) : (
           currentBlogs.map((blo, index) => (
-            <div key={index} className="w-full shadow-2xl group group transition duration-300 transform hover:scale-[1.02] rounded-lg ">
+            <div key={index} className="w-full shadow-2xl group group transition duration-700 transform hover:scale-[1.02] rounded-lg ">
               <div
                 style={{ backgroundImage: `url(${blo.photo})` }}
                 className="w-full bg-cover bg-no-repeat rounded-t-lg h-64 p-2"

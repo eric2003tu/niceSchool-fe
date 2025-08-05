@@ -37,7 +37,7 @@ const Footer = () => {
               <Link
                 key={i}
                 href="#"
-                className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition-all duration-300"
+                className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition-all duration-700"
               >
                 <Icon className="w-4 h-4" />
               </Link>

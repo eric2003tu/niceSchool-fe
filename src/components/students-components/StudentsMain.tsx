@@ -26,7 +26,7 @@ const StudentsMain = () => {
 
       <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4">
         {cards.map((card,index)=>(
-        <div key={index} className="grid grid-cols-1 py-5 gap-2 w-full bg-white rounded-md justify-items-center text-[#0a0a40] group transition duration-300 transform hover:scale-[1.02]">
+        <div key={index} className="grid grid-cols-1 py-5 gap-2 w-full bg-white rounded-md justify-items-center text-[#0a0a40] group transition duration-700 transform hover:scale-[1.02]">
           <div className="w-fit text-[#0F9255] bg-green-200 text-center rounded-full p-3 hover:text-white hover:bg-[#0F9255]">
             {card.icon}
           </div>

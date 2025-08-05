@@ -175,7 +175,7 @@ const Header = () => {
       {/* Mobile Sidebar Menu */}
       <div
         ref={mobileMenuRef}
-        className={`fixed top-0 right-0 h-screen w-80 bg-gray-900 text-white shadow-lg z-[9999] transition-all duration-300 ease-in-out transform ${
+        className={`fixed top-0 right-0 h-screen w-80 bg-gray-900 text-white shadow-lg z-[9999] transition-all duration-700 ease-in-out transform ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -218,7 +218,7 @@ const Header = () => {
                       />
                     </button>
                     <div
-                      className={`overflow-hidden transition-all duration-300 ${
+                      className={`overflow-hidden transition-all duration-700 ${
                         expandedMobileItems.includes(i)
                           ? "max-h-[500px] opacity-100"
                           : "max-h-0 opacity-0"
