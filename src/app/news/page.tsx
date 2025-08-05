@@ -1,6 +1,6 @@
-import AlumniHero from '@/src/components/alumni-components/AlumniHero'
-import AllNews from '@/src/components/news-components/AllNews'
-import News from '@/src/components/ui/News'
+import AlumniHero from '@/components/alumni-components/AlumniHero'
+import AllNews from '@/components/news-components/AllNews'
+import News from '@/components/ui/News'
 import React from 'react'
 
 const page = () => {

@@ -1,8 +1,8 @@
 import React from 'react'
-import AlumniHero from '@/src/components/alumni-components/AlumniHero'
-import StudentsMain from '@/src/components/students-components/StudentsMain'
-import Filters from '@/src/components/students-components/Filters'
-import LifeOnCampus from '@/src/components/students-components/LifeOnCampus'
+import AlumniHero from '@/components/alumni-components/AlumniHero'
+import StudentsMain from '@/components/students-components/StudentsMain'
+import Filters from '@/components/students-components/Filters'
+import LifeOnCampus from '@/components/students-components/LifeOnCampus'
 
 const page = () => {
   return (
