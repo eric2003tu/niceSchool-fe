@@ -92,7 +92,7 @@ const Header = () => {
       {/* Logo */}
       <div className="flex items-center text-2xl font-bold gap-2">
         <img
-          src="/apple-touch-icon.png"
+          src="apple-touch-icon.png"
           alt="NiceSchool Logo"
           width={40}
           height={40}
