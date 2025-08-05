@@ -34,6 +34,7 @@ const Header = () => {
     },
     { title: "Students Life", href: "/students-life" },
     { title: "News", href: "/news" },
+    { title: "Events", href: "/events" },
     { title: "Alumni", href: "/alumni" },
     {
       title: "More Pages",
@@ -57,6 +58,7 @@ const Header = () => {
       ],
     },
     { title: "Contact", href: "/contact" },
+    
   ];
 
   // Close dropdowns when clicking outside
