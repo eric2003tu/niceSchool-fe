@@ -24,7 +24,7 @@ const ProgressStepper: React.FC<ProgressStepperProps> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center justify-between mb-4 ${className}`}>
+    <div className={`grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 justify-items-center  mb-4 ${className}`}>
       {steps.map((step, index) => {
         const Icon = step.icon;
         const isActive = currentStep === step.id;
