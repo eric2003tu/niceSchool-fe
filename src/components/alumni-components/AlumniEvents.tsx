@@ -2,6 +2,8 @@
 import React from "react";
 import { CalendarClock, MapPin, Clock } from "lucide-react";
 
+import Link from 'next/link';
+
 const events = [
   {
     date: { month: "JUN", day: "18" },
@@ -87,13 +89,13 @@ const AlumniEvents = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <a
-            href="#"
+          <Link
+            href="/events"
             className="text-sm font-semibold text-gray-800 hover:underline flex items-center justify-center gap-1"
           >
             View Full Events Calendar
             <CalendarClock className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import {
   Accessibility,
   GraduationCap,
 } from 'lucide-react';
+import Link from 'next/link';
 
 const supportServices = [
   {
@@ -66,9 +67,9 @@ const Support = () => {
         <p className="text-gray-600 mb-4">
           Our student support team is available Monday through Friday, 8am to 5pm.
         </p>
-        <button className="bg-green-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition">
+        <Link href='/contact' className="bg-green-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition">
           Contact Student Services →
-        </button>
+        </Link>
       </div>
     </div>
   );
