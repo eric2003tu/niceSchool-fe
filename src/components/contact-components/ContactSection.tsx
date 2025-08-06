@@ -6,10 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Cards";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Clock } from "lucide-react";
+import ContactForm from "./ContactForm";
 
 export default function ContactSection() {
   return (
@@ -69,27 +67,8 @@ export default function ContactSection() {
       </div>
 
       {/* Contact Form */}
-      <div className="lg:absolute lg:top-1/2 lg:left-1/3 lg:w-fit
-       w-full bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Get in Touch</h2>
-        <form className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-  type="text"
-  placeholder="First Name"
-  required
-  className="focus:ring-2 focus:ring-[#0F9255] focus:outline-none"
-/>
+      <ContactForm/>
 
-            <Input type="email" placeholder="Email Address" required />
-          </div>
-          <Input type="text" placeholder="Subject" required />
-          <Textarea placeholder="Write Message..." rows={5} required />
-          <Button type="submit" className="w-full bg-[#0F9255] text-white hover:scale-[1.03] transition-all duration-700 ease-in-out hover:bg-green-500">
-            Send Message
-          </Button>
-        </form>
-      </div>
     </div>
   );
 }
