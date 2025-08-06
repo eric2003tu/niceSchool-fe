@@ -31,7 +31,7 @@ const events = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.",
     link: "#",
-  },
+  }
 ];
 
 const AlumniEvents = () => {
