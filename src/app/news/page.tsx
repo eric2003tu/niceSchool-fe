@@ -13,6 +13,9 @@ const page = () => {
       </header>
       <AlumniHero name='News'/>
       <AllNews/>
+      <footer>
+        <Footer/>
+      </footer>
     </div>
   )
 }

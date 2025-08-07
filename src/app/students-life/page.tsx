@@ -16,6 +16,9 @@ const page = () => {
       <StudentsMain/>
       <Filters/>
       <LifeOnCampus/>
+      <footer>
+      <Footer/>
+      </footer>
     </div>
   )
 }

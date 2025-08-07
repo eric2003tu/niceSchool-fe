@@ -11,7 +11,11 @@ const page = () => {
        <Header/>
       </header>
       <AlumniHero name='Terms & Conditions'/>
-      <TermsConditions/>
+      <TermsConditions/> 
+
+      <footer>
+        <Footer/>
+      </footer>
     </div>
   )
 }

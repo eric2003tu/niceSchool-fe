@@ -12,6 +12,9 @@ const page = () => {
       </header>
         {/* <AlumniHero name="Login"/> */}
       <LoginForm/>
+    <footer>
+      <Footer/>
+    </footer>
     </div>
   )
 }
