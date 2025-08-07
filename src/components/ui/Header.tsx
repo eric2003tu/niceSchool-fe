@@ -43,7 +43,7 @@ const Header = () => {
         { title: "Event Details", href: "/event-details" },
         { title: "Privacy", href: "/privacy" },
         { title: "Terms of Service", href: "/terms" },
-        { title: "Error 404", href: "/404" },
+        { title: "Login", href: "/login" },
         { title: "Starter Page", href: "/starter" },
       ],
     },
