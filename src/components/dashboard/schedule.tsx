@@ -25,10 +25,10 @@ export const SchedulePage = () => {
     <main className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
-          <div>
+          {/* <div>
             <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
             <p className="mt-1 text-sm text-gray-600">Manage classes and events</p>
-          </div>
+          </div> */}
           <Button className="flex items-center gap-2">
             <Plus className="w-4 h-4" />
             Add Event
