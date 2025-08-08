@@ -1,5 +1,5 @@
-import AlumniHero from '@/components/alumni-components/AlumniHero'
-import LoginForm from '@/components/ui/Login'
+// import AlumniHero from '@/components/alumni-components/AlumniHero'
+import LoginForm from '@/components/LoginForm';
 import React from 'react'
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";

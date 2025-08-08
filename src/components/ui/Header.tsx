@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Menu, X, User } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -43,18 +43,7 @@ const Header = () => {
         { title: "Event Details", href: "/event-details" },
         { title: "Privacy", href: "/privacy" },
         { title: "Terms of Service", href: "/terms" },
-        { title: "Login", href: "/login" },
         { title: "Starter Page", href: "/starter" },
-      ],
-    },
-    {
-      title: "Dropdown",
-      subItems: [
-        { title: "Dropdown 1", href: "/dropdown1" },
-        { title: "Deep Dropdown", href: "/deep" },
-        { title: "Dropdown 2", href: "/dropdown2" },
-        { title: "Dropdown 3", href: "/dropdown3" },
-        { title: "Dropdown 4", href: "/dropdown4" },
       ],
     },
     { title: "Contact", href: "/contact" },
@@ -102,7 +91,7 @@ const Header = () => {
       </div>
 
       {/* Desktop Menu */}
-      <nav className="hidden lg:flex flex-1 justify-end" ref={menuRef}>
+      <nav className="hidden lg:flex flex-1 justify-end items-center gap-6" ref={menuRef}>
         <ul className="flex gap-8 items-center relative">
           {navs.map((nav, index) => (
             <li
@@ -153,6 +142,15 @@ const Header = () => {
             </li>
           ))}
         </ul>
+        
+        {/* Prominent Login Button - Desktop */}
+        <Link
+          href="/login"
+          className="ml-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center gap-2 shadow-md hover:shadow-lg"
+        >
+          <User size={18} />
+          Login
+        </Link>
       </nav>
 
       {/* Mobile Menu Button */}
@@ -200,6 +198,18 @@ const Header = () => {
         </div>
 
         <div className="overflow-y-auto h-[calc(100vh-64px)] p-4">
+          {/* Prominent Login Button - Mobile */}
+          <div className="mb-6">
+            <Link
+              href="/login"
+              className="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <User size={20} />
+              Login
+            </Link>
+          </div>
+          
           <ul className="flex flex-col gap-1">
             {navs.map((nav, i) => (
               <li key={i} className="border-b border-gray-700 last:border-0">

@@ -45,11 +45,11 @@ export const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => (
           {/* Profile dropdown */}
           <div className="relative">
             <button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-              <img
-                className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Profile"
-              />
+                  <img
+                    src='person-f-2.webp'
+                    alt='Admin'
+                    className="w-12 h-12 rounded-xl object-cover ring-2 ring-white shadow-md"
+                  />
               <ChevronDown className="ml-2 w-4 h-4 text-gray-400" />
             </button>
           </div>
