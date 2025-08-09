@@ -220,12 +220,12 @@ const AllNews: React.FC = () => {
   };
 
   return (
-    <div className="text-[#0a0a40] lg:px-30 px-4 w-full">
+    <div className="text-[#0a0a40] lg:px-30 px-4 w-full justify-items-center">
       <h1 className="text-4xl font-bold">Recent News</h1>
       <p className="mb-4">Stay updated with the latest news and stories</p>
 
       {/* Controls */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 mb-6 w-full">
         <input
           type="text"
           placeholder="Search by title, field, or author..."
