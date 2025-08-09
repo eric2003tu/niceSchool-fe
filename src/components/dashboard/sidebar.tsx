@@ -210,22 +210,7 @@ export const Sidebar = ({
           </div>
 
           {/* Storage Info */}
-          <div className="px-4 pb-4">
-            <div className="bg-white/60 rounded-lg p-3 border border-white/50">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-gray-500">Storage Used</span>
-                <span className="text-gray-700 font-medium">
-                  {storageUsed}GB / {storageLimit}GB
-                </span>
-              </div>
-              <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-                <div 
-                  className="bg-gradient-to-r from-emerald-500 to-emerald-600 h-1.5 rounded-full" 
-                  style={{ width: `${storagePercentage}%` }}
-                ></div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
 
