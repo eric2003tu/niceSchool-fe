@@ -4,7 +4,7 @@ import axios from "axios";
 
 // Types
 interface Author {
-  profileImage?: string;
+  profileImage?: string | null;
   firstName?: string;
   lastName?: string;
 }
@@ -16,6 +16,7 @@ interface ApiNewsItem {
   author?: Author | string;
   date?: string;
   createdAt?: string;
+  publishedAt?: string;
 }
 
 interface NewsItem {
@@ -66,29 +67,7 @@ const AllNews: React.FC = () => {
     { photo: '/blog-post-5.webp', field: "Entertainment", title: "The future of cinema in the digital age", profile: "/person-f-10.webp", name: "Lana Brooks", date: "2022-06-22" },
     { photo: '/blog-post-1.webp', field: "Politics", title: "Empowering youth through policy change", profile: "/person-m-11.webp", name: "Daniel Owusu", date: "2022-01-01" },
     { photo: '/blog-post-3.webp', field: "Sports", title: "Rising stars in African athletics", profile: "/person-m-13.webp", name: "Tuyishime Eric", date: "2022-06-05" },
-    { photo: '/blog-hero-1.webp', field: "Entertainment", title: "Independent filmmakers to watch", profile: "/person-f-2.webp", name: "Chantal Niyonsaba", date: "2022-07-01" },
-    { photo: '/blog-hero-2.webp', field: "Politics", title: "Decentralization in modern governance", profile: "/person-m-2.webp", name: "Jean Murenzi", date: "2022-02-15" },
-    { photo: '/blog-post-4.webp', field: "Sports", title: "Grassroots football academies in Rwanda", profile: "/person-f-3.webp", name: "Esther Uwase", date: "2022-07-15" },
-    { photo: '/blog-post-5.webp', field: "Entertainment", title: "Behind the lens: Directing hit series", profile: "/person-f-8.webp", name: "Grace Mutesi", date: "2022-08-22" },
-    { photo: '/blog-post-6.webp', field: "Politics", title: "Policy shifts across East Africa", profile: "/person-m-4.webp", name: "David Iradukunda", date: "2022-03-03" },
-    { photo: '/blog-post-7.webp', field: "Sports", title: "The science of peak athletic performance", profile: "/person-m-9.webp", name: "Brian Gasana", date: "2022-04-05" },
-    { photo: '/blog-post-3.webp', field: "Entertainment", title: "Exploring the global influence of K-pop", profile: "/person-f-5.webp", name: "Alice Ray", date: "2022-05-12" },
-    { photo: '/blog-post-9.webp', field: "Politics", title: "International relations in a shifting world", profile: "/person-m-6.webp", name: "Jonathan Dee", date: "2021-11-04" },
-    { photo: '/blog-post-10.webp', field: "Sports", title: "Historic moments from Tokyo 2022", profile: "/person-f-7.webp", name: "Sandra Kim", date: "2022-12-30" },
-    { photo: '/blog-post-5.webp', field: "Entertainment", title: "From script to screen: Storytelling secrets", profile: "/person-f-11.webp", name: "Deborah Nkundwa", date: "2022-06-29" },
-    { photo: '/blog-post-1.webp', field: "Politics", title: "Women in leadership across Africa", profile: "/person-f-12.webp", name: "Maria Wanjiku", date: "2022-01-11" },
-    { photo: '/blog-post-3.webp', field: "Sports", title: "Top 10 athletes breaking records", profile: "/person-m-14.webp", name: "Eric Munyaneza", date: "2022-06-10" },
-    { photo: '/blog-hero-1.webp', field: "Entertainment", title: "The evolution of African pop music", profile: "/person-f-6.webp", name: "Josiane Mbabazi", date: "2022-07-04" },
-    { photo: '/blog-hero-2.webp', field: "Politics", title: "Tech policy: The next frontier", profile: "/person-m-10.webp", name: "Amos Nshimiyimana", date: "2022-02-25" },
-    { photo: '/blog-post-4.webp', field: "Sports", title: "Street sports gaining recognition", profile: "/person-m-5.webp", name: "Claude Habimana", date: "2022-07-18" },
-    { photo: '/blog-post-5.webp', field: "Entertainment", title: "Cultural diversity in modern cinema", profile: "/person-f-10.webp", name: "Linda Barya", date: "2022-08-29" },
-    { photo: '/blog-post-6.webp', field: "Politics", title: "The role of youth in peacebuilding", profile: "/person-f-4.webp", name: "Aline Mugiraneza", date: "2022-03-08" },
-    { photo: '/blog-post-7.webp', field: "Sports", title: "Inside a champion's daily routine", profile: "/person-m-13.webp", name: "Kevin Rukundo", date: "2022-04-10" },
-    { photo: '/blog-post-3.webp', field: "Entertainment", title: "Documentaries shaping public opinion", profile: "/person-f-9.webp", name: "Angelique Hope", date: "2022-05-19" },
-    { photo: '/blog-post-9.webp', field: "Politics", title: "Africa’s voice at the UN summit", profile: "/person-m-6.webp", name: "Jonathan Dee", date: "2022-11-01" },
-    { photo: '/blog-post-10.webp', field: "Sports", title: "Africa’s rising stars in basketball", profile: "/person-f-7.webp", name: "Sandra Kim", date: "2022-12-31" },
   ];
-
 
   const [news, setNews] = useState<NewsItem[]>(sampleNews);
   const [loading, setLoading] = useState(true);
@@ -104,7 +83,7 @@ const AllNews: React.FC = () => {
   // Map API response to NewsItem format
   const mapApiToNewsItem = (item: ApiNewsItem): NewsItem => {
     let authorName = "Unknown";
-    let profileImage = "/person-m-11.webp";
+    let profileImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s";
     
     if (typeof item.author === 'string') {
       authorName = item.author;
@@ -119,7 +98,8 @@ const AllNews: React.FC = () => {
       title: item.title,
       profile: profileImage,
       name: authorName,
-      date: item.date || item.createdAt || "2022-01-01"
+      date: item.date || item.publishedAt || item.createdAt || "2022-01-01",
+      id: (item as any).id // Add type assertion for the id property
     };
   };
 
@@ -128,14 +108,16 @@ const AllNews: React.FC = () => {
     const fetchNews = async () => {
       try {
         setLoading(true);
-        setError("");
+setError("");
 const res = await axios.get("https://niceschool-be-2.onrender.com/api/news");
 
-if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
-  setNews(res.data.data.map(mapApiToNewsItem));
+if (res.data && Array.isArray(res.data.data)) {
+  const mappedNews = res.data.data.map(mapApiToNewsItem);
+  setNews(mappedNews.length > 0 ? mappedNews : sampleNews);
 } else {
   setNews(sampleNews);
 }
+
       } catch (err) {
         console.error("Error fetching news:", err);
         setError("Failed to load news. Showing sample data.");
@@ -247,6 +229,7 @@ if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
           className="w-full md:w-1/4 border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-[#0F9255] focus:outline-none"
           aria-label="Filter by category"
         >
+          <option value="All">All</option>
           <option value="general">General</option>
           <option value="entertainment">Entertainment</option>
           <option value="politics">Politics</option>
@@ -255,7 +238,6 @@ if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
           <option value="health">Health</option>
           <option value="business">Business</option>
           <option value="education">Education</option>
-
         </select>
 
         <select
@@ -319,11 +301,10 @@ if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
                     {highlightText(blo.title, debouncedSearchTerm)}
                   </h2>
                   <div className="flex items-center gap-4">
-                    <img 
-                      src={blo.profile} 
-                      alt={`${blo.name}'s profile`} 
-                      className="w-10 h-10 rounded-full" 
-                      loading="lazy"
+                    <img
+                      src={blo.profile}
+                      alt={blo.name}
+                      className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
                       <p className="font-bold">{highlightText(blo.name, debouncedSearchTerm)}</p>
