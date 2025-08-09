@@ -3,34 +3,85 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard/ui/card";
 import { Users, Plus, Search, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 
 interface Student {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  course: string;
-  progress: number;
-  avatar: string;
+  phone: string;
+  dateOfBirth: string;
+  profileImage: string;
+  // You might want to add course and progress fields if they exist in your API
 }
 
 export const StudentsPage = () => {
-  const students: Student[] = [
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", course: "React Development", progress: 85, avatar: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 2, name: "Bob Smith", email: "bob@example.com", course: "JavaScript Basics", progress: 92, avatar: "https://randomuser.me/api/portraits/men/32.jpg" },
-    { id: 3, name: "Carol Davis", email: "carol@example.com", course: "Node.js Backend", progress: 78, avatar: "https://randomuser.me/api/portraits/women/63.jpg" },
-    { id: 4, name: "David Wilson", email: "david@example.com", course: "TypeScript", progress: 88, avatar: "https://randomuser.me/api/portraits/men/75.jpg" },
-    { id: 5, name: "Eve Martinez", email: "eve@example.com", course: "UI/UX Principles", progress: 65, avatar: "https://randomuser.me/api/portraits/women/25.jpg" },
-    { id: 6, name: "Frank Taylor", email: "frank@example.com", course: "GraphQL", progress: 95, avatar: "https://randomuser.me/api/portraits/men/45.jpg" }
-  ];
+  const [students, setStudents] = useState<Student[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error('Authentication required');
+      }
+      try {
+        const response = await fetch('http://localhost:3001/api/users',{
+          method: "GET",
+          headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch students');
+        }
+        const data = await response.json();
+
+
+        console.log(data)
+        setStudents(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-50">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex justify-center items-center h-64">
+            <p>Loading students...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-50">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex justify-center items-center h-64">
+            <p className="text-red-500">Error: {error}</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
-          {/* <div>
-            <h1 className="text-2xl font-bold text-gray-900">Students</h1>
-            <p className="mt-1 text-sm text-gray-600">Manage student information and progress</p>
-          </div> */}
           <Button className="flex items-center gap-2">
             <Plus className="w-4 h-4" />
             Add Student
@@ -65,26 +116,20 @@ export const StudentsPage = () => {
                 <div key={student.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                   <div className="flex items-center space-x-4">
                     <img
-                      src={student.avatar}
-                      alt={student.name}
+                      src={student.profileImage}
+                      alt={`${student.firstName} ${student.lastName}`}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <p className="font-medium text-gray-900">{student.name}</p>
+                      <p className="font-medium text-gray-900">{student.firstName} {student.lastName}</p>
                       <p className="text-sm text-gray-600">{student.email}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-gray-900">{student.course}</p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-emerald-600 h-2 rounded-full" 
-                          style={{ width: `${student.progress}%` }}
-                        ></div>
-                      </div>
-                      <span className="text-sm text-gray-600">{student.progress}%</span>
-                    </div>
+                    <p className="text-sm font-medium text-gray-900">{student.phone}</p>
+                    <p className="text-sm text-gray-600">
+                      {new Date(student.dateOfBirth).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
               ))}
