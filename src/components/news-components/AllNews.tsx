@@ -129,13 +129,13 @@ const AllNews: React.FC = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await axios.get("https://niceschool-be-2.onrender.com/api/news");
-        
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          setNews(res.data.map(mapApiToNewsItem));
-        } else {
-          setNews(sampleNews);
-        }
+const res = await axios.get("https://niceschool-be-2.onrender.com/api/news");
+
+if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+  setNews(res.data.data.map(mapApiToNewsItem));
+} else {
+  setNews(sampleNews);
+}
       } catch (err) {
         console.error("Error fetching news:", err);
         setError("Failed to load news. Showing sample data.");
@@ -247,10 +247,15 @@ const AllNews: React.FC = () => {
           className="w-full md:w-1/4 border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-[#0F9255] focus:outline-none"
           aria-label="Filter by category"
         >
-          <option value="All">All Categories</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Politics">Politics</option>
-          <option value="Sports">Sports</option>
+          <option value="general">General</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="politics">Politics</option>
+          <option value="sports">Sports</option>
+          <option value="technology">Technology</option>
+          <option value="health">Health</option>
+          <option value="business">Business</option>
+          <option value="education">Education</option>
+
         </select>
 
         <select

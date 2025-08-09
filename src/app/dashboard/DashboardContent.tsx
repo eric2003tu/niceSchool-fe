@@ -6,6 +6,8 @@ import { SchedulePage } from "@/components/dashboard/schedule";
 import { AnalyticsPage } from "@/components/dashboard/analytics";
 import { SettingsPage } from "@/components/dashboard/settings";
 import DashboardPage from "@/components/dashboard/DashboardPage";
+import AddNews from "@/components/dashboard/AddNews";
+import ProNewsManagement from "@/components/dashboard/AddNews";
 
 interface DashboardContentProps {
   activeView: string;
@@ -13,7 +15,7 @@ interface DashboardContentProps {
 
 export default function DashboardContent({ activeView }: DashboardContentProps) {
   return (
-    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 max-w-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page header */}
         <div className="mb-8">
@@ -22,6 +24,7 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
              activeView === 'courses' ? 'Courses' :
              activeView === 'students' ? 'Students' :
              activeView === 'schedule' ? 'Schedule' :
+             activeView === 'news' ? 'News':
              activeView === 'analytics' ? 'Analytics' : 'Settings'}
           </h1>
           <p className="mt-1 text-sm text-gray-600">
@@ -37,6 +40,7 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
         {activeView === 'schedule' && <SchedulePage />}
         {activeView === 'analytics' && <AnalyticsPage />}
         {activeView === 'settings' && <SettingsPage />}
+        {activeView === 'news' && <ProNewsManagement />}
       </div>
     </main>
   );

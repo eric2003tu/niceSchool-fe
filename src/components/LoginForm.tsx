@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (values: LoginFormData) => {
     try {
-      const response = await fetch('https://niceschool-be-2.onrender.com/api/auth/login', {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -38,10 +38,14 @@ const LoginForm: React.FC = () => {
         const status = response.status;
         if (status === 401) throw new Error('Invalid email or password. Please try again.');
         if (status === 429) throw new Error('Too many login attempts. Please try again later.');
-        if (status >= 500) throw new Error('Server error. Please try again later.');
+        if (status === 500) throw new Error('Server error. Please try again later.');
         throw new Error('Login failed. Please check your credentials.');
       }
-
+    const { access_token, user } = await response.json();
+    
+    // Store token and user data in localStorage
+    localStorage.setItem('authToken', access_token);
+    localStorage.setItem('user', JSON.stringify(user));
       showToast('Welcome back! Login successful.', 'success');
        router.push('/dashboard');
     } catch (error) {

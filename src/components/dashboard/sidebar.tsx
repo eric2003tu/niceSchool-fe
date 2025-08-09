@@ -1,6 +1,7 @@
 "use client";
 
 import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown } from "lucide-react";
+import { TiNews } from "react-icons/ti";
 import { useState } from "react";
 
 interface SidebarProps {
@@ -24,7 +25,8 @@ const sidebarItems = [
   { icon: Users, label: "Students", href: "#" },
   { icon: Calendar, label: "Schedule", href: "#" },
   { icon: BarChart3, label: "Analytics", href: "#" },
-  { icon: Settings, label: "Settings", href: "#" }
+  { icon: Settings, label: "Settings", href: "#" },
+  {icon: TiNews, label: "News", href:"#"}
 ];
 
 export const Sidebar = ({ 
