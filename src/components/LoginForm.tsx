@@ -6,6 +6,7 @@ import { Toast } from '@/hooks/UseToast';
 import { Input } from './ui/login/Input';
 import { Button } from './ui/login/Button';
 import { validateField } from '../utils/validation';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormData {
   email: string;
@@ -14,6 +15,7 @@ interface LoginFormData {
 
 const LoginForm: React.FC = () => {
   const { toast, showToast, hideToast } = useToast();
+  const router = useRouter();
 
   const validateForm = (values: LoginFormData) => {
     const errors: Partial<Record<keyof LoginFormData, string>> = {};
@@ -26,7 +28,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (values: LoginFormData) => {
     try {
-      const response = await fetch('https://www.niceschool.com/login', {
+      const response = await fetch('https://niceschool-be-2.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -41,6 +43,7 @@ const LoginForm: React.FC = () => {
       }
 
       showToast('Welcome back! Login successful.', 'success');
+       router.push('/dashboard');
     } catch (error) {
       const message = error instanceof Error 
         ? (error.message.includes('Failed to fetch') 
