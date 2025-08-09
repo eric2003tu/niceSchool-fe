@@ -287,7 +287,7 @@ const AllNews: React.FC = () => {
 
       {/* Blog Cards */}
       {!loading && (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 w-full">
           {currentBlogs.length === 0 ? (
             <div className="col-span-full text-center py-8">
               <p className="text-gray-600">No news articles found matching your criteria.</p>
