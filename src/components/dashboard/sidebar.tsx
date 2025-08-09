@@ -2,7 +2,8 @@
 
 import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown } from "lucide-react";
 import { TiNews } from "react-icons/ti";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,6 +18,13 @@ interface SidebarProps {
   };
   onLogout?: () => void;
   onProfileClick?: () => void;
+}
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  avatar?: string;
+  role: string;
 }
 
 const sidebarItems = [
@@ -34,16 +42,25 @@ export const Sidebar = ({
   setIsOpen,
   activeView,
   setActiveView,
-  user = {
-    name: "John Doe",
-    email: "john.doe@niceschool.com",
-    role: "Administrator",
-    avatar: "person-f-2.webp"
-  },
   onLogout = () => console.log("Logout clicked"),
   onProfileClick = () => console.log("Profile clicked")
 }: SidebarProps) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
+// Change this line (remove the array type)
+const [user, setUser] = useState<User | null>(null);
+
+// Update your useEffect
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    try {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
+    } catch (e) {
+      console.error("Failed to parse user data", e);
+    }
+  }
+}, []);
 
   return (
     <>
@@ -125,22 +142,26 @@ export const Sidebar = ({
               >
                 <div className="relative">
                   <img
-                    src={user.avatar}
-                    alt={user.name}
+                    src='person-f-2.webp'
+                    alt='user'
                     className="w-12 h-12 rounded-xl object-cover ring-2 ring-white shadow-md"
                   />
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                 </div>
-                <div className="flex-1 text-left min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">
-                    {user.name}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate">
-                    {user.email}
-                  </p>
-                  <p className="text-xs text-emerald-600 font-medium">
-                    {user.role}
-                  </p>
+                <div className="flex flex-col text-left min-w-0">
+            {user && (
+              <>
+                <p className="text-sm font-semibold text-gray-900 truncate">
+                  {user.firstName + " " + user.lastName}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {user.email}
+                </p>
+                <p className="text-xs text-emerald-600 font-medium">
+                  {user.role}
+                </p>
+              </>
+            )}
                 </div>
                 <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
                   showUserMenu ? 'rotate-180' : ''

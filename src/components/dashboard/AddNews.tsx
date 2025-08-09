@@ -185,10 +185,6 @@ if (error instanceof z.ZodError) {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Add News Article</h1>
-        <p className="text-gray-600">Create and publish new news articles</p>
-      </header>
 
       {notification && (
         <div className={`mb-6 p-4 rounded-lg ${
