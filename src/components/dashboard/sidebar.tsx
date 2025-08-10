@@ -59,8 +59,6 @@ export const Sidebar = ({
     }
   }, []);
 
-  const storagePercentage = Math.min(100, Math.round((storageUsed / storageLimit) * 100));
-
   return (
     <>
       {/* Mobile overlay with higher z-index */}

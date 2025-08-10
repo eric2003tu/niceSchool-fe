@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard
 import { Users, Plus, Search, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
+import { AddUserForm } from '@/components/dashboard/AddUsers'
 
 interface Student {
   id: number;
@@ -25,6 +26,7 @@ interface User {
 }
 
 export const StudentsPage = () => {
+   const [showForm, setShowForm] = useState(false);
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -103,11 +105,20 @@ export const StudentsPage = () => {
   return (
     <main className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <Button className="flex items-center gap-2">
+        <div className="relative flex justify-between items-center mb-8">
+          <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
             <Plus className="w-4 h-4" />
             Add User
           </Button>
+          {showForm && (
+        <AddUserForm 
+          onClose={() => setShowForm(false)}
+          onUserAdded={() => {
+            console.log("New user added!");
+            // Refresh your data here if needed
+          }}
+        />
+      )}
         </div>
 
         {/* Search and Filters */}
