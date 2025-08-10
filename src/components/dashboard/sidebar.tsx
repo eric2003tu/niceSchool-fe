@@ -144,7 +144,7 @@ export const Sidebar = ({
                 <div className="relative">
                   {user?.profileImage ? (
                     <img
-                      src={user.profileImage}
+                      src={user.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s"}
                       alt={`${user.firstName} ${user.lastName}`}
                       className="w-12 h-12 rounded-xl object-cover ring-2 ring-white shadow-md"
                     />

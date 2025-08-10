@@ -100,7 +100,7 @@ export const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
                   aria-expanded={dropdownOpen}
                 >
                   <img
-                    src={user.profileImage || '/default-avatar.png'}
+                    src={user.profileImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s'}
                     alt={`${user.firstName} ${user.lastName}`}
                     className="w-8 h-8 rounded-full object-cover ring-2 ring-white shadow-md"
                     onError={(e) => {

@@ -10,16 +10,38 @@ interface Student {
   firstName: string;
   lastName: string;
   email: string;
+  role: string;
   phone: string;
   dateOfBirth: string;
   profileImage: string;
   // You might want to add course and progress fields if they exist in your API
+}
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  profileImage?: string;
 }
 
 export const StudentsPage = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+    const [user, setUser] = useState<User | null>(null);
+  
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
+        } catch (e) {
+          console.error("Failed to parse user data", e);
+        }
+      }
+    }, []);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -28,7 +50,7 @@ export const StudentsPage = () => {
         throw new Error('Authentication required');
       }
       try {
-        const response = await fetch('http://localhost:3001/api/users',{
+        const response = await fetch('https://niceschool-be-2.onrender.com/api/users',{
           method: "GET",
           headers: {
           'Authorization': `Bearer ${token}`,
@@ -84,7 +106,7 @@ export const StudentsPage = () => {
         <div className="flex justify-between items-center mb-8">
           <Button className="flex items-center gap-2">
             <Plus className="w-4 h-4" />
-            Add Student
+            Add User
           </Button>
         </div>
 
@@ -108,7 +130,7 @@ export const StudentsPage = () => {
         {/* Students List */}
         <Card>
           <CardHeader>
-            <CardTitle>Student List</CardTitle>
+            <CardTitle>Users List</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -116,7 +138,7 @@ export const StudentsPage = () => {
                 <div key={student.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                   <div className="flex items-center space-x-4">
                     <img
-                      src={student.profileImage}
+                      src={student.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s"}
                       alt={`${student.firstName} ${student.lastName}`}
                       className="w-10 h-10 rounded-full object-cover"
                     />
@@ -127,8 +149,8 @@ export const StudentsPage = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-gray-900">{student.phone}</p>
-                    <p className="text-sm text-gray-600">
-                      {new Date(student.dateOfBirth).toLocaleDateString()}
+                    <p className={`${ user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' :'text-gray-600'} text-sm`}>
+                      {student.role}
                     </p>
                   </div>
                 </div>
