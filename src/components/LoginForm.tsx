@@ -1,8 +1,8 @@
 "use client";
 import React from 'react';
-import { useForm } from '@/hooks/UseForm';
-import { useToast } from '@/hooks/UseToast';
-import { Toast } from '@/hooks/UseToast';
+import { useForm } from '@/components/hooks/UseForm';
+import { useToast } from '@/components/hooks/UseToast';
+import { Toast } from '@/components/ui/Toast';
 import { Input } from './ui/login/Input';
 import { Button } from './ui/login/Button';
 import { validateField } from '../utils/validation';
@@ -67,7 +67,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 mt-10">
-      <Toast show={toast.show} message={toast.message} type={toast.type} onClose={hideToast} />
+      <Toast toast={toast} onClose={hideToast} />
       
       <div className="w-full max-w-md">
         <div className="bg-white/10 backdrop-blur-xl border bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-white/20 rounded-2xl p-8 shadow-2xl">

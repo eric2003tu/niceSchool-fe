@@ -8,6 +8,7 @@ import { SettingsPage } from "@/components/dashboard/settings";
 import DashboardPage from "@/components/dashboard/DashboardPage";
 import AddNews from "@/components/dashboard/AddNews";
 import ProNewsManagement from "@/components/dashboard/AddNews";
+import { ProfilePage } from "@/components/dashboard/profile/ProfilePage";
 
 interface DashboardContentProps {
   activeView: string;
@@ -25,7 +26,9 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
              activeView === 'students' ? 'Students' :
              activeView === 'schedule' ? 'Schedule' :
              activeView === 'news' ? 'News':
-             activeView === 'analytics' ? 'Analytics' : 'Settings'}
+             activeView === 'profile' ? 'Profile':
+             activeView === 'analytics' ? 'Analytics' : 'Settings'
+             }
           </h1>
           <p className="mt-1 text-sm text-gray-600">
             {activeView === 'dashboard' ? 'Welcome back! Here\'s what\'s happening at NiceSchool today.' : 
@@ -41,6 +44,7 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
         {activeView === 'analytics' && <AnalyticsPage />}
         {activeView === 'settings' && <SettingsPage />}
         {activeView === 'news' && <ProNewsManagement />}
+        {activeView === 'profile' && <ProfilePage/>}
       </div>
     </main>
   );
