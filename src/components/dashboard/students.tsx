@@ -5,6 +5,8 @@ import { Users, Plus, Search, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { AddUserForm } from '@/components/dashboard/AddUsers'
+import { IoIosMore } from "react-icons/io";
+import ViewMore from "./ui/ViewMore";
 
 interface Student {
   id: number;
@@ -15,8 +17,8 @@ interface Student {
   phone: string;
   dateOfBirth: string;
   profileImage: string;
-  // You might want to add course and progress fields if they exist in your API
 }
+
 interface User {
   firstName: string;
   lastName: string;
@@ -26,24 +28,24 @@ interface User {
 }
 
 export const StudentsPage = () => {
-   const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-    const [user, setUser] = useState<User | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   
-    useEffect(() => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        try {
-          const parsedUser = JSON.parse(storedUser);
-          setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
-        } catch (e) {
-          console.error("Failed to parse user data", e);
-        }
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
+      } catch (e) {
+        console.error("Failed to parse user data", e);
       }
-    }, []);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -52,21 +54,18 @@ export const StudentsPage = () => {
         throw new Error('Authentication required');
       }
       try {
-        const response = await fetch('https://niceschool-be-2.onrender.com/api/users',{
+        const response = await fetch('https://niceschool-be-2.onrender.com/api/users', {
           method: "GET",
           headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
         if (!response.ok) {
           throw new Error('Failed to fetch students');
         }
         const data = await response.json();
-
-
-        console.log(data)
+        console.log(data);
         setStudents(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
@@ -111,14 +110,13 @@ export const StudentsPage = () => {
             Add User
           </Button>
           {showForm && (
-        <AddUserForm 
-          onClose={() => setShowForm(false)}
-          onUserAdded={() => {
-            console.log("New user added!");
-            // Refresh your data here if needed
-          }}
-        />
-      )}
+            <AddUserForm 
+              onClose={() => setShowForm(false)}
+              onUserAdded={() => {
+                console.log("New user added!");
+              }}
+            />
+          )}
         </div>
 
         {/* Search and Filters */}
@@ -146,7 +144,7 @@ export const StudentsPage = () => {
           <CardContent>
             <div className="space-y-4">
               {students.map((student) => (
-                <div key={student.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                <div key={student.id} className={`flex items-center justify-between p-4 border rounded-lg ${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600 hover:bg-gray-50 transition-colors'}`}>
                   <div className="flex items-center space-x-4">
                     <img
                       src={student.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s"}
@@ -156,13 +154,24 @@ export const StudentsPage = () => {
                     <div>
                       <p className="font-medium text-gray-900">{student.firstName} {student.lastName}</p>
                       <p className="text-sm text-gray-600">{student.email}</p>
+                      <p className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600'} text-sm`}>
+                        {student.role}
+                      </p>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="relative text-right">
                     <p className="text-sm font-medium text-gray-900">{student.phone}</p>
-                    <p className={`${ user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' :'text-gray-600'} text-sm`}>
-                      {student.role}
-                    </p>
+                    <button 
+                      onClick={() => {
+                        {user?.email !== student.email ? setActiveDropdown(activeDropdown === student.id ? null : student.id) : ''}
+                      }} 
+                      className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600'} text-sm`}
+                    >
+                      {user?.email !== student.email ? <IoIosMore size={30} className="cursor-pointer hover:scale-110 transition-transform" />: 'You'}
+                    </button>
+                    {activeDropdown === student.id && (
+                      <ViewMore onClose={() => setActiveDropdown(null)} />
+                    )}
                   </div>
                 </div>
               ))}
