@@ -95,7 +95,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
             onClick={onClose}
             className="absolute top-4 right-4 p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-all duration-200"
           >
-            <X className="w-5 h-5 text-white" />
+            <X className="w-5 h-5 cursor-pointer" />
           </button>
           
           <div className="flex items-center space-x-6">

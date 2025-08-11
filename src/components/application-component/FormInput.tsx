@@ -5,6 +5,9 @@ interface FormInputProps {
   label?: string;
   name: string;
   value: string | number;
+  step?: string; 
+  min?: string;
+  max?: string;
   onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'time' | 'datetime-local' | 'month' | 'week';
   placeholder?: string;

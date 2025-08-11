@@ -1,80 +1,59 @@
-// EducationStep.tsx
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from "react";
 import FormInput from "@/components/application-component/FormInput";
-import FormSelect from "@/components/application-component/FormSelect";
 
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
-interface EducationData {
-  currentEducation: string;
-  gpa: string;
-  graduationDate: string;
-  previousSchools: string;
+interface AcademicInfo {
+  previousEducation: string;
+  gpa: number | "";
+  graduationYear: number | "";
+  institution: string;
 }
 
 interface EducationStepProps {
-  formData: EducationData;
-  handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
-  className?: string;
+  formData: AcademicInfo;
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const educationOptions: SelectOption[] = [
-  { value: "", label: "Select your current level" },
-  { value: "high-school", label: "High School Student" },
-  { value: "high-school-graduate", label: "High School Graduate" },
-  { value: "undergraduate", label: "Undergraduate Student" },
-  { value: "bachelors", label: "Bachelor's Degree" },
-  { value: "masters", label: "Master's Degree" },
-  { value: "other", label: "Other" }
-];
-
-const EducationStep: React.FC<EducationStepProps> = ({ 
-  formData, 
-  handleChange,
-  className = ""
-}) => {
+const EducationStep: React.FC<EducationStepProps> = ({ formData, handleChange }) => {
   return (
-    <div className={`space-y-6 ${className}`}>
-      <FormSelect
-        label="Current Education Level"
-        name="currentEducation"
-        value={formData.currentEducation}
+    <div className="space-y-6 grid md:grid-cols-2 gap-6">
+      <FormInput
+        label="Previous Education"
+        name="academicInfo.previousEducation"
+        value={formData.previousEducation}
         onChange={handleChange}
-        options={educationOptions}
+        placeholder="High school, college, etc."
         required
       />
-      
-      <div className="grid md:grid-cols-2 gap-6">
-        <FormInput
-          label="GPA / Grade Average"
-          name="gpa"
-          value={formData.gpa}
-          onChange={handleChange}
-          placeholder="e.g., 3.8/4.0 or 85%"
-          required
-        />
-        
-        <FormInput
-          label="Expected Graduation Date"
-          name="graduationDate"
-          type="month"
-          value={formData.graduationDate}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      
       <FormInput
-        label="Previous Schools Attended"
-        name="previousSchools"
-        value={formData.previousSchools}
+        label="GPA"
+        name="academicInfo.gpa"
+        type="number"
+        step="0.01"
+        min="0"
+        max="4"
+        value={formData.gpa === "" ? "" : formData.gpa}
         onChange={handleChange}
-        textarea
-        rows={4}
-        placeholder="List your previous educational institutions..."
+        placeholder="e.g. 3.8"
+        required
+      />
+      <FormInput
+        label="Graduation Year"
+        name="academicInfo.graduationYear"
+        type="number"
+        min="1900"
+        max={(new Date().getFullYear() + 10).toString()}
+        value={formData.graduationYear === "" ? "" : formData.graduationYear}
+        onChange={handleChange}
+        placeholder="e.g. 2023"
+        required
+      />
+      <FormInput
+        label="Institution"
+        name="academicInfo.institution"
+        value={formData.institution}
+        onChange={handleChange}
+        placeholder="Name of institution"
+        required
       />
     </div>
   );

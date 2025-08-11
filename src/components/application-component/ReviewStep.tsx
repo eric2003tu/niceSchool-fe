@@ -1,118 +1,82 @@
-// ReviewStep.tsx
-import React, { ChangeEvent, CSSProperties } from 'react';
-import FormInput from "@/components/application-component/FormInput";
-
-interface ReviewStepData {
-  extracurriculars: string;
-  workExperience: string;
-  specialCircumstances: string;
-  // Review display fields
-  fullName: string;
-  email: string;
-  phone: string;
-  currentEducation: string;
-  gpa: string;
-  graduationDate: string;
-  academicAchievements: string;
-  personalStatement: string;
-}
+import React from "react";
 
 interface ReviewStepProps {
-  formData: ReviewStepData;
-  handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  className?: string;
+  data: {
+    program: string;
+    academicYear: string;
+    personalInfo: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      dateOfBirth: string;
+      address: string;
+      nationality: string;
+    };
+
+    academicInfo: {
+      previousEducation: string;
+      gpa: number | "";
+      graduationYear: number | "";
+      institution: string;
+    };
+
+    documents: {
+      transcript: string;
+      recommendationLetter: string;
+      personalStatement: string;
+      idDocument: string;
+    };
+
+    personalStatement: string;
+  };
 }
 
-const ReviewStep: React.FC<ReviewStepProps> = ({ 
-  formData, 
-  handleChange,
-  className = ""
-}) => {
-  const truncateText = (text: string, maxLength: number = 100): string => {
-    if (!text) return 'Not provided';
-    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
-  };
-
-  const displayValue = (value: string): string => {
-    return value || 'Not provided';
-  };
+const ReviewStep: React.FC<ReviewStepProps> = ({ data }) => {
+  const display = (val: any) => (val ? val.toString() : "Not provided");
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      <FormInput
-        label="Extracurricular Activities & Leadership"
-        name="extracurriculars"
-        value={formData.extracurriculars}
-        onChange={handleChange}
-        textarea
-        rows={4}
-        placeholder="Clubs, sports, volunteer work, leadership roles..."
-        required
-      />
-      
-      <FormInput
-        label="Work Experience & Internships"
-        name="workExperience"
-        value={formData.workExperience}
-        onChange={handleChange}
-        textarea
-        rows={4}
-        placeholder="Part-time jobs, internships, research positions..."
-      />
-      
-      <FormInput
-        label="Special Circumstances"
-        name="specialCircumstances"
-        value={formData.specialCircumstances}
-        onChange={handleChange}
-        textarea
-        rows={3}
-        placeholder="Any additional information or special circumstances..."
-      />
-      
-      <div className="bg-gray-50 p-6 rounded-xl border-2 border-gray-200">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Application Review</h3>
-        <div className="space-y-3 text-sm">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <strong className="text-gray-700">Name:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.fullName)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">Email:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.email)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">Phone:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.phone)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">Education:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.currentEducation)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">GPA:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.gpa)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">Graduation:</strong>{' '}
-              <span className="text-gray-600">{displayValue(formData.graduationDate)}</span>
-            </div>
-          </div>
-          <div className="pt-2 border-t border-gray-300">
-            <div>
-              <strong className="text-gray-700">Academic Achievements:</strong>{' '}
-              <span className="text-gray-600">{truncateText(formData.academicAchievements)}</span>
-            </div>
-            <div>
-              <strong className="text-gray-700">Personal Statement:</strong>{' '}
-              <span className="text-gray-600">{truncateText(formData.personalStatement)}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-6">
+      <section className="bg-gray-50 p-4 rounded-md border border-gray-300">
+        <h3 className="text-xl font-semibold mb-2">Program Info</h3>
+        <p><strong>Program:</strong> {display(data.program)}</p>
+        <p><strong>Academic Year:</strong> {display(data.academicYear)}</p>
+      </section>
+
+      <section className="bg-gray-50 p-4 rounded-md border border-gray-300">
+        <h3 className="text-xl font-semibold mb-2">Personal Information</h3>
+        <p><strong>First Name:</strong> {display(data.personalInfo.firstName)}</p>
+        <p><strong>Last Name:</strong> {display(data.personalInfo.lastName)}</p>
+        <p><strong>Email:</strong> {display(data.personalInfo.email)}</p>
+        <p><strong>Phone:</strong> {display(data.personalInfo.phone)}</p>
+        <p><strong>Date of Birth:</strong> {display(data.personalInfo.dateOfBirth)}</p>
+        <p><strong>Address:</strong> {display(data.personalInfo.address)}</p>
+        <p><strong>Nationality:</strong> {display(data.personalInfo.nationality)}</p>
+      </section>
+
+      <section className="bg-gray-50 p-4 rounded-md border border-gray-300">
+        <h3 className="text-xl font-semibold mb-2">Academic Information</h3>
+        <p><strong>Previous Education:</strong> {display(data.academicInfo.previousEducation)}</p>
+        <p><strong>GPA:</strong> {display(data.academicInfo.gpa)}</p>
+        <p><strong>Graduation Year:</strong> {display(data.academicInfo.graduationYear)}</p>
+        <p><strong>Institution:</strong> {display(data.academicInfo.institution)}</p>
+      </section>
+
+      <section className="bg-gray-50 p-4 rounded-md border border-gray-300">
+        <h3 className="text-xl font-semibold mb-2">Documents</h3>
+        <p><strong>Transcript:</strong> {display(data.documents.transcript)}</p>
+        <p><strong>Recommendation Letter:</strong> {display(data.documents.recommendationLetter)}</p>
+        <p><strong>Personal Statement Document:</strong> {display(data.documents.personalStatement)}</p>
+        <p><strong>ID Document:</strong> {display(data.documents.idDocument)}</p>
+      </section>
+
+      <section className="bg-gray-50 p-4 rounded-md border border-gray-300">
+        <h3 className="text-xl font-semibold mb-2">Personal Statement</h3>
+        <p>{display(data.personalStatement)}</p>
+      </section>
     </div>
   );
 };
+
 
 export default ReviewStep;

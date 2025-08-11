@@ -2,49 +2,45 @@
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { User, GraduationCap, FileText, Award, Heart, Send, LucideIcon } from "lucide-react";
+
 import ProgressStepper from "@/components/application-component/ProgressStepper";
 import FormStepHeader from "@/components/application-component/FormStepHeader";
 import NavigationButtons from "@/components/application-component/NavigationButtons";
+
 import PersonalInfoStep from "@/components/application-component/PersonalInfoStep";
 import EducationStep from "@/components/application-component/EducationStep";
 import AcademicRecordsStep from "@/components/application-component/AcademicRecordsStep";
-import ReferencesStep from "@/components/application-component/ReferencesStep";
 import EssaysStep from "@/components/application-component/EssaysStep";
 import ReviewStep from "@/components/application-component/ReviewStep";
 
 interface FormData {
-  // Step 1: Personal Information
-  fullName: string;
-  email: string;
-  phone: string;
-  dateOfBirth: string;
-  address: string;
-  
-  // Step 2: Educational Background
-  currentEducation: string;
-  gpa: string;
-  graduationDate: string;
-  previousSchools: string;
-  
-  // Step 3: Academic Records & Transcripts
-  academicAchievements: string;
-  standardizedScores: string;
-  coursework: string;
-  
-  // Step 4: Recommendations & References
-  recommendationLetters: string;
-  references: string;
-  teacherContacts: string;
-  
-  // Step 5: Personal Statement & Essays
+  program: string;
+  academicYear: string;
+   personalInfo:{
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    dateOfBirth: string;
+    address: string;
+    nationality: string;
+   }
+
+  academicInfo: {
+    previousEducation: string;
+    gpa: number | "";
+    graduationYear: number | "";
+    institution: string;
+  };
+
+  documents: {
+    transcript: string;
+    recommendationLetter: string;
+    personalStatement: string;
+    idDocument: string;
+  };
+
   personalStatement: string;
-  careerGoals: string;
-  whyThisProgram: string;
-  
-  // Step 6: Additional Information
-  extracurriculars: string;
-  workExperience: string;
-  specialCircumstances: string;
 }
 
 interface Step {
@@ -54,193 +50,250 @@ interface Step {
   description: string;
 }
 
-type RequiredFieldsMap = Record<number, (keyof FormData)[]>;
+type RequiredFieldsMap = Record<number, string[]>;
 
 const ModernAdmissionForm: React.FC = () => {
   const [step, setStep] = useState<number>(1);
+
   const [formData, setFormData] = useState<FormData>({
-    // Step 1: Personal Information
-    fullName: "",
-    email: "",
-    phone: "",
-    dateOfBirth: "",
-    address: "",
-    
-    // Step 2: Educational Background
-    currentEducation: "",
-    gpa: "",
-    graduationDate: "",
-    previousSchools: "",
-    
-    // Step 3: Academic Records & Transcripts
-    academicAchievements: "",
-    standardizedScores: "",
-    coursework: "",
-    
-    // Step 4: Recommendations & References
-    recommendationLetters: "",
-    references: "",
-    teacherContacts: "",
-    
-    // Step 5: Personal Statement & Essays
+    program: "",
+    academicYear: "",
+
+    personalInfo: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      dateOfBirth: "",
+      address: "",
+      nationality: "",
+    },
+
+    academicInfo: {
+      previousEducation: "",
+      gpa: "",
+      graduationYear: "",
+      institution: "",
+    },
+
+    documents: {
+      transcript: "",
+      recommendationLetter: "",
+      personalStatement: "",
+      idDocument: "",
+    },
+
     personalStatement: "",
-    careerGoals: "",
-    whyThisProgram: "",
-    
-    // Step 6: Additional Information
-    extracurriculars: "",
-    workExperience: "",
-    specialCircumstances: ""
   });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const keys = name.split(".");
+      setFormData((prev) => {
+        const updated = { ...prev };
+        let current: any = updated;
+        for (let i = 0; i < keys.length - 1; i++) {
+          current[keys[i]] = { ...current[keys[i]] };
+          current = current[keys[i]];
+        }
+        if (
+          (name === "academicInfo.gpa" || name === "academicInfo.graduationYear") &&
+          value !== ""
+        ) {
+          current[keys[keys.length - 1]] = Number(value);
+        } else {
+          current[keys[keys.length - 1]] = value;
+        }
+        return updated;
+      });
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, steps.length));
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      alert("No auth token found. Please log in.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/api/admissions/apply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit application");
+      }
+
+      alert("Application submitted successfully!");
+      // Optionally reset form or redirect user here
+
+    } catch (error: any) {
+      alert(`Error submitting application: ${error.message || error}`);
+    }
+  };
 
   const steps: Step[] = [
     { id: 1, title: "Personal Info", icon: User, description: "Basic personal details" },
     { id: 2, title: "Education", icon: GraduationCap, description: "Educational background" },
     { id: 3, title: "Academic Records", icon: FileText, description: "Transcripts & achievements" },
-    { id: 4, title: "References", icon: Award, description: "Recommendations & contacts" },
-    { id: 5, title: "Essays", icon: Heart, description: "Personal statements" },
-    { id: 6, title: "Additional Info", icon: Send, description: "Final details & review" }
+    { id: 4, title: "Essays", icon: Heart, description: "Personal statements" },
+    { id: 5, title: "Review", icon: Send, description: "Review & submit your application" },
   ];
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({ 
-      ...prevData, 
-      [name as keyof FormData]: value 
-    }));
-  };
-
-  const nextStep = (): void => setStep((prev) => prev + 1);
-  const prevStep = (): void => setStep((prev) => prev - 1);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    console.log("Submitted Form:", formData);
-    alert("Application submitted successfully!");
+  const requiredFields: RequiredFieldsMap = {
+    1: [
+      "program",
+      "academicYear",
+      "personalInfo.firstName",
+      "personalInfo.lastName",
+      "personalInfo.email",
+      "personalInfo.phone",
+      "personalInfo.dateOfBirth",
+      "personalInfo.address",
+      "personalInfo.nationality",
+    ],
+    2: [
+      "academicInfo.previousEducation",
+      "academicInfo.gpa",
+      "academicInfo.graduationYear",
+      "academicInfo.institution",
+    ],
+    3: [
+      "documents.transcript",
+      "documents.recommendationLetter",
+      "documents.personalStatement",
+      "documents.idDocument",
+    ],
+    4: ["personalStatement"],
   };
 
   const isStepComplete = (stepNum: number): boolean => {
-    const requiredFields: RequiredFieldsMap = {
-      1: ['fullName', 'email', 'phone', 'dateOfBirth'],
-      2: ['currentEducation', 'gpa', 'graduationDate'],
-      3: ['academicAchievements', 'standardizedScores'],
-      4: ['recommendationLetters', 'references'],
-      5: ['personalStatement', 'careerGoals'],
-      6: ['extracurriculars']
-    };
-    
-    return requiredFields[stepNum]?.every(field => {
-      const value = formData[field];
-      return typeof value === 'string' && value.trim() !== '';
-    }) || false;
+    const fields = requiredFields[stepNum] || [];
+    return fields.every((field) => {
+      const keys = field.split(".");
+      let value: any = formData;
+      for (const key of keys) {
+        if (value == null) return false;
+        value = value[key];
+      }
+      if (typeof value === "number") return !isNaN(value);
+      return typeof value === "string" && value.trim() !== "";
+    });
   };
 
-  const renderStepContent = (): React.ReactElement | null => {
+  const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
           <>
-            <FormStepHeader 
-              title="Personal Information" 
-              description="Let's start with your basic details. This information helps us identify and contact you throughout the admission process." 
+            <FormStepHeader
+              title="Personal Information"
+              description="Let's start with your basic details. This information helps us identify and contact you throughout the admission process."
             />
             <PersonalInfoStep formData={formData} handleChange={handleChange} />
           </>
         );
+
       case 2:
         return (
           <>
-            <FormStepHeader 
-              title="Educational Background" 
-              description="Tell us about your current and previous educational experiences. This helps us understand your academic journey." 
+            <FormStepHeader
+              title="Educational Background"
+              description="Tell us about your current and previous educational experiences. This helps us understand your academic journey."
             />
-            <EducationStep formData={formData} handleChange={handleChange} />
+            <EducationStep formData={formData.academicInfo} handleChange={handleChange} />
           </>
         );
+
       case 3:
         return (
           <>
-            <FormStepHeader 
-              title="Academic Records & Achievements" 
-              description="Share your academic accomplishments, test scores, and relevant coursework that demonstrate your readiness for our program." 
+            <FormStepHeader
+              title="Academic Records & Documents"
+              description="Share your transcripts, recommendation letters, and personal statements."
             />
-            <AcademicRecordsStep formData={formData} handleChange={handleChange} />
+            <AcademicRecordsStep formData={formData.documents} handleChange={handleChange} />
           </>
         );
+
       case 4:
         return (
           <>
-            <FormStepHeader 
-              title="References & Recommendations" 
-              description="Provide information about your recommendation letters and professional references who can speak to your qualifications." 
+            <FormStepHeader
+              title="Personal Statement"
+              description="Write your personal statement for the admission committee."
             />
-            <ReferencesStep formData={formData} handleChange={handleChange} />
+            <EssaysStep formData={{ personalStatement: formData.personalStatement }} handleChange={handleChange} />
           </>
         );
+
       case 5:
         return (
           <>
-            <FormStepHeader 
-              title="Personal Statement & Essays" 
-              description="This is your opportunity to tell your story and explain why you're the perfect fit for our program." 
+            <FormStepHeader
+              title="Review & Submit"
+              description="Review all your information before submission."
             />
-            <EssaysStep formData={formData} handleChange={handleChange} />
+            <ReviewStep data={formData} />
           </>
         );
-      case 6:
-        return (
-          <>
-            <FormStepHeader 
-              title="Additional Information" 
-              description="Complete your application with additional details and review all information before submission." 
-            />
-            <ReviewStep formData={formData} handleChange={handleChange} />
-          </>
-        );
+
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
+    <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
             University Admission Application
           </h1>
-          <p className="text-gray-600 text-lg">
-            Take the first step towards your academic future
-          </p>
+          <p className="text-gray-600 text-lg">Take the first step towards your academic future</p>
         </div>
 
-        {/* Progress Indicator */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <ProgressStepper 
-            steps={steps} 
-            currentStep={step} 
-            isStepComplete={isStepComplete} 
+          <ProgressStepper steps={steps} currentStep={step} isStepComplete={isStepComplete} />
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
+          {renderStepContent()}
+
+          <NavigationButtons
+            currentStep={step}
+            totalSteps={steps.length}
+            onPrev={prevStep}
+            onNext={nextStep}
+            isLastStep={step === steps.length}
+            disabled={!isStepComplete(step)}
+            onSubmit={handleSubmit}
           />
         </div>
-
-        {/* Form Container */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="space-y-6">
-            {renderStepContent()}
-            
-            <NavigationButtons
-              currentStep={step}
-              totalSteps={steps.length}
-              onPrev={prevStep}
-              onNext={nextStep}
-              onSubmit={handleSubmit}
-              isLastStep={step === steps.length}
-            />
-          </div>
-        </div>
       </div>
-    </div>
+    </form>
   );
 };
 

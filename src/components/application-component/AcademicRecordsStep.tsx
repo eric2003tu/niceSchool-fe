@@ -1,56 +1,52 @@
-// AcademicRecordsStep.tsx
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from "react";
 import FormInput from "@/components/application-component/FormInput";
 
-interface AcademicRecordsData {
-  academicAchievements: string;
-  standardizedScores: string;
-  coursework: string;
+interface Documents {
+  transcript: string;
+  recommendationLetter: string;
+  personalStatement: string;
+  idDocument: string;
 }
 
 interface AcademicRecordsStepProps {
-  formData: AcademicRecordsData;
-  handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  className?: string;
+  formData: Documents;
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const AcademicRecordsStep: React.FC<AcademicRecordsStepProps> = ({ 
-  formData, 
-  handleChange,
-  className = ""
-}) => {
+const AcademicRecordsStep: React.FC<AcademicRecordsStepProps> = ({ formData, handleChange }) => {
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className="space-y-6">
       <FormInput
-        label="Academic Achievements & Awards"
-        name="academicAchievements"
-        value={formData.academicAchievements}
+        label="Transcript URL or File Path"
+        name="documents.transcript"
+        value={formData.transcript}
         onChange={handleChange}
-        textarea
-        rows={4}
-        placeholder="List your academic honors, scholarships, dean's list achievements, academic competitions, etc..."
+        placeholder="Paste link or file identifier"
         required
       />
-      
       <FormInput
-        label="Standardized Test Scores"
-        name="standardizedScores"
-        value={formData.standardizedScores}
+        label="Recommendation Letter URL or File Path"
+        name="documents.recommendationLetter"
+        value={formData.recommendationLetter}
         onChange={handleChange}
-        textarea
-        rows={3}
-        placeholder="SAT, ACT, GRE, GMAT, TOEFL, IELTS scores with dates taken..."
+        placeholder="Paste link or file identifier"
         required
       />
-      
       <FormInput
-        label="Relevant Coursework"
-        name="coursework"
-        value={formData.coursework}
+        label="Personal Statement Document"
+        name="documents.personalStatement"
+        value={formData.personalStatement}
         onChange={handleChange}
-        textarea
-        rows={4}
-        placeholder="List courses that are particularly relevant to the program you're applying for..."
+        placeholder="Paste link or file identifier"
+        required
+      />
+      <FormInput
+        label="ID Document URL or File Path"
+        name="documents.idDocument"
+        value={formData.idDocument}
+        onChange={handleChange}
+        placeholder="Paste link or file identifier"
+        required
       />
     </div>
   );
