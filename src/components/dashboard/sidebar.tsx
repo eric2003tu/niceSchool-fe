@@ -32,7 +32,8 @@ const sidebarItems = [
   { icon: BarChart3, label: "Analytics", href: "#" },
   { icon: Settings, label: "Settings", href: "#" },
   { icon: TiNews, label: "News", href: "#" },
-  {icon: TiNews, label: "Profile", href: "#"}
+  {icon: TiNews, label: "Profile", href: "#"},
+  {icon: TiNews, label: "Apply", href: "#"}
 ];
 
 export const Sidebar = ({ 
