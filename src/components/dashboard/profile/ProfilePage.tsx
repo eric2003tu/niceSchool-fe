@@ -26,7 +26,7 @@ export const ProfilePage = () => {
         const authToken = localStorage.getItem("authToken");
         if (!authToken) throw new Error("Authentication required");
 
-        const response = await fetch("http://localhost:3001/api/users/profile", {
+        const response = await fetch("https://niceschool-be-2.onrender.com/api/users/profile", {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -71,7 +71,7 @@ export const ProfilePage = () => {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) throw new Error("Authentication required");
 
-      const uploadResponse = await fetch("http://localhost:3001/api/upload", {
+      const uploadResponse = await fetch("https://niceschool-be-2.onrender.com/api/upload", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -100,7 +100,7 @@ export const ProfilePage = () => {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) throw new Error("Authentication required");
 
-      const response = await fetch("http://localhost:3001/api/users/profile", {
+      const response = await fetch("https://niceschool-be-2.onrender.com/api/users/profile", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

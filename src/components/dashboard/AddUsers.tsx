@@ -35,7 +35,7 @@ export const AddUserForm = ({ onClose, onUserAdded }: AddUserFormProps) => {
       const authToken = localStorage.getItem('authToken');
       if (!authToken) throw new Error('Authentication required');
 
-      const response = await fetch('http://localhost:3001/api/users', {
+      const response = await fetch('https://niceschool-be-2.onrender.com/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
