@@ -1,11 +1,30 @@
 import React, { useEffect, useRef } from 'react';
 import { User, Edit3, Eye, Trash2, Settings, UserCheck } from 'lucide-react';
 
-interface ViewMoreProps {
-  onClose: () => void;
+interface Student {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  phone: string;
+  dateOfBirth: string;
+  profileImage: string;
 }
 
-const ViewMore: React.FC<ViewMoreProps> = ({ onClose }) => {
+interface ViewMoreProps {
+  student: Student;
+  currentUserEmail?: string;
+  onClose: () => void;
+  onViewProfile: (student: Student) => void;
+}
+
+const ViewMore: React.FC<ViewMoreProps> = ({ 
+  student,
+  currentUserEmail,
+  onClose,
+  onViewProfile
+}) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to close dropdown
@@ -36,8 +55,13 @@ const ViewMore: React.FC<ViewMoreProps> = ({ onClose }) => {
     };
   }, [onClose]);
 
+  const handleViewProfile = () => {
+    onViewProfile(student);
+    onClose();
+  };
+
   const handleAction = (action: string) => {
-    console.log(`${action} clicked`);
+    console.log(`${action} clicked for:`, student);
     onClose();
   };
 
@@ -58,14 +82,14 @@ const ViewMore: React.FC<ViewMoreProps> = ({ onClose }) => {
           </p>
         </div>
         <p className="text-xs text-gray-500 mt-1">
-          Manage user profile and settings
+          {student.firstName} {student.lastName}
         </p>
       </div>
 
       {/* Action Menu */}
       <div className="py-1" role="none">
         <button
-          onClick={() => handleAction('View Profile')}
+          onClick={handleViewProfile}
           className="group flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all duration-150 ease-in-out"
           role="menuitem"
         >

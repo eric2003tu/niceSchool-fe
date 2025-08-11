@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AddUserForm } from '@/components/dashboard/AddUsers'
 import { IoIosMore } from "react-icons/io";
 import ViewMore from "./ui/ViewMore";
+import ProfilePopup from "@/components/dashboard/ProfilePopup"
 
 interface Student {
   id: number;
@@ -33,6 +34,8 @@ export const StudentsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [user, setUser] = useState<User | null>(null);
   
   useEffect(() => {
@@ -76,6 +79,16 @@ export const StudentsPage = () => {
 
     fetchStudents();
   }, []);
+
+  const handleViewProfile = (student: Student) => {
+    setSelectedStudent(student);
+    setShowProfilePopup(true);
+  };
+
+  const handleCloseProfilePopup = () => {
+    setShowProfilePopup(false);
+    setSelectedStudent(null);
+  };
 
   if (loading) {
     return (
@@ -163,14 +176,19 @@ export const StudentsPage = () => {
                     <p className="text-sm font-medium text-gray-900">{student.phone}</p>
                     <button 
                       onClick={() => {
-                        {user?.email !== student.email ? setActiveDropdown(activeDropdown === student.id ? null : student.id) : ''}
+                        setActiveDropdown(activeDropdown === student.id ? null : student.id);
                       }} 
                       className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600'} text-sm`}
                     >
-                      {user?.email !== student.email ? <IoIosMore size={30} className="cursor-pointer hover:scale-110 transition-transform" />: 'You'}
+                      <IoIosMore size={30} className="cursor-pointer hover:scale-110 transition-transform" />
                     </button>
                     {activeDropdown === student.id && (
-                      <ViewMore onClose={() => setActiveDropdown(null)} />
+                      <ViewMore 
+                        student={student}
+                        currentUserEmail={user?.email}
+                        onClose={() => setActiveDropdown(null)}
+                        onViewProfile={handleViewProfile}
+                      />
                     )}
                   </div>
                 </div>
@@ -179,6 +197,15 @@ export const StudentsPage = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Profile Popup */}
+      {showProfilePopup && selectedStudent && (
+        <ProfilePopup
+          student={selectedStudent}
+          currentUserEmail={user?.email}
+          onClose={handleCloseProfilePopup}
+        />
+      )}
     </main>
   );
 };
