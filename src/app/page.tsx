@@ -1,7 +1,7 @@
 
 import React from "react";
 import Main from "../components/ui/Main";
-import Card from "../components/ui/Card";
+import { Card } from "@/components/ui/card";
 import Program from "../components/ui/Program";
 import Life from "../components/ui/Life";
 import Testimanial from "../components/ui/Testimanial";
