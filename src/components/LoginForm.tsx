@@ -3,8 +3,8 @@ import React from 'react';
 import { useForm } from '@/components/hooks/UseForm';
 import { useToast } from '@/components/hooks/UseToast';
 import { Toast } from '@/components/ui/Toast';
-import { Input } from './ui/login/Input';
-import { Button } from './ui/login/Button';
+import { Input } from '@/components/ui/login/Input';
+import { Button } from '@/components/ui/login/Button';
 import { validateField } from '../utils/validation';
 import { useRouter } from 'next/navigation';
 

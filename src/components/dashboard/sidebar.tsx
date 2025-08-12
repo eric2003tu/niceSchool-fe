@@ -37,8 +37,13 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
   { icon: Home, label: "Dashboard", href: "#" },
+  {icon: HiAcademicCap, label: "Academics", href: "#",
+    children:[
   {icon: Home, label: "Admin", href: "#"},
+  {icon: IoSchoolSharp, label: "Events", href: "#"},
   { icon: BookOpen, label: "Courses", href: "#" },
+
+]},
   { icon: Users, label: "Students", href: "#" },
   { icon: Calendar, label: "Schedule", href: "#" },
   { icon: BarChart3, label: "Analytics", href: "#" },
