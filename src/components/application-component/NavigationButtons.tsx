@@ -29,7 +29,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         <button
           type="button"
           onClick={onPrev}
-          disabled={disabled}
+          disabled={false}
           className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors font-medium"
         >
           ← Previous

@@ -132,7 +132,7 @@ const ModernAdmissionForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://niceschool-be-2.onrender.com/api/admissions/apply", {
+      const response = await fetch("http://localhost:3001/api/admissions/apply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -270,7 +270,7 @@ const ModernAdmissionForm: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            University Admission Application
+          NiceSchool Application Portal
           </h1>
           <p className="text-gray-600 text-lg">Take the first step towards your academic future</p>
         </div>

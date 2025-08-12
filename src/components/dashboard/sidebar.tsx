@@ -37,6 +37,7 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
   { icon: Home, label: "Dashboard", href: "#" },
+  {icon: Home, label: "Admin", href: "#"},
   { icon: BookOpen, label: "Courses", href: "#" },
   { icon: Users, label: "Students", href: "#" },
   { icon: Calendar, label: "Schedule", href: "#" },
