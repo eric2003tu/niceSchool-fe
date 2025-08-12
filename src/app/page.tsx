@@ -1,16 +1,16 @@
-"use client"
+
 import React from "react";
-import Main from "@/components/ui/Main";
-import Card from "@/components/Card"; 
-import Program from "@/components/ui/Program";
-import Life from "@/components/ui/Life";
-import Testimanial from "@/components/ui/Testimanial";
-import Excellency from "@/components/ui/Excellency";
-import News from "@/components/ui/News";
-import Event from "@/components/ui/Events";
-import Footer from "@/components/ui/Footer";
-import Hero from "@/components/ui/Hero";
-import Header from "@/components/ui/Header";
+import Main from "../components/ui/Main";
+import Card from "../components/ui/Card";
+import Program from "../components/ui/Program";
+import Life from "../components/ui/Life";
+import Testimanial from "../components/ui/Testimanial";
+import Excellency from "../components/ui/Excellency";
+import News from "../components/ui/News";
+import Event from "../components/ui/Events";
+import Footer from "../components/ui/Footer";
+import Hero from "../components/ui/Hero";
+import Header from "../components/ui/Header";
 
 export default function Home() {
   return (
