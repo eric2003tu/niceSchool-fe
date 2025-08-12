@@ -10,6 +10,8 @@ import AddNews from "@/components/dashboard/AddNews";
 import ProNewsManagement from "@/components/dashboard/AddNews";
 import { ProfilePage } from "@/components/dashboard/profile/ProfilePage";
 import ModernAdmissionForm from '@/components/application-component/ModernAdmissionForm'
+import MyApplications from "@/components/application-component/MyApplications";
+// import MyApplications from '@/components/application-component/MyApplications'
 
 interface DashboardContentProps {
   activeView: string;
@@ -27,6 +29,7 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
              activeView === 'students' ? 'Students' :
              activeView === 'schedule' ? 'Schedule' :
              activeView === 'news' ? 'News':
+             activeView === 'apps' ? "Apps":
              activeView === 'apply' ? "Apply":
              activeView === 'profile' ? 'Profile':
              activeView === 'analytics' ? 'Analytics' : 'Settings'
@@ -48,6 +51,7 @@ export default function DashboardContent({ activeView }: DashboardContentProps) 
         {activeView === 'news' && <ProNewsManagement />}
         {activeView === 'profile' && <ProfilePage/>}
         {activeView === 'apply' && <ModernAdmissionForm/>}
+        {activeView === 'apps' && <MyApplications/>}
       </div>
     </main>
   );

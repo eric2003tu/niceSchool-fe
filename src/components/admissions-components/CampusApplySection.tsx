@@ -28,7 +28,7 @@ const CampusApplySection = () => {
           Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur non
           nulla sit amet.
         </p>
-        <Link href="/apply" className="bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-700 transition">
+        <Link href="/login" className="bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-700 transition">
           START APPLICATION
         </Link>
       </div>

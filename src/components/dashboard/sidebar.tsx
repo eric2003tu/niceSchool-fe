@@ -1,7 +1,11 @@
 "use client";
 
-import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown } from "lucide-react";
+import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown, ChevronRight } from "lucide-react";
+import { HiAcademicCap } from "react-icons/hi2";
+import { IoSchoolSharp } from "react-icons/io5";
+import { FaDoorOpen } from "react-icons/fa";
 import { TiNews } from "react-icons/ti";
+import { CgProfile } from "react-icons/cg";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
 
@@ -12,8 +16,8 @@ interface SidebarProps {
   setActiveView: (view: string) => void;
   onLogout?: () => void;
   onProfileClick?: () => void;
-  storageUsed?: number; // Add storage prop
-  storageLimit?: number; // Add storage prop
+  storageUsed?: number;
+  storageLimit?: number;
 }
 
 interface User {
@@ -24,7 +28,14 @@ interface User {
   profileImage?: string;
 }
 
-const sidebarItems = [
+interface SidebarItem {
+  icon: any;
+  label: string;
+  href: string;
+  children?: SidebarItem[];
+}
+
+const sidebarItems: SidebarItem[] = [
   { icon: Home, label: "Dashboard", href: "#" },
   { icon: BookOpen, label: "Courses", href: "#" },
   { icon: Users, label: "Students", href: "#" },
@@ -32,8 +43,16 @@ const sidebarItems = [
   { icon: BarChart3, label: "Analytics", href: "#" },
   { icon: Settings, label: "Settings", href: "#" },
   { icon: TiNews, label: "News", href: "#" },
-  {icon: TiNews, label: "Profile", href: "#"},
-  {icon: TiNews, label: "Apply", href: "#"}
+  { icon: CgProfile, label: "Profile", href: "#" },
+  { 
+    icon: IoSchoolSharp, 
+    label: "Applications", 
+    href: "#",
+    children: [
+      { icon: HiAcademicCap, label: "Apply", href: "#" },
+      { icon: FaDoorOpen, label: "Apps", href: "#" }
+    ]
+  }
 ];
 
 export const Sidebar = ({ 
@@ -48,6 +67,7 @@ export const Sidebar = ({
 }: SidebarProps) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -61,6 +81,71 @@ export const Sidebar = ({
     }
   }, []);
 
+  const toggleItemExpansion = (label: string) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [label]: !prev[label]
+    }));
+  };
+
+  const renderSidebarItem = (item: SidebarItem, index: number, depth = 0) => {
+    const Icon = item.icon;
+    const viewKey = item.label.toLowerCase();
+    const isActive = activeView === viewKey;
+    const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedItems[item.label];
+
+    return (
+      <div key={`${index}-${depth}`} className="space-y-1">
+        <button
+          onClick={() => {
+            if (hasChildren) {
+              toggleItemExpansion(item.label);
+            } else {
+              setActiveView(viewKey);
+              setIsOpen(false);
+            }
+          }}
+          className={`group flex items-center w-full px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-200 relative ${
+            isActive
+              ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/80 text-emerald-700 shadow-sm border border-emerald-200/50'
+              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:scale-[1.02]'
+          }`}
+          style={{ paddingLeft: `${depth * 16 + 16}px` }}
+        >
+          <Icon className={`w-5 h-5 mr-4 transition-all duration-200 ${
+            isActive 
+              ? 'text-emerald-600' 
+              : 'text-gray-400 group-hover:text-gray-600'
+          }`} />
+          <span className="font-semibold">{item.label}</span>
+          
+          {hasChildren && (
+            <span className="ml-auto">
+              {isExpanded ? (
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              ) : (
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              )}
+            </span>
+          )}
+          
+          {isActive && !hasChildren && (
+            <div className="absolute right-2 w-2 h-2 bg-emerald-500 rounded-full"></div>
+          )}
+        </button>
+        
+        {hasChildren && isExpanded && (
+          <div className="space-y-1">
+            {item.children?.map((child, childIndex) => 
+              renderSidebarItem(child, childIndex, depth + 1)
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
       {/* Mobile overlay with higher z-index */}
@@ -72,67 +157,42 @@ export const Sidebar = ({
       )}
       
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl transform transition-all duration-300 ease-out lg:translate-x-0 lg:static lg:inset-0 border-r border-gray-100 ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl transform transition-all duration-300 ease-out lg:translate-x-0 lg:static lg:inset-0 border-r border-gray-100 flex flex-col ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         
-        {/* Logo Section */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
-              <BookOpen className="w-6 h-6 text-white" />
+        {/* Fixed Header */}
+        <div className="flex-shrink-0">
+          <div className="flex items-center justify-between h-16 px-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
+                <BookOpen className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  NiceSchool
+                </span>
+                <p className="text-xs text-gray-500 -mt-0.5">Learning Platform</p>
+              </div>
             </div>
-            <div>
-              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                NiceSchool
-              </span>
-              <p className="text-xs text-gray-500 -mt-0.5">Learning Platform</p>
-            </div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="lg:hidden p-2 rounded-xl hover:bg-white/50 transition-colors group"
+            >
+              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
+            </button>
           </div>
-          <button 
-            onClick={() => setIsOpen(false)}
-            className="lg:hidden p-2 rounded-xl hover:bg-white/50 transition-colors group"
-          >
-            <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
-          </button>
         </div>
         
-        {/* Navigation */}
-        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-          {sidebarItems.map((item, index) => {
-            const Icon = item.icon;
-            const viewKey = item.label.toLowerCase();
-            const isActive = activeView === viewKey;
-            
-            return (
-              <button
-                key={index}
-                onClick={() => {
-                  setActiveView(viewKey);
-                  setIsOpen(false);
-                }}
-                className={`group flex items-center w-full px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-200 relative ${
-                  isActive
-                    ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/80 text-emerald-700 shadow-sm border border-emerald-200/50'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:scale-[1.02]'
-                }`}
-              >
-                <Icon className={`w-5 h-5 mr-4 transition-all duration-200 ${
-                  isActive 
-                    ? 'text-emerald-600' 
-                    : 'text-gray-400 group-hover:text-gray-600'
-                }`} />
-                <span className="font-semibold">{item.label}</span>
-                {isActive && (
-                  <div className="absolute right-2 w-2 h-2 bg-emerald-500 rounded-full"></div>
-                )}
-              </button>
-            );
-          })}
-        </nav>
+        {/* Scrollable Navigation */}
+        <div className="flex-1 overflow-y-auto">
+          <nav className="px-4 py-6 space-y-2">
+            {sidebarItems.map((item, index) => renderSidebarItem(item, index))}
+          </nav>
+        </div>
 
-        {/* User Profile Section */}
-        <div className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100/50">
+        {/* Fixed Footer */}
+        <div className="flex-shrink-0 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100/50">
           <div className="p-4">
             <div className="relative">
               <button
@@ -208,9 +268,6 @@ export const Sidebar = ({
               )}
             </div>
           </div>
-
-          {/* Storage Info */}
-
         </div>
       </div>
 
