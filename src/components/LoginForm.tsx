@@ -70,14 +70,14 @@ const LoginForm: React.FC = () => {
       <Toast toast={toast} onClose={hideToast} />
       
       <div className="w-full max-w-md">
-        <div className="bg-white/10 backdrop-blur-xl border bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-white/20 rounded-2xl p-8 shadow-2xl">
+        <div className="relative w-full max-w-xl mx-auto bg-blue-300 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl mb-4 shadow-lg">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-2xl mb-4 shadow-lg">
               <img src="apple-touch-icon.png" alt="logo" className="w-full h-full rounded-2xl"/>
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-            <p className="text-white/70">Sign in to your NiceSchool account</p>
+            <h1 className="text-3xl font-bold  text-gray-800 mb-2">Welcome Back</h1>
+            <p className=" text-gray-800">Sign in to your NiceSchool account</p>
           </div>
 
           {/* Form */}
@@ -90,8 +90,9 @@ const LoginForm: React.FC = () => {
               value={form.values.email}
               onChange={form.handleChange}
               label="Email Address"
+              className='border-gray-400'
               error={form.errors.email}
-              icon={<svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              icon={<svg className="w-5 h-5  text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
               </svg>}
             />
@@ -106,18 +107,18 @@ const LoginForm: React.FC = () => {
               label="Password"
               error={form.errors.password}
               showPasswordToggle
-              icon={<svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              icon={<svg className="w-5 h-5  text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>}
             />
 
             {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center text-white/70 hover:text-white cursor-pointer">
+              <label className="flex items-center  text-gray-800 hover:text-gray-900 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 text-emerald-500 bg-white/10 border-white/20 rounded focus:ring-emerald-500 focus:ring-2"/>
                 <span className="ml-2">Remember me</span>
               </label>
-              <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+              <a href="#" className="text-emerald-700 hover:text-emerald-900 transition-colors">
                 Forgot password?
               </a>
             </div>

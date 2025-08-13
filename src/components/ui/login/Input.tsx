@@ -11,6 +11,8 @@ interface InputProps {
   error?: string;
   icon?: React.ReactNode;
   showPasswordToggle?: boolean;
+  className?: string;
+  required?: boolean;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -23,15 +25,18 @@ export const Input: React.FC<InputProps> = ({
   label,
   error,
   icon,
-  showPasswordToggle = false
+  showPasswordToggle = false,
+  className = '',
+  required = false
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputType = showPasswordToggle ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <div className="space-y-2">
+    <div className={`space-y-2 ${className}`}>
       <label htmlFor={id} className="text-sm font-medium text-white/90">
         {label}
+        {required && <span className="text-red-400 ml-1">*</span>}
       </label>
       <div className="relative">
         {icon && (
@@ -46,16 +51,17 @@ export const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`w-full ${icon ? 'pl-10' : 'pl-4'} ${showPasswordToggle ? 'pr-12' : 'pr-4'} py-3 bg-white/10 border backdrop-blur-sm rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 ${
+          className={`w-full ${icon ? 'pl-10' : 'pl-4'} ${showPasswordToggle ? 'pr-12' : 'pr-4'} py-3 bg-gray-100 border backdrop-blur-sm rounded-xl text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 ${
             error ? 'border-red-400 focus:ring-red-500' : 'border-white/20 hover:border-white/30'
           }`}
-          required
+          required={required}
         />
         {showPasswordToggle && (
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-white/50 hover:text-white/70 transition-colors"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-800 hover:text-gray-900 transition-colors"
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

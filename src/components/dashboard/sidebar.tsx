@@ -8,7 +8,6 @@ import { TiNews } from "react-icons/ti";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -104,7 +103,7 @@ export const Sidebar = ({
 
     return (
       <div key={`${index}-${depth}`} className="space-y-1">
-        <Button
+        <button
           onClick={() => {
             if (hasChildren) {
               toggleItemExpansion(item.label);
@@ -140,7 +139,7 @@ export const Sidebar = ({
           {isActive && !hasChildren && (
             <div className="absolute right-2 w-2 h-2 bg-emerald-500 rounded-full"></div>
           )}
-        </Button>
+        </button>
         
         {hasChildren && isExpanded && (
           <div className="space-y-1">
@@ -182,12 +181,12 @@ export const Sidebar = ({
                 <p className="text-xs text-gray-500 -mt-0.5">Learning Platform</p>
               </div>
             </div>
-            <Button 
+            <button 
               onClick={() => setIsOpen(false)}
               className="lg:hidden p-2 rounded-xl hover:bg-white/50 transition-colors group"
             >
               <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
-            </Button>
+            </button>
           </div>
         </div>
         
@@ -202,7 +201,7 @@ export const Sidebar = ({
         <div className="flex-shrink-0 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100/50">
           <div className="p-4">
             <div className="relative">
-              <Button
+              <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
                 className="w-full flex items-center space-x-3 p-3 rounded-xl hover:bg-white/80 transition-all duration-200 group"
                 aria-expanded={showUserMenu}
@@ -242,7 +241,7 @@ export const Sidebar = ({
                 <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
                   showUserMenu ? 'rotate-180' : ''
                 }`} />
-              </Button>
+              </button>
 
               {/* User Menu Dropdown */}
               {showUserMenu && (
