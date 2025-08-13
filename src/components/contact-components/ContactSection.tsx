@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  Cards,
+  Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Cards";
+} from "@/components/ui/card";
 import { Mail, MapPin, Clock } from "lucide-react";
 import ContactForm from "./ContactForm";
 
@@ -14,7 +14,7 @@ export default function ContactSection() {
     <div className="relative w-full bg-gray-100 py-10 px-4 space-y-10">
       {/* Info Cards */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Cards className="text-center">
+        <Card className="text-center">
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2">
               <MapPin className="text-green-600" />
@@ -24,9 +24,9 @@ export default function ContactSection() {
           <CardContent>
             <p>1842 Maple Avenue, Portland, Oregon 97204</p>
           </CardContent>
-        </Cards>
+        </Card>
 
-        <Cards className="text-center">
+        <Card className="text-center">
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2">
               <Mail className="text-green-600" />
@@ -37,9 +37,9 @@ export default function ContactSection() {
             <p>info@example.com</p>
             <p>contact@example.com</p>
           </CardContent>
-        </Cards>
+        </Card>
 
-        <Cards className="text-center">
+        <Card className="text-center">
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2">
               <Clock className="text-green-600" />
@@ -50,7 +50,7 @@ export default function ContactSection() {
             <p>Sunday–Fri: 9 AM – 6 PM</p>
             <p>Saturday: 9 AM – 4 PM</p>
           </CardContent>
-        </Cards>
+        </Card>
       </div>
 
       {/* Embedded Map */}
