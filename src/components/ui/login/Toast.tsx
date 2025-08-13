@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdClose } from 'react-icons/md';
+import { Button } from '@/components/ui/button';
 
 interface ToastProps {
   show: boolean;
@@ -36,9 +37,9 @@ export const Toast: React.FC<ToastProps> = ({ show, message, type, onClose }) =>
               </div>
               <span className="text-sm font-medium">{message}</span>
             </div>
-            <button onClick={onClose} className="ml-4 text-gray-400 hover:text-gray-600 transition-colors">
+            <Button onClick={onClose} className="ml-4 text-gray-400 hover:text-gray-600 transition-colors">
               <MdClose size={25}/>
-            </button>
+            </Button>
           </div>
         </div>
       )}

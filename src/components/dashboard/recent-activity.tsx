@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/dashboard/ui/card";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Clock } from "lucide-react";
 
 interface Activity {

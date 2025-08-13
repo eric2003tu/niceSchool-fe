@@ -2,7 +2,8 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard/ui/card";
 import { User, Bell, Lock, CreditCard } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export const SettingsPage = () => {
   return (
@@ -26,7 +27,7 @@ export const SettingsPage = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input
+                  <Input
                     type="text"
                     defaultValue="John Doe"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
@@ -34,7 +35,7 @@ export const SettingsPage = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input
+                  <Input
                     type="email"
                     defaultValue="john.doe@niceschool.com"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
@@ -63,7 +64,7 @@ export const SettingsPage = () => {
                 ].map((item, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <span className="text-sm text-gray-700">{item.label}</span>
-                    <input
+                    <Input
                       type="checkbox"
                       defaultChecked={item.enabled}
                       className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"

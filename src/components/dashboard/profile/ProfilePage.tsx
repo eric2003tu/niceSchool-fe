@@ -177,7 +177,7 @@ export const ProfilePage = () => {
           {isEditing && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
               <Label htmlFor="profileImage" className="cursor-pointer text-white">
-                <input
+                <Input
                   id="profileImage"
                   type="file"
                   accept="image/*"

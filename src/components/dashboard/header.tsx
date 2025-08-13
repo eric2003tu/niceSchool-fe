@@ -4,6 +4,7 @@ import { Search, Bell, ChevronDown, Menu, LogOut, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 interface UserData {
   id: string;
@@ -93,7 +94,7 @@ export const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
             
             {user ? (
               <div className="relative">
-                <button 
+                <Button 
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                   aria-label="User menu"
@@ -112,7 +113,7 @@ export const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
                     {user.firstName}
                   </span>
                   <ChevronDown className={`ml-1 w-4 h-4 text-gray-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
+                </Button>
 
                 {dropdownOpen && (
                   <div 

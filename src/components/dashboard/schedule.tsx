@@ -2,7 +2,7 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard/ui/card";
 import { Calendar, Plus, Clock } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { UpcomingEvents } from "./upcoming-events";
 
 interface Class {

@@ -2,7 +2,7 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard/ui/card";
 import { BookOpen, Plus, MoreVertical, Star, Search } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 interface Course {
   id: number;
@@ -58,9 +58,9 @@ export const CoursesPage = () => {
               <CardHeader className="pb-0">
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{course.title}</CardTitle>
-                  <button className="p-2 hover:bg-gray-100 rounded">
+                  <Button className="p-2 hover:bg-gray-100 rounded">
                     <MoreVertical className="w-4 h-4" />
-                  </button>
+                  </Button>
                 </div>
               </CardHeader>
               <CardContent>

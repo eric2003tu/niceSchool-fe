@@ -2,7 +2,7 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard/ui/card";
 import { Users, Plus, Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { AddUserForm } from '@/components/dashboard/AddUsers'
 import { IoIosMore } from "react-icons/io";
@@ -193,9 +193,9 @@ export const StudentsPage = () => {
               onChange={handleSearchChange}
             />
           </div>
-          <button className="flex items-center text-sm text-gray-600 hover:text-gray-900">
+          <Button className="flex items-center text-sm text-gray-600 hover:text-gray-900">
             Filter <ChevronDown className="ml-1 w-4 h-4" />
-          </button>
+          </Button>
         </div>
 
         {/* Students List */}
@@ -224,14 +224,14 @@ export const StudentsPage = () => {
                     </div>
                     <div className="relative text-right">
                       <p className="text-sm font-medium text-gray-900">{student.phone}</p>
-                      <button 
+                      <Button 
                         onClick={() => {
                           setActiveDropdown(activeDropdown === student.id ? null : student.id);
                         }} 
                         className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600'} text-sm`}
                       >
                         <IoIosMore size={30} className="cursor-pointer hover:scale-110 transition-transform" />
-                      </button>
+                      </Button>
                       {activeDropdown === student.id && (
                         <ViewMore 
                           student={student}
