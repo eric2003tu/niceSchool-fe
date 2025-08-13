@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Search, Filter, Calendar, Clock, MapPin, Ticket, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "../ui/login/Input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "../ui/skeleton";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle} from "../ui/card";
 // import Image from "next/image";
 
 interface Event {
