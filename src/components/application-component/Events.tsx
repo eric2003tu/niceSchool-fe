@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "../ui/login/Input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "../ui/skeleton";
-import Image from "next/image";
+// import Image from "next/image";
 
 interface Event {
   id: string;
