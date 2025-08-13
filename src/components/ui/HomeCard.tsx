@@ -2,7 +2,7 @@ import { Eye, Star } from 'lucide-react'
 import React from 'react'
 import { GrDeploy } from 'react-icons/gr'
 
-const Card = () => {
+const HomeCard = () => {
   return (
 <div className='max-w-full lg:px-30 px-4 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 mt-20 py-10'>
 <div className="relative group overflow-hidden rounded-md border shadow-lg p-4 bg-white group transition duration-700 transform hover:scale-[1.02] hover:shadow-xl">
@@ -75,4 +75,4 @@ const Card = () => {
   )
 }
 
-export default Card
+export default HomeCard

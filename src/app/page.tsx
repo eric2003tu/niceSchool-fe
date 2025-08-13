@@ -1,7 +1,7 @@
 
 import React from "react";
 import Main from "../components/ui/Main";
-import { Card } from "@/components/ui/card";
+import HomeCard from "../components/ui/HomeCard"
 import Program from "../components/ui/Program";
 import Life from "../components/ui/Life";
 import Testimanial from "../components/ui/Testimanial";
@@ -44,7 +44,7 @@ export default function Home() {
       {/* Main content section */}
       <section className="w-full pt-[header-height]">
         <Main/>
-        <Card/>
+        <HomeCard/>
         <Program/>
         <Life/>
         <Testimanial/>
