@@ -157,6 +157,7 @@ export const Events = () => {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
       });
 
@@ -191,7 +192,7 @@ export const Events = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center sticky">
         <h1 className="text-2xl font-bold">Events Dashboard</h1>
         <Button onClick={handleCreate}>
           <Plus className="h-4 w-4 mr-2" />

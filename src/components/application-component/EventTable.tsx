@@ -61,7 +61,6 @@ export const EventTable = ({ events, loading, onView, onEdit, onDelete }: EventT
                   <div className="min-w-0 flex-1">
                     <p className="font-medium text-sm leading-tight">
                       {event.title} 
-                      <span className="text-xs text-gray-400 ml-2">#{event.id.slice(0,4)}</span>
                     </p>
                     <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                       {event.description}
