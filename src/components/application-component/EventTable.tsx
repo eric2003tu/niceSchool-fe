@@ -1,10 +1,10 @@
 "use client";
-import { Event } from "@/components/hooks/useEvents";
-import { Button } from "@/components/ui/button";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Event } from "./Events";
 
 interface EventTableProps {
   events: Event[];
@@ -21,6 +21,14 @@ export const EventTable = ({ events, loading, onView, onEdit, onDelete }: EventT
         {[...Array(5)].map((_, i) => (
           <Skeleton key={i} className="h-16 w-full" />
         ))}
+      </div>
+    );
+  }
+
+  if (!loading && events.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 gap-4">
+        <p className="text-gray-500 text-lg">No events found</p>
       </div>
     );
   }
@@ -51,7 +59,10 @@ export const EventTable = ({ events, loading, onView, onEdit, onDelete }: EventT
                     }}
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-sm leading-tight">{event.title}</p>
+                    <p className="font-medium text-sm leading-tight">
+                      {event.title} 
+                      <span className="text-xs text-gray-400 ml-2">#{event.id.slice(0,4)}</span>
+                    </p>
                     <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                       {event.description}
                     </p>
@@ -59,7 +70,13 @@ export const EventTable = ({ events, loading, onView, onEdit, onDelete }: EventT
                 </div>
               </TableCell>
               <TableCell className="whitespace-nowrap">
-                {new Date(event.startDate).toLocaleDateString()}
+                {new Date(event.startDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
               </TableCell>
               <TableCell className="whitespace-nowrap">
                 <div className="flex flex-col gap-1">

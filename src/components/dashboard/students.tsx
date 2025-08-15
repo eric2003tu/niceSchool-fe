@@ -61,7 +61,7 @@ export const StudentsPage = () => {
         throw new Error('Authentication required');
       }
       try {
-        const response = await fetch('http://localhost:3001/api/users', {
+        const response = await fetch('https://niceschool-be-2.onrender.com/api/users', {
           method: "GET",
           headers: {
             'Authorization': `Bearer ${token}`,

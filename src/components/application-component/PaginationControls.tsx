@@ -21,9 +21,9 @@ export const PaginationControls = ({
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="text-sm text-gray-500">
-        Showing {startItem} to {endItem} of {totalItems}
+        Showing {startItem} to {endItem} of {totalItems} events
       </div>
       <div className="flex gap-2">
         <Button
@@ -34,6 +34,9 @@ export const PaginationControls = ({
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
+        <div className="flex items-center justify-center px-4 text-sm">
+          Page {currentPage} of {totalPages}
+        </div>
         <Button
           variant="outline"
           size="sm"

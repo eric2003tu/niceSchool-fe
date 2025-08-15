@@ -69,7 +69,7 @@ export default function MyApplications() {
           return;
         }
 
-        const response = await fetch('http://localhost:3001/api/admissions/my-applications', {
+        const response = await fetch('https://niceschool-be-2.onrender.com/api/admissions/my-applications', {
           headers: {
             'Authorization': `Bearer ${authToken}`
           }

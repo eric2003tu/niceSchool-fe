@@ -51,7 +51,7 @@ export const useEvents = (params: {
 
       try {
         setLoading(true);
-        let url = `http://localhost:3001/api/events?page=${params.page}&limit=${params.limit}`;
+        let url = `https://niceschool-be-2.onrender.com/api/events?page=${params.page}&limit=${params.limit}`;
         
         if (params.search) url += `&search=${encodeURIComponent(params.search)}`;
         if (params.category && params.category !== 'all') url += `&category=${params.category}`;

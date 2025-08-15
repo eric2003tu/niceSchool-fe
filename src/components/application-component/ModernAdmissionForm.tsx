@@ -132,7 +132,7 @@ const ModernAdmissionForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/admissions/apply", {
+      const response = await fetch("https://niceschool-be-2.onrender.com/api/admissions/apply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

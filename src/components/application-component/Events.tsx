@@ -1,15 +1,14 @@
 "use client";
-import { useState } from "react";
-import { useEvents, Event } from "@/components/hooks/useEvents"; // Import Event type
-import { EventTable } from "@/components/application-component/EventTable";
-import { EventFilters } from "@/components/application-component/EventFilters";
-import { PaginationControls } from "@/components/application-component/PaginationControls";
-import { EventForm } from "@/components/application-component/EventForm";
+import { useState, useEffect } from "react";
+import { EventTable } from "./EventTable";
+import { EventFilters } from "./EventFilters";
+import { PaginationControls } from "./PaginationControls";
+import { EventForm } from "./EventForm";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { useToast } from "@/components/hooks/UseToast";
 import {
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -18,12 +17,33 @@ import {
   AlertDialogCancel,
   AlertDialogAction
 } from "@/components/ui/alert-dialog";
-import {Dialog,DialogContent, DialogHeader, DialogTitle, } from "@/components/ui/dialog"
-import { useToast } from "@/components/hooks/UseToast";
-import { Toast } from '@/components/ui/Toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  imageUrl: string;
+  category: string;
+  isRegistrationOpen: boolean;
+  maxAttendees: number;
+  price: string;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  registrations: any[];
+}
 
 export const Events = () => {
-  const { toast, showToast, hideToast } = useToast();
+  const { showToast } = useToast();
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -31,14 +51,48 @@ export const Events = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-
-  const { events, total, loading, error } = useEvents({
-    page,
-    limit: 10,
-    search: searchTerm,
-    category: categoryFilter !== "all" ? categoryFilter : undefined,
-    status: statusFilter !== "all" ? statusFilter : undefined,
+  const [eventsData, setEventsData] = useState<{events: Event[], total: number}>({
+    events: [],
+    total: 0
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const query = new URLSearchParams({
+          page: page.toString(),
+          limit: '10',
+          ...(searchTerm && { search: searchTerm }),
+          ...(categoryFilter !== 'all' && { category: categoryFilter }),
+          ...(statusFilter !== 'all' && { status: statusFilter })
+        });
+
+        const response = await fetch(
+          `https://niceschool-be-2.onrender.com/api/events?${query}`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch events');
+        }
+
+        const data = await response.json();
+        setEventsData({
+          events: data.data || [],
+          total: data.total || 0
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+        showToast('Failed to load events', 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [page, searchTerm, categoryFilter, statusFilter]);
 
   const handleCreate = () => {
     setSelectedEvent(null);
@@ -64,8 +118,8 @@ export const Events = () => {
 
     try {
       const url = selectedEvent 
-        ? `http://localhost:3001/api/events/${selectedEvent.id}`
-        : 'http://localhost:3001/api/events';
+        ? `https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`
+        : 'https://niceschool-be-2.onrender.com/api/events';
       
       const method = selectedEvent ? 'PUT' : 'POST';
       
@@ -99,7 +153,7 @@ export const Events = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/events/${selectedEvent.id}`, {
+      const response = await fetch(`https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -155,20 +209,22 @@ export const Events = () => {
       />
 
       <EventTable
-        events={events}
+        events={eventsData.events}
         loading={loading}
         onView={(event) => console.log('View:', event.id)}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
 
-      <PaginationControls
-        currentPage={page}
-        totalPages={Math.ceil(total / 10)}
-        totalItems={total}
-        itemsPerPage={10}
-        onPageChange={setPage}
-      />
+      {eventsData.total > 0 && (
+        <PaginationControls
+          currentPage={page}
+          totalPages={Math.ceil(eventsData.total / 10)}
+          totalItems={eventsData.total}
+          itemsPerPage={10}
+          onPageChange={setPage}
+        />
+      )}
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-2xl">
@@ -204,14 +260,6 @@ export const Events = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {/* {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={hideToast}
-        />
-      )} */}
     </div>
   );
 };

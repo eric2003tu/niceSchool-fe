@@ -233,7 +233,7 @@ Static assets used throughout the app.
 
 3. **Open in browser:**
 
-   Visit `http://localhost:3000` to view the app. locally, and `https://nice-school-fe.vercel.app/` on vercel
+   Visit `http://localhost:3000` to view the app. locally, and `https://https://niceschool-be-2.onrender.com/` on vercel
 
 ---
 

@@ -38,12 +38,12 @@ const sidebarItems: SidebarItem[] = [
     label: "Academics", 
     href: "#",
     children: [
-      { icon: Home, label: "Admin", href: "/dashboard/all-applications" },
+      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
       { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
       { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
     ]
   },
-  { icon: Users, label: "Students", href: "/dashboard/users" },
+  { icon: Users, label: "Users", href: "/dashboard/users" },
   { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
   { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
   { icon: Settings, label: "Settings", href: "/dashboard/settings" },

@@ -70,7 +70,7 @@ export default function Admin() {
           return;
         }
 
-        const response = await fetch('http://localhost:3001/api/admissions/applications', {
+        const response = await fetch('https://niceschool-be-2.onrender.com/api/admissions/applications', {
           headers: {
             'Authorization': `Bearer ${authToken}`
           }
@@ -95,7 +95,7 @@ export default function Admin() {
 const handleUpdateApplication = async (updatedApp: Application) => {
   try {
     const authToken = localStorage.getItem('authToken');
-    const response = await fetch(`http://localhost:3001/api/admissions/applications/${updatedApp.id}/status`, {
+    const response = await fetch(`https://niceschool-be-2.onrender.com/api/admissions/applications/${updatedApp.id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const handleUpdateApplication = async (updatedApp: Application) => {
   const handleDeleteApplication = async (id: string) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`http://localhost:3001/api/admissions/applications/${id}`, {
+      const response = await fetch(`https://niceschool-be-2.onrender.com/api/admissions/applications/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`
