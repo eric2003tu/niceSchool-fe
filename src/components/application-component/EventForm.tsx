@@ -1,6 +1,6 @@
 "use client";
 import { Event } from "@/components/hooks/useEvents";
-import {useState} from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,9 +29,26 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
     isPublished: false
   });
 
+  const formatDateForInput = (isoString: string): string => {
+    if (!isoString) return "";
+    const date = new Date(isoString);
+    if (isNaN(date.getTime())) return "";
+    
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // Convert dates to ISO format
+    const dataToSubmit = {
+      ...formData,
+      startDate: formData.startDate ? new Date(formData.startDate).toISOString() : "",
+      endDate: formData.endDate ? new Date(formData.endDate).toISOString() : ""
+    };
+    
+    onSubmit(dataToSubmit);
   };
 
   return (
@@ -63,7 +80,7 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
           <Input
             id="startDate"
             type="datetime-local"
-            value={formData.startDate}
+            value={formatDateForInput(formData.startDate as string)}
             onChange={(e) => setFormData({...formData, startDate: e.target.value})}
             required
           />
@@ -73,7 +90,7 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
           <Input
             id="endDate"
             type="datetime-local"
-            value={formData.endDate}
+            value={formatDateForInput(formData.endDate as string)}
             onChange={(e) => setFormData({...formData, endDate: e.target.value})}
             required
           />
@@ -87,6 +104,15 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
           value={formData.location}
           onChange={(e) => setFormData({...formData, location: e.target.value})}
           required
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="imageUrl">Image URL</Label>
+        <Input
+          id="imageUrl"
+          value={formData.imageUrl}
+          onChange={(e) => setFormData({...formData, imageUrl: e.target.value})}
         />
       </div>
       
@@ -107,6 +133,19 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
             </SelectContent>
           </Select>
         </div>
+        <div className="space-y-2">
+          <Label htmlFor="maxAttendees">Max Attendees</Label>
+          <Input
+            id="maxAttendees"
+            type="number"
+            value={formData.maxAttendees}
+            onChange={(e) => setFormData({...formData, maxAttendees: Number(e.target.value)})}
+            min="1"
+          />
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="price">Price ($)</Label>
           <Input

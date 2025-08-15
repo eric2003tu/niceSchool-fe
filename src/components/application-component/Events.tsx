@@ -121,7 +121,7 @@ export const Events = () => {
         ? `https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`
         : 'https://niceschool-be-2.onrender.com/api/events';
       
-      const method = selectedEvent ? 'PUT' : 'POST';
+      const method = selectedEvent ? 'PATCH' : 'POST';
       
       const response = await fetch(url, {
         method,
