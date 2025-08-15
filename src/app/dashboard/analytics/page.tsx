@@ -1,10 +1,10 @@
-import DashboardPage from '@/components/dashboard/DashboardPage'
 import React from 'react'
+import { AnalyticsPage } from "@/components/dashboard/analytics";
 
 const page = () => {
   return (
     <div>
-      <DashboardPage />
+      <AnalyticsPage />
     </div>
   )
 }

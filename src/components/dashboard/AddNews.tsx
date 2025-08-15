@@ -175,7 +175,7 @@ if (error instanceof z.ZodError) {
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
+      <div className=" mx-auto p-6 bg-white rounded-lg shadow-sm">
         <div className="text-center py-8">
           <p className="text-lg text-red-600">Redirecting to login page...</p>
         </div>
@@ -184,7 +184,7 @@ if (error instanceof z.ZodError) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
+    <div className="w-full lg:px-15  mx-auto p-6 bg-white rounded-lg shadow-sm">
 
       {notification && (
         <div className={`mb-6 p-4 rounded-lg ${

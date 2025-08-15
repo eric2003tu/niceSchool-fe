@@ -77,7 +77,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full flex items-center justify-between sticky top-0 left-0 z-[1000] py-4 text-white bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 shadow-2xl lg:px-24 px-4 backdrop-blur-2xl border-b border-blue-900/20">
+    <header className="w-full flex items-center justify-between sticky top-0 left-0 z-[1000] py-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 shadow-2xl lg:px-24 px-4 backdrop-blur-2xl border-b border-blue-900/20">
       {/* Logo */}
       <div className="flex items-center text-2xl font-bold gap-2">
         <img

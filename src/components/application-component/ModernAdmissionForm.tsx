@@ -266,8 +266,8 @@ const ModernAdmissionForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <form onSubmit={handleSubmit} className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 lg:px-15 px-4">
+      <div className="w-full mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           NiceSchool Application Portal

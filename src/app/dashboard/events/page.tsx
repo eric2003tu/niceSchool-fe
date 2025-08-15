@@ -1,10 +1,10 @@
-import DashboardPage from '@/components/dashboard/DashboardPage'
 import React from 'react'
+import { Events } from "@/components/application-component/Events";
 
 const page = () => {
   return (
     <div>
-      <DashboardPage />
+      <Events/>
     </div>
   )
 }

@@ -193,7 +193,7 @@ export const StudentsPage = () => {
               onChange={handleSearchChange}
             />
           </div>
-          <Button className="flex items-center text-sm text-gray-600 hover:text-gray-900">
+          <Button className="flex items-center text-sm text-white bg-gray-500 hover:bg-gray-600">
             Filter <ChevronDown className="ml-1 w-4 h-4" />
           </Button>
         </div>
@@ -228,7 +228,7 @@ export const StudentsPage = () => {
                         onClick={() => {
                           setActiveDropdown(activeDropdown === student.id ? null : student.id);
                         }} 
-                        className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'text-gray-600'} text-sm`}
+                        className={`${user?.email === student.email ? 'bg-green-500 text-white px-3 p-2 font-semibold text-center rounded-full' : 'flex items-center text-sm text-white bg-gray-500 hover:bg-gray-600'} text-sm`}
                       >
                         <IoIosMore size={30} className="cursor-pointer hover:scale-110 transition-transform" />
                       </Button>
@@ -282,7 +282,7 @@ export const StudentsPage = () => {
                     variant="outline"
                     onClick={goToNextPage}
                     disabled={currentPage === totalPages}
-                    className="px-3 py-1"
+                    className="px-3 py-1 bg-gray-200"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </Button>

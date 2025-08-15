@@ -1,10 +1,10 @@
-import DashboardPage from '@/components/dashboard/DashboardPage'
 import React from 'react'
+import MyApplications from "@/components/application-component/MyApplications";
 
 const page = () => {
   return (
     <div>
-      <DashboardPage />
+      <MyApplications/>
     </div>
   )
 }

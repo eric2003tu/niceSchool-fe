@@ -6,18 +6,14 @@ import { IoSchoolSharp } from "react-icons/io5";
 import { FaDoorOpen } from "react-icons/fa";
 import { TiNews } from "react-icons/ti";
 import { CgProfile } from "react-icons/cg";
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from "react";
 
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  activeView: string;
-  setActiveView: (view: string) => void;
   onLogout?: () => void;
   onProfileClick?: () => void;
-  storageUsed?: number;
-  storageLimit?: number;
 }
 
 interface User {
@@ -36,27 +32,30 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { icon: Home, label: "Dashboard", href: "#" },
-  {icon: HiAcademicCap, label: "Academics", href: "#",
-    children:[
-  {icon: Home, label: "Admin", href: "#"},
-  {icon: IoSchoolSharp, label: "Events", href: "#"},
-  { icon: BookOpen, label: "Courses", href: "#" },
-
-]},
-  { icon: Users, label: "Students", href: "#" },
-  { icon: Calendar, label: "Schedule", href: "#" },
-  { icon: BarChart3, label: "Analytics", href: "#" },
-  { icon: Settings, label: "Settings", href: "#" },
-  { icon: TiNews, label: "News", href: "#" },
-  { icon: CgProfile, label: "Profile", href: "#" },
+  { icon: Home, label: "Dashboard", href: "/dashboard" },
+  {
+    icon: HiAcademicCap, 
+    label: "Academics", 
+    href: "#",
+    children: [
+      { icon: Home, label: "Admin", href: "/dashboard/all-applications" },
+      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
+    ]
+  },
+  { icon: Users, label: "Students", href: "/dashboard/users" },
+  { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
+  { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
+  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+  { icon: TiNews, label: "News", href: "/dashboard/news" },
+  { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
   { 
     icon: IoSchoolSharp, 
     label: "Applications", 
     href: "#",
     children: [
-      { icon: HiAcademicCap, label: "Apply", href: "#" },
-      { icon: FaDoorOpen, label: "Apps", href: "#" }
+      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" }
     ]
   }
 ];
@@ -64,13 +63,11 @@ const sidebarItems: SidebarItem[] = [
 export const Sidebar = ({ 
   isOpen, 
   setIsOpen,
-  activeView,
-  setActiveView,
   onLogout = () => console.log("Logout clicked"),
   onProfileClick = () => console.log("Profile clicked"),
-  storageUsed = 2.4,
-  storageLimit = 10
 }: SidebarProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
@@ -85,7 +82,14 @@ export const Sidebar = ({
         console.error("Failed to parse user data", e);
       }
     }
-  }, []);
+
+    // Automatically expand parent items when child is active
+    const activeParent = sidebarItems.find(item => 
+      item.children?.some(child => pathname.startsWith(child.href)))
+    if (activeParent) {
+      setExpandedItems(prev => ({ ...prev, [activeParent.label]: true }));
+    }
+  }, [pathname]);
 
   const toggleItemExpansion = (label: string) => {
     setExpandedItems(prev => ({
@@ -94,12 +98,16 @@ export const Sidebar = ({
     }));
   };
 
+  const isActive = (href: string) => {
+    if (href === "#") return false;
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   const renderSidebarItem = (item: SidebarItem, index: number, depth = 0) => {
     const Icon = item.icon;
-    const viewKey = item.label.toLowerCase();
-    const isActive = activeView === viewKey;
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems[item.label];
+    const active = isActive(item.href);
 
     return (
       <div key={`${index}-${depth}`} className="space-y-1">
@@ -107,20 +115,20 @@ export const Sidebar = ({
           onClick={() => {
             if (hasChildren) {
               toggleItemExpansion(item.label);
-            } else {
-              setActiveView(viewKey);
+            } else if (item.href !== "#") {
+              router.push(item.href);
               setIsOpen(false);
             }
           }}
           className={`group flex items-center w-full px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-200 relative ${
-            isActive
+            active
               ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/80 text-emerald-700 shadow-sm border border-emerald-200/50'
               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:scale-[1.02]'
           }`}
           style={{ paddingLeft: `${depth * 16 + 16}px` }}
         >
           <Icon className={`w-5 h-5 mr-4 transition-all duration-200 ${
-            isActive 
+            active 
               ? 'text-emerald-600' 
               : 'text-gray-400 group-hover:text-gray-600'
           }`} />
@@ -136,7 +144,7 @@ export const Sidebar = ({
             </span>
           )}
           
-          {isActive && !hasChildren && (
+          {active && !hasChildren && (
             <div className="absolute right-2 w-2 h-2 bg-emerald-500 rounded-full"></div>
           )}
         </button>
@@ -250,6 +258,7 @@ export const Sidebar = ({
                     <button
                       onClick={() => {
                         onProfileClick();
+                        router.push('/dashboard/profile');
                         setShowUserMenu(false);
                         setIsOpen(false);
                       }}
@@ -261,6 +270,7 @@ export const Sidebar = ({
                     <button
                       onClick={() => {
                         onLogout();
+                        router.push('/');
                         setShowUserMenu(false);
                         setIsOpen(false);
                       }}
