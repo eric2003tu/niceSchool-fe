@@ -7,7 +7,7 @@ import Life from "../components/ui/Life";
 import Testimanial from "../components/ui/Testimanial";
 import Excellency from "../components/ui/Excellency";
 import News from "../components/ui/News";
-import Event from "../components/ui/Events";
+// import Event from "../components/ui/Events";
 import Footer from "../components/ui/Footer";
 import Hero from "../components/ui/Hero";
 import Header from "../components/ui/Header";
@@ -50,7 +50,7 @@ export default function Home() {
         <Testimanial/>
         <Excellency/>
         <News/>
-        <Event/>
+        {/* <Event/> */}
       </section>
       <footer>
         <Footer/>

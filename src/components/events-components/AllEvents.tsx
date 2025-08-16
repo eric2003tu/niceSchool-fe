@@ -1,309 +1,230 @@
 "use client";
-
-import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import { Clock, MapPin, ArrowRight, CalendarPlus } from "lucide-react";
-import { format } from "date-fns";
-
-// Expanded Events Data (18 events)
-const allEvents = [
-  {
-    date: new Date(2023, 5, 15),
-    title: "Annual Science Fair Exhibition",
-    time: "09:00 AM - 04:00 PM",
-    location: "Main Campus Auditorium",
-    description: "Showcase of student science projects and innovations from across all departments.",
-  },
-  {
-    date: new Date(2023, 5, 22),
-    title: "Parent-Teacher Conference",
-    time: "01:00 PM - 04:00 PM",
-    location: "Multiple Classrooms",
-    description: "Opportunity for parents to meet with teachers and discuss student progress.",
-  },
-  {
-    date: new Date(2023, 5, 30),
-    title: "Summer Sports Tournament Final",
-    time: "02:30 PM - 05:30 PM",
-    location: "Sports Complex",
-    description: "Championship matches for basketball, volleyball, and soccer tournaments.",
-  },
-  {
-    date: new Date(2023, 6, 5),
-    title: "Graduation Ceremony Class of 2023",
-    time: "10:00 AM - 01:00 PM",
-    location: "Central Auditorium",
-    description: "Celebration of our graduating students with keynote speaker and diploma ceremony.",
-  },
-  {
-    date: new Date(2023, 6, 12),
-    title: "Alumni Networking Mixer",
-    time: "06:00 PM - 09:00 PM",
-    location: "University Club",
-    description: "Current students can connect with successful alumni from various industries.",
-  },
-  {
-    date: new Date(2023, 6, 18),
-    title: "Summer Research Symposium",
-    time: "08:30 AM - 03:00 PM",
-    location: "Research Hall",
-    description: "Presentation of summer research projects by undergraduate and graduate students.",
-  },
-  {
-    date: new Date(2023, 6, 25),
-    title: "Study Abroad Fair",
-    time: "11:00 AM - 02:00 PM",
-    location: "Student Union",
-    description: "Learn about international study opportunities and exchange programs.",
-  },
-  {
-    date: new Date(2023, 7, 2),
-    title: "New Student Orientation",
-    time: "08:00 AM - 05:00 PM",
-    location: "Various Campus Locations",
-    description: "Welcome event for incoming freshmen and transfer students.",
-  },
-  {
-    date: new Date(2023, 7, 9),
-    title: "Faculty Development Workshop",
-    time: "09:30 AM - 12:30 PM",
-    location: "Faculty Center",
-    description: "Training session on innovative teaching methods and curriculum development.",
-  },
-  {
-    date: new Date(2023, 7, 16),
-    title: "Career Services Open House",
-    time: "10:00 AM - 02:00 PM",
-    location: "Career Center",
-    description: "Learn about resume building, interview skills, and internship opportunities.",
-  },
-  {
-    date: new Date(2025, 5, 6),
-    title: "Diversity and Inclusion Forum",
-    time: "03:00 PM - 05:00 PM",
-    location: "Diversity Center",
-    description: "Panel discussion on creating an inclusive campus environment.",
-  },
-  {
-    date: new Date(2023, 7, 30),
-    title: "STEM Career Fair",
-    time: "09:00 AM - 04:00 PM",
-    location: "Engineering Building",
-    description: "Meet with employers from science, technology, engineering, and math fields.",
-  },
-  {
-    date: new Date(2023, 8, 6),
-    title: "Arts and Humanities Showcase",
-    time: "06:00 PM - 08:00 PM",
-    location: "Performing Arts Center",
-    description: "Exhibition of student work in visual arts, music, theater, and literature.",
-  },
-  {
-    date: new Date(2023, 8, 13),
-    title: "Health and Wellness Fair",
-    time: "10:00 AM - 02:00 PM",
-    location: "Recreation Center",
-    description: "Free health screenings, fitness demonstrations, and wellness resources.",
-  },
-  {
-    date: new Date(2023, 8, 20),
-    title: "Entrepreneurship Competition",
-    time: "01:00 PM - 05:00 PM",
-    location: "Business School",
-    description: "Student teams pitch their business ideas to a panel of investors.",
-  },
-  {
-    date: new Date(2023, 8, 27),
-    title: "Homecoming Football Game",
-    time: "02:00 PM - 05:00 PM",
-    location: "University Stadium",
-    description: "Cheer on our team during the annual homecoming celebration.",
-  },
-  {
-    date: new Date(2023, 9, 4),
-    title: "Fall Career Fair",
-    time: "10:00 AM - 03:00 PM",
-    location: "Student Union Ballroom",
-    description: "Connect with employers from various industries seeking to hire students.",
-  },
-  {
-    date: new Date(2023, 9, 11),
-    title: "Research Grant Deadline",
-    time: "05:00 PM",
-    location: "Online Submission",
-    description: "Deadline for undergraduate research grant applications.",
-  },
-];
-
-// Featured Event
-const featuredEvent = {
-  title: "Annual Arts Festival",
-  dateRange: "July 15-17, 2023",
-  description: "Three-day celebration of student creativity featuring visual arts, performances, and workshops.",
-  image: "blog-post-1.webp", // Update to your image path
-};
+import { useState, useEffect } from "react";
+import { Search, Filter, Sparkles } from "lucide-react";
+import { ModernButton } from "./ModernButton";
+import { ModernInput } from "./ModernInput";
+import { ModernSelect } from "./ModernSelect";
+import { EventSkeleton } from "./EventSkeleton";
+import { ModernEventCard } from "./ModernEventCard";
+import { FeaturedEventCard } from "./FeaturedEventCard";
+import { Event } from "./ModernEventCard";
 
 const EVENTS_PER_PAGE = 6;
 
-const addToCalendar = (event: typeof allEvents[0]) => {
-  // Format the date for the calendar
-  const startDate = format(event.date, "yyyyMMdd");
-  const endDate = format(event.date, "yyyyMMdd");
-  
-  // Extract start and end times (simplified parsing)
-  const timeParts = event.time.split(" - ");
-  const startTime = timeParts[0].replace(" ", "").toUpperCase();
-  const endTime = timeParts[1] ? timeParts[1].replace(" ", "").toUpperCase() : "235900";
-  
-  // Create Google Calendar URL
-  const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate}T${startTime.replace(":", "")}00/${endDate}T${endTime.replace(":", "")}00&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
-  
-  // Create iCal download
-  const icsContent = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "BEGIN:VEVENT",
-    `DTSTART:${startDate}T${startTime.replace(":", "")}00`,
-    `DTEND:${endDate}T${endTime.replace(":", "")}00`,
-    `SUMMARY:${event.title}`,
-    `DESCRIPTION:${event.description}`,
-    `LOCATION:${event.location}`,
-    "END:VEVENT",
-    "END:VCALENDAR"
-  ].join("\n");
-  
-  const icsBlob = new Blob([icsContent], { type: "text/calendar" });
-  const icsUrl = URL.createObjectURL(icsBlob);
-  
-  // Open a dropdown or directly trigger download
-  window.open(googleCalendarUrl, "_blank");
-  const link = document.createElement("a");
-  link.href = icsUrl;
-  link.setAttribute("download", `${event.title.replace(/\s+/g, "_")}.ics`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-export default function EventsPage() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+export const AllEvents = () => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [featuredEvent, setFeaturedEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
 
-  const eventDates = allEvents.map((e) => e.date);
-  const totalPages = Math.ceil(allEvents.length / EVENTS_PER_PAGE);
-  const paginatedEvents = allEvents.slice(
-    (currentPage - 1) * EVENTS_PER_PAGE,
-    currentPage * EVENTS_PER_PAGE
-  );
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const query = new URLSearchParams({
+          page: currentPage.toString(),
+          limit: EVENTS_PER_PAGE.toString(),
+          ...(searchTerm && { search: searchTerm }),
+          ...(categoryFilter && { category: categoryFilter }),
+          isPublished: "true"
+        });
+
+        const response = await fetch(`http://localhost:3001/api/events/public?${query}`);
+        const data = await response.json();
+        
+        setEvents(data.data || []);
+        setFeaturedEvent(data.featured || data.data?.[0] || null);
+        setTotalPages(Math.ceil((data.total || 0) / EVENTS_PER_PAGE));
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const debounceTimer = setTimeout(fetchEvents, 300);
+    return () => clearTimeout(debounceTimer);
+  }, [currentPage, searchTerm, categoryFilter]);
+
+  const addToCalendar = (event: Event) => {
+    const startDate = new Date(event.startDate).toISOString().replace(/[-:]/g, '').split('.')[0];
+    const endDate = new Date(event.endDate).toISOString().replace(/[-:]/g, '').split('.')[0];
+
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+    
+    window.open(googleCalendarUrl, "_blank");
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const categories = [
+    { value: "academic", label: "Academic", count: events.filter(e => e.category === "academic").length },
+    { value: "workshop", label: "Workshop", count: events.filter(e => e.category === "workshop").length },
+    { value: "conference", label: "Conference", count: events.filter(e => e.category === "conference").length },
+    { value: "social", label: "Social", count: events.filter(e => e.category === "social").length }
+  ];
+
   return (
-    <section className="px-6 py-10 bg-gray-50 min-h-screen">
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 max-w-7xl mx-auto">
-        {/* Events List */}
-        <div className="flex flex-col gap-6">
-          {paginatedEvents.map((event, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm flex overflow-hidden">
-              {/* Date Block */}
-              <div className="bg-green-700 text-white px-5 py-6 flex flex-col items-center justify-center w-24 min-w-[96px]">
-                <span className="text-sm font-semibold">{format(event.date, "dd")}</span>
-                <span className="text-xs uppercase">{format(event.date, "MMM")}</span>
-              </div>
-
-              {/* Content */}
-              <div className="p-5 flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{event.title}</h3>
-                <div className="flex items-center text-sm text-gray-600 gap-2 mb-1">
-                  <Clock size={16} /> {event.time}
-                </div>
-                <div className="flex items-center text-sm text-gray-600 gap-2 mb-2">
-                  <MapPin size={16} /> {event.location}
-                </div>
-                <p className="text-sm text-gray-600">{event.description}</p>
-                <div className="mt-3 flex justify-between items-center">
-                  <button className="text-green-700 hover:underline text-sm font-semibold flex items-center gap-1">
-                    Learn More <ArrowRight size={14} />
-                  </button>
-                  <button 
-                    onClick={() => addToCalendar(event)}
-                    className="text-green-700 hover:text-green-800 text-sm font-semibold flex items-center gap-1 border border-green-700 px-3 py-1 rounded"
-                  >
-                    <CalendarPlus size={14} /> Add to Calendar
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Pagination */}
-          <div className="flex justify-center mt-6">
-            <nav className="flex gap-2 items-center text-gray-700">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-8 h-8 rounded border ${currentPage === page ? 'bg-green-600 text-white' : 'bg-white hover:bg-green-100'}`}
-                >
-                  {page}
-                </button>
-              ))}
-              {currentPage < totalPages && (
-                <button 
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className="w-8 h-8 rounded border bg-white hover:bg-green-100"
-                >
-                  <ArrowRight size={16} />
-                </button>
-              )}
-            </nav>
-          </div>
+    <section className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 px-6 py-16">
+      <div className="max-w-7xl mx-auto">
+        {/* Hero Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-6">
+            Discover Amazing Events
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Join our vibrant community and explore workshops, conferences, and networking opportunities 
+            that will inspire and connect you with like-minded individuals.
+          </p>
         </div>
 
-        {/* Sidebar */}
-        <aside className="flex flex-col gap-6">
-          {/* Calendar */}
-          <div className="bg-white p-5 rounded-lg shadow-sm">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Events</h4>
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={setSelectedDate}
-              modifiers={{ hasEvent: eventDates }}
-              modifiersClassNames={{ hasEvent: "event-dot" }}
-              className="rounded-md border"
-            />
+        <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-12">
+          {/* Main Content */}
+          <div className="space-y-8">
+            {/* Enhanced Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ModernInput
+                placeholder="Search events by name or description..."
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
+                icon={Search}
+              />
+              <ModernSelect
+                value={categoryFilter}
+                onChange={(value) => {
+                  setCategoryFilter(value);
+                  setCurrentPage(1);
+                }}
+                options={categories}
+                placeholder="Filter by category"
+              />
+            </div>
+
+            {/* Events List */}
+            <div className="space-y-6">
+              {loading ? (
+                Array.from({ length: EVENTS_PER_PAGE }).map((_, i) => (
+                  <EventSkeleton key={i} />
+                ))
+              ) : events.length > 0 ? (
+                events.map((event) => (
+                  <ModernEventCard 
+                    key={event.id}
+                    event={event}
+                    onAddToCalendar={addToCalendar}
+                  />
+                ))
+              ) : (
+                <div className="text-center py-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg">
+                  <div className="text-6xl mb-4 opacity-50">🎪</div>
+                  <h3 className="text-2xl font-bold text-gray-700 mb-3">No Events Found</h3>
+                  <p className="text-gray-500 text-lg">Try adjusting your search or check back later!</p>
+                </div>
+              )}
+            </div>
+
+            {/* Modern Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-3 mt-12">
+                {currentPage > 1 && (
+                  <ModernButton
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                  >
+                    Previous
+                  </ModernButton>
+                )}
+                
+                <div className="flex gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <ModernButton
+                      key={page}
+                      variant={currentPage === page ? "primary" : "outline"}
+                      size="sm"
+                      onClick={() => handlePageChange(page)}
+                      className="w-12"
+                    >
+                      {page}
+                    </ModernButton>
+                  ))}
+                </div>
+
+                {currentPage < totalPages && (
+                  <ModernButton
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                  >
+                    Next
+                  </ModernButton>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Featured Event */}
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <img src={featuredEvent.image} alt="Featured Event" className="w-full h-40 object-cover" />
-            <div className="p-5">
-              <h5 className="text-lg font-semibold text-gray-900 mb-1">{featuredEvent.title}</h5>
-              <p className="text-sm text-gray-600 mb-2">{featuredEvent.dateRange}</p>
-              <p className="text-sm text-gray-600 mb-3">{featuredEvent.description}</p>
-              <button className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-full">
-                Register Now
-              </button>
+          {/* Enhanced Sidebar */}
+          <div className="space-y-8">
+            {/* Featured Event */}
+            {featuredEvent && (
+              <FeaturedEventCard event={featuredEvent} />
+            )}
+
+            {/* Quick Stats */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <Filter className="text-green-600" size={20} />
+                Event Categories
+              </h4>
+              <div className="space-y-4">
+                {categories.map((category) => (
+                  <div 
+                    key={category.value}
+                    onClick={() => {
+                      setCategoryFilter(categoryFilter === category.value ? "" : category.value);
+                      setCurrentPage(1);
+                    }}
+                    className={`flex justify-between items-center p-3 rounded-xl cursor-pointer transition-all duration-300 ${
+                      categoryFilter === category.value 
+                        ? 'bg-gradient-to-r from-green-100 to-blue-100 text-green-700 shadow-md' 
+                        : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    <span className="font-medium">{category.label}</span>
+                    <span className={`px-3 py-1 text-xs font-bold rounded-full ${
+                      categoryFilter === category.value
+                        ? 'bg-green-200 text-green-800'
+                        : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {category.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl p-6 text-white text-center shadow-2xl">
+              <h4 className="text-xl font-bold mb-3">Host Your Event</h4>
+              <p className="text-sm opacity-90 mb-4">
+                Share your knowledge and connect with our community by hosting your own event.
+              </p>
+              <ModernButton variant="secondary" className="w-full">
+                Get Started
+              </ModernButton>
             </div>
           </div>
-
-          {/* Event Categories */}
-          <div className="bg-white p-5 rounded-lg shadow-sm">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Event Categories</h4>
-            <ul className="space-y-3">
-              <li className="flex justify-between text-sm text-gray-700">Academic <span>(12)</span></li>
-              <li className="flex justify-between text-sm text-gray-700">Sports <span>(8)</span></li>
-              <li className="flex justify-between text-sm text-gray-700">Cultural <span>(6)</span></li>
-              <li className="flex justify-between text-sm text-gray-700">Workshops <span>(4)</span></li>
-              <li className="flex justify-between text-sm text-gray-700">Conferences <span>(2)</span></li>
-            </ul>
-          </div>
-        </aside>
+        </div>
       </div>
     </section>
   );
-}
+};

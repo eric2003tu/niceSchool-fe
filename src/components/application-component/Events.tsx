@@ -59,6 +59,7 @@ export const Events = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
     const fetchEvents = async () => {
       try {
         setLoading(true);
@@ -70,9 +71,13 @@ export const Events = () => {
           ...(statusFilter !== 'all' && { status: statusFilter })
         });
 
-        const response = await fetch(
-          `https://niceschool-be-2.onrender.com/api/events?${query}`
-        );
+const response = await fetch(`http://localhost:3001/api/events?${query}`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  },
+});
         
         if (!response.ok) {
           throw new Error('Failed to fetch events');
@@ -118,8 +123,8 @@ export const Events = () => {
 
     try {
       const url = selectedEvent 
-        ? `https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`
-        : 'https://niceschool-be-2.onrender.com/api/events';
+        ? `http://localhost:3001/api/events/${selectedEvent.id}`
+        : 'http://localhost:3001/api/events';
       
       const method = selectedEvent ? 'PATCH' : 'POST';
       
@@ -153,7 +158,7 @@ export const Events = () => {
     }
 
     try {
-      const response = await fetch(`https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`, {
+      const response = await fetch(`http://localhost:3001/api/events/${selectedEvent.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

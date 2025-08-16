@@ -38,18 +38,28 @@ export const EventForm = ({ event, onSubmit, onCancel }: EventFormProps) => {
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Convert dates to ISO format
-    const dataToSubmit = {
-      ...formData,
-      startDate: formData.startDate ? new Date(formData.startDate).toISOString() : "",
-      endDate: formData.endDate ? new Date(formData.endDate).toISOString() : ""
-    };
-    
-    onSubmit(dataToSubmit);
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const dataToSubmit: Partial<Event> = {
+    ...formData,
   };
+
+  // Only include startDate if it has a value
+  if (formData.startDate) {
+    dataToSubmit.startDate = new Date(formData.startDate).toISOString();
+  } else {
+    delete dataToSubmit.startDate;
+  }
+
+  if (formData.endDate) {
+    dataToSubmit.endDate = new Date(formData.endDate).toISOString();
+  } else {
+    delete dataToSubmit.endDate;
+  }
+
+  onSubmit(dataToSubmit);
+};
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
