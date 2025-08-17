@@ -71,7 +71,7 @@ export const Events = () => {
           ...(statusFilter !== 'all' && { status: statusFilter })
         });
 
-const response = await fetch(`http://localhost:3001/api/events?${query}`, {
+const response = await fetch(`https://niceschool-be-2.onrender.com/api/events?${query}`, {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${token}`,
@@ -123,8 +123,8 @@ const response = await fetch(`http://localhost:3001/api/events?${query}`, {
 
     try {
       const url = selectedEvent 
-        ? `http://localhost:3001/api/events/${selectedEvent.id}`
-        : 'http://localhost:3001/api/events';
+        ? `https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`
+        : 'https://niceschool-be-2.onrender.com/api/events';
       
       const method = selectedEvent ? 'PATCH' : 'POST';
       
@@ -158,7 +158,7 @@ const response = await fetch(`http://localhost:3001/api/events?${query}`, {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/events/${selectedEvent.id}`, {
+      const response = await fetch(`https://niceschool-be-2.onrender.com/api/events/${selectedEvent.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -47,7 +47,10 @@ const sidebarItems: SidebarItem[] = [
   { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
   { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
   { icon: Settings, label: "Settings", href: "/dashboard/settings" },
-  { icon: TiNews, label: "News", href: "/dashboard/news" },
+  {icon: TiNews, label: "News",href: "#", children: [
+  { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
+  {icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news"}
+  ]},
   { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
   { 
     icon: IoSchoolSharp, 

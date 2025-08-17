@@ -1,10 +1,10 @@
-import ViewNews from '@/components/dashboard/ui/NewsView/ViewNews'
 import React from 'react'
+import ProNewsManagement from "@/components/dashboard/AddNews";
 
 const page = () => {
   return (
     <div>
-      <ViewNews />
+      <ProNewsManagement />
     </div>
   )
 }

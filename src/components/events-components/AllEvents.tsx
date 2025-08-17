@@ -32,7 +32,7 @@ export const AllEvents = () => {
           isPublished: "true"
         });
 
-        const response = await fetch(`http://localhost:3001/api/events/public?${query}`);
+        const response = await fetch(`https://niceschool-be-2.onrender.com/api/events/public?${query}`);
         const data = await response.json();
         
         setEvents(data.data || []);
