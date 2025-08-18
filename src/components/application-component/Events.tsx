@@ -41,6 +41,13 @@ export interface Event {
   updatedAt: string;
   registrations: any[];
 }
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  profileImage?: string;
+}
 
 export const Events = () => {
   const { showToast } = useToast();
@@ -57,8 +64,19 @@ export const Events = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+
+      const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
+      } catch (e) {
+        console.error("Failed to parse user data", e);
+      }
+    }
     const token = localStorage.getItem("authToken");
     const fetchEvents = async () => {
       try {
@@ -199,8 +217,8 @@ const response = await fetch(`https://niceschool-be-2.onrender.com/api/events?${
     <div className="space-y-6">
       <div className="flex justify-between items-center sticky">
         <h1 className="text-2xl font-bold">Events Dashboard</h1>
-        <Button onClick={handleCreate}>
-          <Plus className="h-4 w-4 mr-2" />
+        <Button onClick={handleCreate} className={`${user?.role === 'STUDENT' ? 'hidden' : 'flex'}`}>
+          <Plus className={`h-4 w-4 mr-2 `} />
           Create Event
         </Button>
       </div>

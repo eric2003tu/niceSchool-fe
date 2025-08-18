@@ -7,7 +7,7 @@ import Footer from "@/components/ui/Footer";
 const page = () => {
   return (
     <div>
-      <header className="fixed top-0 w-full z-50 mb-6">
+      <header className="fixed top-0 w-full z-50">
        <Header/>
       </header>
         {/* <AlumniHero name="Login"/> */}

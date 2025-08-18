@@ -12,6 +12,14 @@ import { ViewArticleModal } from "./ViewArticleModal";
 import { EditArticleModal } from "./EditArticleModal";
 import { DeleteModal } from "./DeleteModal";
 
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  profileImage?: string;
+}
+
 const ViewNews: React.FC = () => {
   const router = useRouter();
   
@@ -38,6 +46,7 @@ const ViewNews: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [user, setUser] = useState<User | null>(null);
 
   // Authentication Check
   useEffect(() => {
@@ -255,6 +264,15 @@ const handleDelete = async (id: string) => {
 
   // Auto-hide notifications
   useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(Array.isArray(parsedUser) ? parsedUser[0] : parsedUser);
+      } catch (e) {
+        console.error("Failed to parse user data", e);
+      }
+    }
     if (notification) {
       const timer = setTimeout(() => {
         setNotification(null);
@@ -289,7 +307,7 @@ const handleDelete = async (id: string) => {
             <div className="mt-4 sm:mt-0">
               <button
                 onClick={() => router.push('/dashboard/news/create-news')}
-                className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+                className={`bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors ${user?.role === 'STUDENT' ? 'hidden' : 'flex'}`}
               >
                 + Add New Article
               </button>

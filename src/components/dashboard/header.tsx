@@ -132,7 +132,7 @@ export const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
                         </p>
                       </div>
                       <Link
-                        href="#"
+                        href="/dashboard/profile"
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setDropdownOpen(false)}
                       >

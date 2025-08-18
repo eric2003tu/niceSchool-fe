@@ -23,7 +23,7 @@ export const fetchArticles = async (): Promise<NewsArticle[]> => {
 export const updateArticle = async (id: string, articleData: Partial<NewsArticle>) => {
   const token = localStorage.getItem("authToken");
   const response = await fetch(`${API_ENDPOINT}/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',

@@ -66,7 +66,7 @@ const LoginForm: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 mt-10">
+    <div className="min-h-screen flex items-center justify-center p-4 mt-4">
       <Toast toast={toast} onClose={hideToast} />
       
       <div className="w-full max-w-md">

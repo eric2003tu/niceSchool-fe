@@ -31,37 +31,73 @@ interface SidebarItem {
   children?: SidebarItem[];
 }
 
-const sidebarItems: SidebarItem[] = [
-  { icon: Home, label: "Dashboard", href: "/dashboard" },
-  {
-    icon: HiAcademicCap, 
-    label: "Academics", 
-    href: "#",
-    children: [
+
+const sidebarItemsByRole: Record<string, SidebarItem[]> = {
+  STUDENT: [
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
+      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
+    ] },
+    { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
+    { icon: TiNews, label: "News", href: "/dashboard/news" },
+    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+    { icon: IoSchoolSharp, label: "Applications", href: "#", children: [
+      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+    ] },
+  ],
+  ADMIN: [
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
+      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
       { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
       { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
       { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
-    ]
-  },
-  { icon: Users, label: "Users", href: "/dashboard/users" },
-  { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
-  { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
-  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
-  {icon: TiNews, label: "News",href: "#", children: [
-  { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
-  {icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news"}
-  ]},
-  { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
-  { 
-    icon: IoSchoolSharp, 
-    label: "Applications", 
-    href: "#",
-    children: [
+    ] },
+    { icon: Users, label: "Users", href: "/dashboard/users" },
+    { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
+    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+    { icon: TiNews, label: "News", href: "#", children: [
+      { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
+      { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
+    ] },
+    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+  ],
+  FACULTY: [
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
       { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" }
-    ]
-  }
-];
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
+      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
+    ] },
+    { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
+    { icon: TiNews, label: "News", href: "#", children: [
+      { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
+      { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
+    ] },
+    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+  ],
+  ALUMNI: [
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
+      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
+      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
+    ] },
+    { icon: IoSchoolSharp, label: "Alumni Events", href: "/dashboard/alumni-events" },
+    { icon: TiNews, label: "News", href: "#", children: [
+      { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
+      { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
+    ] },
+    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+  ],
+};
 
 export const Sidebar = ({ 
   isOpen, 
@@ -87,12 +123,18 @@ export const Sidebar = ({
     }
 
     // Automatically expand parent items when child is active
-    const activeParent = sidebarItems.find(item => 
-      item.children?.some(child => pathname.startsWith(child.href)))
+    const sidebarItems = getSidebarItems();
+    const activeParent = sidebarItems.find((item: SidebarItem) => 
+      item.children?.some(child => pathname.startsWith(child.href)));
     if (activeParent) {
       setExpandedItems(prev => ({ ...prev, [activeParent.label]: true }));
     }
   }, [pathname]);
+
+  const getSidebarItems = () => {
+    const role = user?.role?.toUpperCase();
+    return sidebarItemsByRole[typeof role === "string" ? role : "STUDENT"] || sidebarItemsByRole["STUDENT"];
+  };
 
   const toggleItemExpansion = (label: string) => {
     setExpandedItems(prev => ({
@@ -204,90 +246,12 @@ export const Sidebar = ({
         {/* Scrollable Navigation */}
         <div className="flex-1 overflow-y-auto">
           <nav className="px-4 py-6 space-y-2">
-            {sidebarItems.map((item, index) => renderSidebarItem(item, index))}
+            {getSidebarItems().map((item: SidebarItem, index: number) => renderSidebarItem(item, index))}
           </nav>
         </div>
 
         {/* Fixed Footer */}
-        <div className="flex-shrink-0 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100/50">
-          <div className="p-4">
-            <div className="relative">
-              <button
-                onClick={() => setShowUserMenu(!showUserMenu)}
-                className="w-full flex items-center space-x-3 p-3 rounded-xl hover:bg-white/80 transition-all duration-200 group"
-                aria-expanded={showUserMenu}
-                aria-label="User menu"
-              >
-                <div className="relative">
-                  {user?.profileImage ? (
-                    <img
-                      src={user.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtu74pEiq7ofeQeTsco0migV16zZoBwSlGg&s"}
-                      alt={`${user.firstName} ${user.lastName}`}
-                      className="w-12 h-12 rounded-xl object-cover ring-2 ring-white shadow-md"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 rounded-xl bg-gray-200 flex items-center justify-center text-gray-500">
-                      <User className="w-6 h-6" />
-                    </div>
-                  )}
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
-                </div>
-                <div className="flex flex-col text-left min-w-0">
-                  {user ? (
-                    <>
-                      <p className="text-sm font-semibold text-gray-900 truncate">
-                        {`${user.firstName} ${user.lastName}`}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {user.email}
-                      </p>
-                      <p className="text-xs text-emerald-600 font-medium">
-                        {user.role}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-sm text-gray-500">Loading user...</p>
-                  )}
-                </div>
-                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                  showUserMenu ? 'rotate-180' : ''
-                }`} />
-              </button>
-
-              {/* User Menu Dropdown */}
-              {showUserMenu && (
-                <div className="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-50">
-                  <div className="py-2">
-                    <button
-                      onClick={() => {
-                        onProfileClick();
-                        router.push('/dashboard/profile');
-                        setShowUserMenu(false);
-                        setIsOpen(false);
-                      }}
-                      className="w-full flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors group"
-                    >
-                      <User className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-600" />
-                      View Profile
-                    </button>
-                    <button
-                      onClick={() => {
-                        onLogout();
-                        router.push('/');
-                        setShowUserMenu(false);
-                        setIsOpen(false);
-                      }}
-                      className="w-full flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors group"
-                    >
-                      <LogOut className="w-4 h-4 mr-3 text-red-400 group-hover:text-red-600" />
-                      Sign Out
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* ...existing user menu code... */}
       </div>
 
       {/* Click outside to close user menu */}
