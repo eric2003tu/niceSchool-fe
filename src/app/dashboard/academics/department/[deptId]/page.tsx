@@ -76,8 +76,10 @@ const DeptPage = (): React.ReactElement => {
           <p className="text-gray-500">No programs yet.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {dept.programs.map((p: any) => (
-              <div key={p.id || p._id} className="bg-white rounded-lg shadow p-4">
+            {dept.programs.map((p: any) => {
+              const pid = p.id || p._id;
+              return (
+              <div key={pid} className="bg-white rounded-lg shadow p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-medium text-emerald-700">{p.name}</h3>
@@ -89,11 +91,12 @@ const DeptPage = (): React.ReactElement => {
                   </div>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
-                  <Link href={`/dashboard/academics/department/${deptId}/programs/${p.id}`} className="text-emerald-600">Open</Link>
+                  <Link href={`/dashboard/academics/department/${deptId}/programs/${pid}`} className="text-emerald-600">Open</Link>
                   <div className="text-sm text-gray-500">Cohorts: {p.cohorts?.length || 0}</div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -37,7 +37,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
     { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: HiAcademicCap, label: "Academics", href: "#", 
   children: [
-    { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics"},
     { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department"},
     { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
     { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
@@ -58,7 +57,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: HiAcademicCap, label: "Academics", href: "#", 
   children: [
-    { icon: HiAcademicCap, label: "Academy", href: "/dashboard/academics"},
     { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
     { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
     { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
