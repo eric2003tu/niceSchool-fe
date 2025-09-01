@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import api, { extractList } from '@/lib/api';
 import Link from 'next/link';
+import AddProgramModal from '@/components/academics/AddProgramModal';
 
 const DeptProgramsPage: React.FC = () => {
   const params = useParams() as { deptId?: string };
@@ -12,6 +13,7 @@ const DeptProgramsPage: React.FC = () => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showAddProgram, setShowAddProgram] = useState(false);
 
   useEffect(() => {
     if (!deptId) return;
@@ -41,10 +43,11 @@ const DeptProgramsPage: React.FC = () => {
 
   return (
     <div>
+      <AddProgramModal open={showAddProgram} onClose={() => setShowAddProgram(false)} departmentId={deptId} />
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">Programs</h2>
         <div className="flex items-center gap-2">
-          <Link href={`/dashboard/academics/programs/create?deptId=${deptId}`} className="px-3 py-2 bg-emerald-600 text-white rounded-md">+ New Program</Link>
+          <button onClick={() => setShowAddProgram(true)} className="px-3 py-2 bg-emerald-600 text-white rounded-md">+ New Program</button>
         </div>
       </div>
 
