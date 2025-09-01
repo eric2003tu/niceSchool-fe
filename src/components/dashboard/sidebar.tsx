@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown, ChevronRight } from "lucide-react";
+import { Home, BookOpen, Users, Calendar, BarChart3, Settings, X, LogOut, User, ChevronDown, ChevronRight, Contact } from "lucide-react";
 import { HiAcademicCap } from "react-icons/hi2";
 import { IoSchoolSharp } from "react-icons/io5";
 import { FaDoorOpen } from "react-icons/fa";
@@ -35,67 +35,86 @@ interface SidebarItem {
 const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   STUDENT: [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
-      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
-      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
+  { icon: HiAcademicCap, label: "Academics", href: "#", 
+  children: [
+    { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics"},
+    { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department"},
+    { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
+    { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
+    { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
+    { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
+    { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
+    { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" }
+  ]},
+  { icon: TiNews, label: "News", href: "/dashboard/news" },
+  { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+  { icon: IoSchoolSharp, label: "Applications", href: "#", children: [
+    { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+    { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
     ] },
-    { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
-    { icon: TiNews, label: "News", href: "/dashboard/news" },
-    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
-    { icon: IoSchoolSharp, label: "Applications", href: "#", children: [
-      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
-    ] },
+    {icon: Contact, label: "Contact", href:"/dashboard/contact"},
   ],
   ADMIN: [
-    { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
-      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
-      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
-      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
-      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
-    ] },
-    { icon: Users, label: "Users", href: "/dashboard/users" },
-    { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
-    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
-    { icon: TiNews, label: "News", href: "#", children: [
+  { icon: Home, label: "Dashboard", href: "/dashboard" },
+  { icon: HiAcademicCap, label: "Academics", href: "#", 
+  children: [
+    { icon: HiAcademicCap, label: "Academy", href: "/dashboard/academics"},
+    { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
+    { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
+    { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
+    { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
+    { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
+    { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" }
+  ]},
+  { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+  { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+  { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
+  { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+  { icon: Users, label: "Users", href: "/dashboard/users" },
+  { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
+  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+  { icon: TiNews, label: "News", href: "#", children: [
       { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
       { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
     ] },
     { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+    {icon: Contact, label: "Contact", href:"/dashboard/contact"},
   ],
   FACULTY: [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
-      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
-      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
-      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
-      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
-    ] },
+  { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics" },
+  { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
+  { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
+  { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
+  { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
+  { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
+  { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
+  { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
     { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
     { icon: TiNews, label: "News", href: "#", children: [
       { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
       { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
     ] },
     { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+    {icon: Contact, label: "Contact", href:"/dashboard/contact"},
   ],
   ALUMNI: [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: HiAcademicCap, label: "Academics", href: "#", children: [
-      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
-      { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
-      { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
-      { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
-    ] },
+  { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics" },
+  { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
+  { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
+  { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
+  { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
+  { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
+  { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
+  { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
     { icon: IoSchoolSharp, label: "Alumni Events", href: "/dashboard/alumni-events" },
     { icon: TiNews, label: "News", href: "#", children: [
       { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
       { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
     ] },
     { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+    {icon: Contact, label: "Contact", href:"/dashboard/contact"},
   ],
 };
 
@@ -133,7 +152,7 @@ export const Sidebar = ({
 
   const getSidebarItems = () => {
     const role = user?.role?.toUpperCase();
-    return sidebarItemsByRole[typeof role === "string" ? role : "STUDENT"] || sidebarItemsByRole["STUDENT"];
+    return sidebarItemsByRole[typeof role === "string" ? role : "ADMIN"] || sidebarItemsByRole["STUDENT"];
   };
 
   const toggleItemExpansion = (label: string) => {
@@ -251,7 +270,41 @@ export const Sidebar = ({
         </div>
 
         {/* Fixed Footer */}
-        {/* ...existing user menu code... */}
+        <div className="px-4 py-4 border-t border-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img src={user?.profileImage || '/person-m-3.webp'} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <div className="text-sm font-semibold">{user?.firstName} {user?.lastName}</div>
+                <div className="text-xs text-gray-500">{user?.role}</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => { setShowUserMenu(prev => !prev); }}
+                aria-label="Open user menu"
+                className="p-2 rounded-lg hover:bg-gray-50"
+              >
+                <User className="w-4 h-4 text-gray-600" />
+              </button>
+              <button
+                onClick={() => onLogout()}
+                aria-label="Logout"
+                className="p-2 rounded-lg hover:bg-gray-50"
+              >
+                <LogOut className="w-4 h-4 text-gray-600" />
+              </button>
+            </div>
+          </div>
+
+          {showUserMenu && (
+            <div className="mt-3 bg-white border border-gray-100 rounded-lg p-3 shadow-sm">
+              <button onClick={() => { onProfileClick(); setShowUserMenu(false); setIsOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Profile</button>
+              <button onClick={() => { onLogout(); setShowUserMenu(false); setIsOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Logout</button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Click outside to close user menu */}

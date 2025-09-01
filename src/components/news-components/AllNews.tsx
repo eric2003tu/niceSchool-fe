@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo, useState, useEffect } from "react";
-import axios from "axios";
+import api, { extractList } from '@/lib/api';
 
 // Types
 interface Author {
@@ -108,16 +108,15 @@ const AllNews: React.FC = () => {
     const fetchNews = async () => {
       try {
         setLoading(true);
-setError("");
-const res = await axios.get("https://niceschool-be-2.onrender.com/api/news");
-
-if (res.data && Array.isArray(res.data.data)) {
-  const mappedNews = res.data.data.map(mapApiToNewsItem);
-  setNews(mappedNews.length > 0 ? mappedNews : sampleNews);
-} else {
-  setNews(sampleNews);
-}
-
+        setError("");
+        const res = await api.get('/news');
+        const list = extractList(res.data);
+        if (list.length > 0) {
+          const mappedNews = list.map(mapApiToNewsItem);
+          setNews(mappedNews);
+        } else {
+          setNews(sampleNews);
+        }
       } catch (err) {
         console.error("Error fetching news:", err);
         setError("Failed to load news. Showing sample data.");

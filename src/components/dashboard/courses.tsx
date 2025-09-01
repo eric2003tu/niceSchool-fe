@@ -32,7 +32,7 @@ export const CoursesPage = () => {
             <h1 className="text-2xl font-bold text-gray-900">Courses</h1>
             <p className="mt-1 text-sm text-gray-600">Manage and monitor all courses</p>
           </div> */}
-          <Link href='/dashboard/cources' className="flex items-center gap-2">
+          <Link href='/dashboard/courses' className="flex items-center gap-2">
             <Plus className="w-4 h-4" />
             Add Course
           </Link>

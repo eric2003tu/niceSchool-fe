@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/dashboard
 import { Users, Plus, Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import api, { extractList } from '@/lib/api';
 import { AddUserForm } from '@/components/dashboard/AddUsers'
 import { IoIosMore } from "react-icons/io";
 import ViewMore from "./ui/ViewMore";
@@ -56,25 +57,13 @@ export const StudentsPage = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        throw new Error('Authentication required');
-      }
       try {
-        const response = await fetch('https://niceschool-be-2.onrender.com/api/users', {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch students');
-        }
-        const data = await response.json();
-        setStudents(data);
-        setFilteredStudents(data);
+        const res = await api.get('/users');
+        const list = extractList(res.data);
+        setStudents(list);
+        setFilteredStudents(list);
       } catch (err) {
+        console.error('fetch students error', err);
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
         setLoading(false);

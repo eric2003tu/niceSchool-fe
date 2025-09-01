@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -85,24 +85,18 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post('/api/contact', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await api.post('/contact', formData);
 
       if (response.status === 200) {
         showToast('success', 'Message sent successfully! We\'ll get back to you soon.');
         setFormData({ firstName: '', email: '', subject: '', message: '' });
         setErrors({});
       } else {
-        throw new Error(response.data.message || 'Failed to send message');
+        throw new Error(response.data?.message || 'Failed to send message');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Submission error:', error);
-      const errorMessage = axios.isAxiosError(error) 
-        ? error.response?.data?.message || 'Failed to send message. Please try again.'
-        : 'Failed to send message. Please try again.';
+      const errorMessage = error?.response?.data?.message || error.message || 'Failed to send message. Please try again.';
       showToast('error', errorMessage);
     } finally {
       setIsSubmitting(false);

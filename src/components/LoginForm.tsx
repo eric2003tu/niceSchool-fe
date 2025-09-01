@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/login/Input';
 import { Button } from '@/components/ui/login/Button';
 import { validateField } from '../utils/validation';
 import { useRouter } from 'next/navigation';
+import api from '@/lib/api';
 
 interface LoginFormData {
   email: string;
@@ -28,33 +29,19 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (values: LoginFormData) => {
     try {
-      const response = await fetch('https://niceschool-be-2.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      });
+      const response = await api.post('/auth/login', values);
+      const { access_token, user } = response.data;
 
-      if (!response.ok) {
-        const status = response.status;
-        if (status === 401) throw new Error('Invalid email or password. Please try again.');
-        if (status === 429) throw new Error('Too many login attempts. Please try again later.');
-        if (status === 500) throw new Error('Server error. Please try again later.');
-        throw new Error('Login failed. Please check your credentials.');
-      }
-    const { access_token, user } = await response.json();
-    
-    // Store token and user data in localStorage
-    localStorage.setItem('authToken', access_token);
-    localStorage.setItem('user', JSON.stringify(user));
+      // Store token and user data in localStorage
+      localStorage.setItem('authToken', access_token);
+      localStorage.setItem('user', JSON.stringify(user));
+
       showToast('Welcome back! Login successful.', 'success');
-       router.push('/dashboard');
-    } catch (error) {
-      const message = error instanceof Error 
-        ? (error.message.includes('Failed to fetch') 
-          ? 'Network error. Please check your connection and try again.' 
-          : error.message)
-        : 'An unexpected error occurred. Please try again.';
-      showToast(message, 'error');
+      router.push('/dashboard');
+    } catch (error: any) {
+      const message = error?.response?.data?.message || (error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.');
+      const userMessage = message.includes('Failed to fetch') ? 'Network error. Please check your connection and try again.' : message;
+      showToast(userMessage, 'error');
       throw error;
     }
   };

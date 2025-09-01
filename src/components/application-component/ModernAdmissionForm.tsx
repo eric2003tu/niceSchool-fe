@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { User, GraduationCap, FileText, Award, Heart, Send, LucideIcon } from "lucide-react";
 
 import ProgressStepper from "@/components/application-component/ProgressStepper";
+import api from '@/lib/api';
 import FormStepHeader from "@/components/application-component/FormStepHeader";
 import NavigationButtons from "@/components/application-component/NavigationButtons";
 
@@ -124,33 +125,12 @@ const ModernAdmissionForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("authToken");
-
-    if (!token) {
-      alert("No auth token found. Please log in.");
-      return;
-    }
-
     try {
-      const response = await fetch("https://niceschool-be-2.onrender.com/api/admissions/apply", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit application");
-      }
-
-      alert("Application submitted successfully!");
+      const response = await api.post('/admissions/apply', formData);
+      alert('Application submitted successfully!');
       // Optionally reset form or redirect user here
-
     } catch (error: any) {
-      alert(`Error submitting application: ${error.message || error}`);
+      alert(`Error submitting application: ${error?.response?.data?.message || error.message || error}`);
     }
   };
 

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Search, Filter, Sparkles } from "lucide-react";
+import api, { extractList } from '@/lib/api';
 import { ModernButton } from "./ModernButton";
 import { ModernInput } from "./ModernInput";
 import { ModernSelect } from "./ModernSelect";
@@ -32,12 +33,13 @@ export const AllEvents = () => {
           isPublished: "true"
         });
 
-        const response = await fetch(`https://niceschool-be-2.onrender.com/api/events/public?${query}`);
-        const data = await response.json();
-        
-        setEvents(data.data || []);
-        setFeaturedEvent(data.featured || data.data?.[0] || null);
-        setTotalPages(Math.ceil((data.total || 0) / EVENTS_PER_PAGE));
+  const response = await api.get(`/events/public?${query}`);
+  const data = response.data;
+
+  const list = extractList(data);
+  setEvents(list || []);
+  setFeaturedEvent(data.featured || list?.[0] || null);
+  setTotalPages(Math.ceil((data.total || list.length || 0) / EVENTS_PER_PAGE));
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
