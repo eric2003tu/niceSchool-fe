@@ -36,13 +36,33 @@ api.interceptors.request.use((config) => {
 
 export function extractList(payload: any): any[] {
   if (!payload) return [];
+  // direct array
   if (Array.isArray(payload)) return payload;
+
+  // helper: recursively search for the first array in an object
+  const findArray = (value: any, seen = new Set()): any[] | null => {
+    if (value == null) return null;
+    if (Array.isArray(value)) return value;
+    if (typeof value !== 'object') return null;
+    if (seen.has(value)) return null;
+    seen.add(value);
+    for (const key of Object.keys(value)) {
+      try {
+        const found = findArray(value[key], seen);
+        if (Array.isArray(found) && found.length > 0) return found;
+      } catch (e) {
+        // ignore and continue
+      }
+    }
+    return null;
+  };
+
+  // common top-level properties
   if (Array.isArray(payload.data)) return payload.data;
   if (Array.isArray(payload.users)) return payload.users;
-  for (const key of Object.keys(payload)) {
-    if (Array.isArray(payload[key])) return payload[key];
-  }
-  return [];
+
+  const nested = findArray(payload);
+  return Array.isArray(nested) ? nested : [];
 }
 
 export default api;

@@ -63,24 +63,9 @@ export default function MyApplications() {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const authToken = localStorage.getItem('authToken');
-        if (!authToken) {
-          router.push('/login');
-          return;
-        }
-
-        const response = await fetch('https://niceschool-be-2.onrender.com/api/admissions/my-applications', {
-          headers: {
-            'Authorization': `Bearer ${authToken}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch applications');
-        }
-
-        const data = await response.json();
-        setApplications(data);
+    const res = await api.get('/admissions/my-applications');
+    const payload = res?.data?.data ?? res?.data ?? [];
+    setApplications(payload);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
@@ -88,7 +73,7 @@ export default function MyApplications() {
       }
     };
 
-    fetchApplications();
+  fetchApplications();
   }, [router]);
 
   const toggleExpand = (id: string) => {

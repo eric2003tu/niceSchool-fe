@@ -64,53 +64,25 @@ export default function Admin() {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const authToken = localStorage.getItem('authToken');
-        if (!authToken) {
-          router.push('/login');
-          return;
-        }
-
-        const response = await fetch('https://niceschool-be-2.onrender.com/api/admissions/applications', {
-          headers: {
-            'Authorization': `Bearer ${authToken}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch applications');
-        }
-
-        const data = await response.json();
-        setApplications(data.data); // Note: Changed to data.data to match your API response
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        const res = await api.get('/admissions/applications');
+        // API returns { data, total, page, limit } in some endpoints; support both
+        const payload = res?.data?.data ?? res?.data ?? [];
+        setApplications(payload);
+      } catch (err: any) {
+        setError(err?.message || 'An unknown error occurred');
       } finally {
         setLoading(false);
       }
     };
 
     fetchApplications();
-  }, [router]);
+  }, []);
 
 const handleUpdateApplication = async (updatedApp: Application) => {
   try {
     const authToken = localStorage.getItem('authToken');
-    const response = await fetch(`https://niceschool-be-2.onrender.com/api/admissions/applications/${updatedApp.id}/status`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`
-      },
-      body: JSON.stringify({ status: updatedApp.status })
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update application');
-    }
-
-    setApplications(prev => prev.map(app => 
-      app.id === updatedApp.id ? updatedApp : app
-    ));
+  await api.patch(`/admissions/applications/${updatedApp.id}/status`, { status: updatedApp.status });
+  setApplications(prev => prev.map(app => app.id === updatedApp.id ? updatedApp : app));
   } catch (err) {
     setError(err instanceof Error ? err.message : 'Failed to update application');
   }
@@ -119,18 +91,8 @@ const handleUpdateApplication = async (updatedApp: Application) => {
   const handleDeleteApplication = async (id: string) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://niceschool-be-2.onrender.com/api/admissions/applications/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${authToken}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete application');
-      }
-
-      setApplications(prev => prev.filter(app => app.id !== id));
+    await api.delete(`/admissions/applications/${id}`);
+    setApplications(prev => prev.filter(app => app.id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete application');
     }

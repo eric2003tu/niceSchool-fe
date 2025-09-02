@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import api, { extractList } from '@/lib/api';
 import Link from 'next/link';
+import ApplicationsAnalyticsRow from '@/components/application-component/ApplicationsAnalyticsRow';
 
 const DeptProgramPage: React.FC = () => {
   const params = useParams() as { deptId?: string; ProgramId?: string };
@@ -105,6 +106,11 @@ const DeptProgramPage: React.FC = () => {
         </div>
       </section>
 
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/applications`} className="inline-block px-3 py-2 bg-emerald-600 text-white rounded-md">View program applications</Link>
+        <Link href={`/dashboard/academics/department/${deptId}/applications`} className="inline-block px-3 py-2 bg-gray-100 text-gray-800 rounded-md">View department applications</Link>
+      </div>
+
       {/* Navigation cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/courses`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
@@ -129,6 +135,11 @@ const DeptProgramPage: React.FC = () => {
           <div className="text-sm text-gray-500">Enrollments</div>
           <div className="mt-3 text-lg font-semibold">Manage Enrollments</div>
           <div className="mt-2 text-sm text-gray-600">Enroll students and review enrollment status.</div>
+        </Link>
+        <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/applications`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
+          <div className="text-sm text-gray-500">Applications</div>
+          <div className="mt-3 text-lg font-semibold">Program Applications</div>
+          <div className="mt-2 text-sm text-gray-600">View and manage applications for this program.</div>
         </Link>
       </section>
 

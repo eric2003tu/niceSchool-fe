@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import api from '@/lib/api';
 import Link from 'next/link';
+import ApplicationsAnalyticsRow from '@/components/application-component/ApplicationsAnalyticsRow';
 
 const CoursePage: React.FC = () => {
   const params = useParams() as { deptId?: string; ProgramId?: string; id?: string };
@@ -61,6 +62,12 @@ const CoursePage: React.FC = () => {
             <Link href={`./exams/create-exam`} className="ml-2 inline-block px-3 py-1 bg-indigo-600 text-white rounded">Create Exam</Link>
           </>
         )}
+        {canManage && (
+          <Link href={`./applications`} className="ml-2 inline-block px-3 py-1 bg-emerald-600 text-white rounded">View Applications</Link>
+        )}
+        <div className="mt-6">
+          <Link href={`./applications`} className="inline-block px-3 py-2 bg-emerald-600 text-white rounded-md">View course applications</Link>
+        </div>
       </div>
     </div>
   );

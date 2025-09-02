@@ -43,32 +43,14 @@ export const useEvents = (params: {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        setError("Authentication required");
-        return;
-      }
-
       try {
         setLoading(true);
-        let url = `https://niceschool-be-2.onrender.com/api/events?page=${params.page}&limit=${params.limit}`;
-        
-        if (params.search) url += `&search=${encodeURIComponent(params.search)}`;
-        if (params.category && params.category !== 'all') url += `&category=${params.category}`;
-        if (params.status && params.status !== 'all') url += `&status=${params.status}`;
-
-        const response = await fetch(url, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const json: ApiResponse = await response.json();
+        const qs = new URLSearchParams({ page: String(params.page), limit: String(params.limit) });
+        if (params.search) qs.set('search', params.search);
+        if (params.category && params.category !== 'all') qs.set('category', params.category);
+        if (params.status && params.status !== 'all') qs.set('status', params.status);
+        const res = await (await import('@/lib/api')).default.get(`/events?${qs.toString()}`);
+        const json: ApiResponse = res?.data?.data ? res.data : res.data;
         setData(json);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

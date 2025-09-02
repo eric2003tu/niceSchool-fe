@@ -32,22 +32,7 @@ export const AddUserForm = ({ onClose, onUserAdded }: AddUserFormProps) => {
     setError('');
 
     try {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) throw new Error('Authentication required');
-
-      const response = await fetch('https://niceschool-be-2.onrender.com/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create user');
-      }
+  await api.post('/users', formData);
 
       onUserAdded?.();
       onClose();

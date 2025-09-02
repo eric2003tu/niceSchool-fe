@@ -23,21 +23,10 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      // setIsLoading(true);
       setIsLoading(true);
       try {
-        const authToken = localStorage.getItem("authToken");
-        if (!authToken) throw new Error("Authentication required");
-
-        const response = await fetch("https://niceschool-be-2.onrender.com/api/users/profile", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch profile");
-
-        const data = await response.json();
+        const res = await (await import('@/lib/api')).default.get('/users/profile');
+        const data = res?.data?.data ?? res?.data ?? res;
         setUser(data);
         setFormData(data);
       } catch (error) {
@@ -74,17 +63,8 @@ export const ProfilePage = () => {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) throw new Error("Authentication required");
 
-      const uploadResponse = await fetch("https://niceschool-be-2.onrender.com/api/upload", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: formData,
-      });
-
-      if (!uploadResponse.ok) throw new Error("Failed to upload image");
-
-      const { url } = await uploadResponse.json();
+  const uploadRes = await (await import('@/lib/api')).default.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+  const { url } = uploadRes?.data ?? uploadRes;
       setFormData((prev) => ({ ...prev, profileImage: url }));
     } catch (error) {
       showToast(
@@ -103,21 +83,8 @@ export const ProfilePage = () => {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) throw new Error("Authentication required");
 
-      const response = await fetch("https://niceschool-be-2.onrender.com/api/users/profile", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update profile");
-      }
-
-      const updatedUser = await response.json();
+  const res = await (await import('@/lib/api')).default.patch('/users/profile', formData);
+  const updatedUser = res?.data ?? res;
       setUser(updatedUser);
       setIsEditing(false);
       showToast("Success", "Profile updated successfully", "success");

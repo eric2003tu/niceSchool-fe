@@ -16,7 +16,7 @@ const MarksPage: React.FC = () => {
     const load = async () => {
       try {
         setLoading(true);
-        const res = await api.get(`/programs/${ProgramId}/users/${id}/marks`);
+        const res = await api.get(`/academics/programs/${ProgramId}/users/${id}/marks`).catch(() => ({ data: [] }));
         setMarks(extractList(res.data));
       } catch (err: any) {
         console.error('Failed to load marks', err);

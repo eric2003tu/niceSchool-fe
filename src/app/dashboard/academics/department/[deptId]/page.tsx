@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import api from '@/lib/api';
 import Link from 'next/link';
+import ApplicationsAnalyticsRow from '@/components/application-component/ApplicationsAnalyticsRow';
 import AddProgramModal from '@/components/academics/AddProgramModal';
 
 const DeptPage = (): React.ReactElement => {
@@ -68,6 +69,10 @@ const DeptPage = (): React.ReactElement => {
           <p className="text-sm text-gray-500">Cohorts</p>
           <p className="text-2xl font-bold">{stats.cohorts}</p>
         </div>
+      </div>
+
+      <div className="mb-6">
+        <Link href={`/dashboard/academics/department/${deptId}/applications`} className="inline-block px-3 py-2 bg-emerald-600 text-white rounded-md">View all department applications</Link>
       </div>
 
       <div>
