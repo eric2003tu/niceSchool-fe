@@ -12,6 +12,7 @@ const DeptProgramPage: React.FC = () => {
   const [program, setProgram] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [appCount, setAppCount] = useState<number | null>(null);
 
   const deptId = params?.deptId;
 
@@ -59,6 +60,21 @@ const DeptProgramPage: React.FC = () => {
       } catch (e) {
         // non-fatal
         console.debug('Failed to fetch related lists for program', e);
+      }
+
+      // fetch program-level counts: students, teachers, enrollments, applications
+      try {
+        const [studentsRes, teachersRes, enrollmentsRes, appsRes] = await Promise.all([
+          api.get(`/academics/programs/${programId}/students`).catch(() => ({ data: [] })),
+          api.get(`/academics/programs/${programId}/teachers`).catch(() => ({ data: [] })),
+          api.get(`/academics/programs/${programId}/enrollments`).catch(() => ({ data: [] })),
+          api.get('/admissions/applications', { params: { page: 1, limit: 1, program: programId } }).catch(() => ({ data: { total: 0 } })),
+        ]);
+        if (!mounted) return;
+        setProgram((prev: any) => ({ ...(prev || {}), studentsCount: Array.isArray(studentsRes.data) ? studentsRes.data.length : (studentsRes.data?.total ?? 0), teachersCount: Array.isArray(teachersRes.data) ? teachersRes.data.length : (teachersRes.data?.total ?? 0), enrollmentsCount: Array.isArray(enrollmentsRes.data) ? enrollmentsRes.data.length : (enrollmentsRes.data?.total ?? 0) }));
+        setAppCount(appsRes.data?.total ?? 0);
+      } catch (e) {
+        // ignore
       }
 
       if (mounted) setLoading(false);
@@ -125,10 +141,16 @@ const DeptProgramPage: React.FC = () => {
           <div className="mt-2 text-sm text-gray-600">Create and manage program cohorts and intakes.</div>
         </Link>
 
-        <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/users`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
-          <div className="text-sm text-gray-500">Users</div>
-          <div className="mt-3 text-lg font-semibold">Program Users</div>
-          <div className="mt-2 text-sm text-gray-600">View enrolled students and assigned faculty.</div>
+        <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/students`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
+          <div className="text-sm text-gray-500">Students</div>
+          <div className="mt-3 text-lg font-semibold">Program Students</div>
+          <div className="mt-2 text-sm text-gray-600">View and manage students enrolled in this program.</div>
+        </Link>
+
+        <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/teachers`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
+          <div className="text-sm text-gray-500">Teachers</div>
+          <div className="mt-3 text-lg font-semibold">Program Teachers</div>
+          <div className="mt-2 text-sm text-gray-600">View and manage faculty assigned to this program.</div>
         </Link>
 
         <Link href={`/dashboard/academics/department/${deptId}/programs/${programId}/enrollments`} className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
