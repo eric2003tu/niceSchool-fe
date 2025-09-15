@@ -15,10 +15,10 @@ const Hero = () => {
             eu viverra risus egestas.
           </p>
           <div className='flex flex-wrap gap-3'>
-            <button className='text-white font-bold bg-[#0F9255] px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-green-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
+            <button className='text-white font-bold cursor-pointer bg-[#0F9255] px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-green-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-lg'>
               Start Your Journey
             </button>
-            <button className='text-white font-bold bg-gray-700/80 px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-gray-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
+            <button className='text-white font-bold cursor-pointer bg-gray-700/80 px-4 py-2 rounded-md text-lg sm:text-xl hover:bg-gray-600 transition duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
               Discover programs
             </button>
           </div>
@@ -38,7 +38,7 @@ const Hero = () => {
               { icon: <Building2 size={32} />, title: '120+', subtitle: 'Degree Programs' }
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-4">
-                <div className="bg-[#0F9255] p-4 rounded-lg">{item.icon}</div>
+                <div className="bg-[#0F9255] p-4 rounded-lg cursor-pointer">{item.icon}</div>
                 <div className="text-left">
                   <h3 className="text-2xl font-bold">{item.title}</h3>
                   <p className="text-sm">{item.subtitle}</p>

@@ -12,28 +12,28 @@ const Filters = () => {
   return (
     <div className=" w-full lg:px-30 px-4 mt-8">
 <div className="w-fit p-2 rounded-full bg-blue-100 text-xl grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-2">
-  <button className={`flex items-center gap-2 px-4 py-2 font-semibold  rounded-full ${currentFilter=== 'Clubs' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
+  <button className={`flex items-center gap-2 px-4 py-2 font-semibold cursor-pointer  rounded-full ${currentFilter=== 'Clubs' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
     setCurrentFilter('Clubs')
   }}>
     <User2 size={22} />
     <span>Clubs & Organizations</span>
   </button>
 
-  <button className={`flex items-center gap-2  px-4 py-2 rounded-full font-semibold  ${currentFilter=== 'Athletics' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
+  <button className={`flex items-center gap-2 cursor-pointer px-4 py-2 rounded-full font-semibold text-center ${currentFilter=== 'Athletics' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
     setCurrentFilter('Athletics')
   }}>
     <Trophy size={22} />
     <span>Athletics</span>
   </button>
 
-  <button className={`flex items-center gap-2 px-4 py-2 rounded-full  font-semibold  ${currentFilter=== 'Facilities' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
+  <button className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer font-semibold  ${currentFilter=== 'Facilities' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'} `} onClick={()=>{
     setCurrentFilter('Facilities')
   }} >
     <MdApartment size={22} />
     <span>Campus Facilities</span>
   </button>
 
-  <button className={`flex items-center gap-2 px-4 py-2 rounded-full  font-semibold  ${currentFilter=== 'Support' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'}`}onClick={()=>{
+  <button className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer font-semibold  ${currentFilter=== 'Support' ? 'bg-green-600 text-white' : 'text-green-900 hover:bg-green-200'}`}onClick={()=>{
     setCurrentFilter('Support')
   }}>
     <LifeBuoy size={22} />

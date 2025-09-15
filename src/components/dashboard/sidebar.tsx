@@ -38,11 +38,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   { icon: HiAcademicCap, label: "Academics", href: "#", 
   children: [
     { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department"},
-    { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
-    { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
-    { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
-    { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
-    { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
     { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" }
   ]},
   { icon: TiNews, label: "News", href: "/dashboard/news" },
@@ -58,11 +53,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   { icon: HiAcademicCap, label: "Academics", href: "#", 
   children: [
     { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
-    { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
-    { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
-    { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
-    { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
-    { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" }
   ]},
   { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
   { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
@@ -82,11 +72,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
     { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics" },
   { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
-  { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
-  { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
-  { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
-  { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
-  { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
   { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
     { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
     { icon: TiNews, label: "News", href: "#", children: [
@@ -100,11 +85,6 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
     { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: HiAcademicCap, label: "Academics", href: "/dashboard/academics" },
   { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
-  { icon: HiAcademicCap, label: "Programs", href: "/dashboard/academics/programs" },
-  { icon: BookOpen, label: "Courses", href: "/dashboard/academics/courses" },
-  { icon: Calendar, label: "Cohorts", href: "/dashboard/academics/cohorts" },
-  { icon: Users, label: "Enrollments", href: "/dashboard/academics/enrollments" },
-  { icon: Calendar, label: "Attendance", href: "/dashboard/academics/attendance" },
   { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
     { icon: IoSchoolSharp, label: "Alumni Events", href: "/dashboard/alumni-events" },
     { icon: TiNews, label: "News", href: "#", children: [

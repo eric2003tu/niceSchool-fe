@@ -5,6 +5,7 @@ import api, { extractList } from '@/lib/api';
 import Link from 'next/link';
 import ApplicationsAnalyticsRow from '@/components/application-component/ApplicationsAnalyticsRow';
 import AddProgramModal from '@/components/academics/AddProgramModal';
+import BackButton from '@/components/ui/BackButton';
 
 const DeptProgramsPage: React.FC = () => {
   const params = useParams() as { deptId?: string };
@@ -69,7 +70,10 @@ const DeptProgramsPage: React.FC = () => {
     <div>
       <AddProgramModal open={showAddProgram} onClose={() => setShowAddProgram(false)} departmentId={deptId} />
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold">Programs</h2>
+        <div className="flex items-center gap-4">
+          <BackButton href={deptId ? `/dashboard/academics/department/${deptId}` : '/dashboard/academics'} />
+          <h2 className="text-xl font-bold">Programs</h2>
+        </div>
         <div className="flex items-center gap-2">
           <button onClick={() => setShowAddProgram(true)} className="px-3 py-2 bg-emerald-600 text-white rounded-md">+ New Program</button>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from 'react';
+import BackButton from '@/components/ui/BackButton';
 import { useParams } from 'next/navigation';
 import api, { extractList } from '@/lib/api';
 import Link from 'next/link';
@@ -96,9 +97,12 @@ const DeptProgramPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <header className="flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">{program?.name || 'Program'}</h1>
-          {program?.description && <p className="mt-1 text-sm text-gray-600">{program.description}</p>}
+        <div className="flex items-center gap-4">
+          <BackButton href={`/dashboard/academics/department/${deptId}/programs`} />
+          <div>
+            <h1 className="text-2xl font-bold">{program?.name || 'Program'}</h1>
+            {program?.description && <p className="mt-1 text-sm text-gray-600">{program.description}</p>}
+          </div>
         </div>
       </header>
 
@@ -166,40 +170,81 @@ const DeptProgramPage: React.FC = () => {
       </section>
 
       {/* Additional analytics below navigation */}
-      <section className="mt-6 bg-white p-4 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-3">Program Analytics</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-3 border rounded">
-            <div className="flex items-center justify-between">
-              <div>
+          <section className="mt-6 bg-white p-4 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-3">Program Analytics</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Total Applications</div>
+                <div className="mt-2 text-2xl font-semibold">{appCount ?? '—'}</div>
+                <div className="text-xs text-gray-400 mt-1">All time</div>
+              </div>
+
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Students</div>
+                <div className="mt-2 text-2xl font-semibold">{program?.studentsCount ?? '—'}</div>
+                <div className="text-xs text-gray-400 mt-1">Enrolled</div>
+              </div>
+
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Teachers</div>
+                <div className="mt-2 text-2xl font-semibold">{program?.teachersCount ?? '—'}</div>
+                <div className="text-xs text-gray-400 mt-1">Assigned</div>
+              </div>
+
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Enrollments</div>
+                <div className="mt-2 text-2xl font-semibold">{program?.enrollmentsCount ?? stats.enrollments}</div>
+                <div className="text-xs text-gray-400 mt-1">Active</div>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Courses</div>
+                <div className="mt-2 text-2xl font-semibold">{stats.courses}</div>
+                <div className="text-xs text-gray-400 mt-1">Total across program</div>
+              </div>
+
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Cohorts</div>
+                <div className="mt-2 text-2xl font-semibold">{stats.cohorts}</div>
+                <div className="text-xs text-gray-400 mt-1">Intakes</div>
+              </div>
+
+              <div className="p-4 border rounded">
                 <div className="text-sm text-gray-500">Avg Courses / Cohort</div>
-                <div className="mt-1 text-xl font-semibold">{(stats.courses && stats.cohorts) ? (Math.round((stats.courses / Math.max(1, stats.cohorts)) * 10) / 10) : '—'}</div>
+                <div className="mt-2 text-2xl font-semibold">{(stats.courses && stats.cohorts) ? (Math.round((stats.courses / Math.max(1, stats.cohorts)) * 10) / 10) : '—'}</div>
+                <div className="text-xs text-gray-400 mt-1">Average</div>
               </div>
-              <div className="text-sm text-green-600">+4% <span className="text-gray-400">vs last term</span></div>
             </div>
-          </div>
 
-          <div className="p-3 border rounded">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 border rounded">
                 <div className="text-sm text-gray-500">Student / Faculty Ratio</div>
-                <div className="mt-1 text-xl font-semibold">{program?.studentFacultyRatio ?? '—'}</div>
+                <div className="mt-2 text-2xl font-semibold">{(() => {
+                  const students = program?.studentsCount ?? 0;
+                  const teachers = program?.teachersCount ?? 0;
+                  return (teachers > 0) ? `${Math.round((students / teachers) * 10) / 10}:1` : '—';
+                })()}</div>
+                <div className="text-xs text-gray-400 mt-1">Students per teacher</div>
               </div>
-              <div className="text-sm text-red-600">-1% <span className="text-gray-400">vs last term</span></div>
-            </div>
-          </div>
 
-          <div className="p-3 border rounded">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-500">Active Enrollments</div>
-                <div className="mt-1 text-xl font-semibold">{stats.enrollments}</div>
+              <div className="p-4 border rounded">
+                <div className="text-sm text-gray-500">Application Conversion</div>
+                <div className="mt-2 text-2xl font-semibold">{(() => {
+                  const students = program?.studentsCount ?? 0;
+                  const apps = appCount ?? 0;
+                  return (apps > 0) ? `${Math.round((students / apps) * 100)}%` : '—';
+                })()}</div>
+                <div className="text-xs text-gray-400 mt-1">Applicants → Enrolled</div>
               </div>
-              <div className="text-sm text-green-600">+12% <span className="text-gray-400">vs last term</span></div>
             </div>
-          </div>
-        </div>
-      </section>
+
+            <div className="mt-6">
+              <h4 className="text-sm font-semibold mb-2">Application status breakdown</h4>
+              <ApplicationsAnalyticsRow filter={{ program: programId }} />
+            </div>
+          </section>
     </div>
   );
 };

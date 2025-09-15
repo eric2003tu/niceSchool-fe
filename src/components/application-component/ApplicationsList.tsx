@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import api, { extractList } from '@/lib/api';
 import ApplicationDetailModal from './ApplicationDetailModal';
+import BackButton from '@/components/ui/BackButton';
 import { Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function ApplicationsList({ filter }: { filter?: any }) {
@@ -43,6 +44,9 @@ export default function ApplicationsList({ filter }: { filter?: any }) {
 
   return (
     <div className="space-y-4">
+      <div>
+        <BackButton />
+      </div>
       {apps.map((app: any) => (
         <div key={app.id} className="border rounded p-4 bg-white">
           <div className="flex justify-between items-start">

@@ -3,6 +3,7 @@ import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { CoursePerformance } from "@/components/dashboard/course-performance";
 import { UpcomingEvents } from "@/components/dashboard/upcoming-events";
+import DashboardCharts from "@/components/dashboard/DashboardCharts";
 
 export default function DashboardPage() {
   return (
@@ -62,6 +63,11 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           <CoursePerformance />
           <UpcomingEvents />
+        </div>
+
+        {/* Charts row */}
+        <div className="mt-6">
+          <DashboardCharts />
         </div>
       </div>
     </main>

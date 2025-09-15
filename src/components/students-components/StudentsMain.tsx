@@ -30,7 +30,7 @@ const StudentsMain = () => {
           <div className="w-fit text-[#0F9255] bg-green-200 text-center rounded-full p-3 hover:text-white hover:bg-[#0F9255]">
             {card.icon}
           </div>
-          <h1 className="text-2xl font-semibold">{card.title}</h1>
+          <h1 className="text-2xl font-semibold cursor-pointer">{card.title}</h1>
           <p>{card.data}</p>
         </div>
         ))}

@@ -16,15 +16,15 @@ const Main = () => {
             </p>
 
             <div className='w-full flex flex-col sm:flex-row gap-3 px-0 sm:px-3'>
-              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer shadow-[#0F9255] shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
-                <span className="text-2xl text-start font-bold text-[#0a0a40]">25+</span>
+              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer  shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
+                <span className="text-2xl text-start font-bold text-[#0a0a40]">2005+ </span>
                 <p>Years</p>
               </button>
-              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer shadow-[#0F9255] shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
+              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
                 <span className="text-2xl text-start font-bold text-[#0a0a40]">5000+</span>
                 <p>Students</p>
               </button>
-              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer shadow-[#0F9255] shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
+              <button className='text-gray-500 font-bold bg-white rounded-md text-[18px] text-center px-7 p-2 cursor-pointer shadow-sm transition-all ease-in-out group duration-700 transform hover:scale-[1.02] hover:shadow-xl'>
                 <span className="text-2xl text-start font-bold text-[#0a0a40]">700+</span>
                 <p>Faculties</p>
               </button>
