@@ -4,8 +4,8 @@ const DEFAULT_REMOTE = 'https://niceschool-be-2.onrender.com/api';
 const ENV_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const api = axios.create({
-  //baseURL: ENV_BASE || DEFAULT_REMOTE,
-  baseURL = 'https://niceschool-be-2.onrender.com/api'
+  baseURL: ENV_BASE || DEFAULT_REMOTE,
+  // baseURL = 'https://niceschool-be-2.onrender.com/api'
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -67,4 +67,5 @@ export function extractList(payload: any): any[] {
 }
 
 export default api;
+
 
