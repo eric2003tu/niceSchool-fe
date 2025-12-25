@@ -71,7 +71,7 @@ const DeptProgramsPage: React.FC = () => {
       <AddProgramModal open={showAddProgram} onClose={() => setShowAddProgram(false)} departmentId={deptId} />
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
-          <BackButton href={deptId ? `/dashboard/academics/department/${deptId}` : '/dashboard/academics'} />
+          <BackButton label="Back" />
           <h2 className="text-xl font-bold">Programs</h2>
         </div>
         <div className="flex items-center gap-2">

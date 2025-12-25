@@ -98,7 +98,7 @@ const DeptProgramPage: React.FC = () => {
     <div className="space-y-6">
       <header className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <BackButton href={`/dashboard/academics/department/${deptId}/programs`} />
+          <BackButton label="Back to Programs" />
           <div>
             <h1 className="text-2xl font-bold">{program?.name || 'Program'}</h1>
             {program?.description && <p className="mt-1 text-sm text-gray-600">{program.description}</p>}

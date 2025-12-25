@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import api from "@/lib/api";
 
 interface AddUserFormProps {
   onClose: () => void;
@@ -32,13 +33,14 @@ export const AddUserForm = ({ onClose, onUserAdded }: AddUserFormProps) => {
     setError('');
 
     try {
-  await api.post('/users', formData);
+      await api.post('/users', formData);
 
       onUserAdded?.();
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred');
-    } finally {
+          // ...existing code...
+          await api.post('/users', formData);
       setIsSubmitting(false);
     }
   };
