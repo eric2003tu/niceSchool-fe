@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import api, { extractList } from '@/lib/api';
-import ApplicationDetailModal from './ApplicationDetailModal';
+// import ApplicationDetailModal from './ApplicationDetailModal';
 import BackButton from '@/components/ui/BackButton';
 import { Loader2, ChevronDown, ChevronUp } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ApplicationsList({ filter }: { filter?: any }) {
   const [apps, setApps] = useState<any[]>([]);
@@ -13,7 +14,7 @@ export default function ApplicationsList({ filter }: { filter?: any }) {
   const [limit] = useState(20);
   const [total, setTotal] = useState(0);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [selectedApp, setSelectedApp] = useState<any | null>(null);
+  // const [selectedApp, setSelectedApp] = useState<any | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -57,18 +58,20 @@ export default function ApplicationsList({ filter }: { filter?: any }) {
             <div className="text-sm text-gray-500">{new Date(app.createdAt).toLocaleString()}</div>
           </div>
           <div className="mt-3">
-            <button className="text-sm text-emerald-600" onClick={() => setSelectedApp(app)}>{'View details'}</button>
+            <Link
+              className="text-sm text-emerald-600 hover:underline"
+              href={filter?.department
+                ? `/dashboard/academics/department/${filter.department}/applications/${app.id}`
+                : `/dashboard/academics/department/${app.departmentId || 'unknown'}/applications/${app.id}`
+              }
+            >
+              View details
+            </Link>
           </div>
         </div>
       ))}
 
-      {selectedApp && (
-        <ApplicationDetailModal application={selectedApp} onClose={() => setSelectedApp(null)} onStatusChange={(newStatus) => {
-          // optimistic update: refresh list after status change
-          setSelectedApp(null);
-          setApps(prev => prev.map(a => a.id === selectedApp.id ? { ...a, status: newStatus } : a));
-        }} />
-      )}
+      {/* Modal removed: details now open in a dedicated page */}
 
       <div className="flex justify-between items-center">
         <div className="text-sm text-gray-600">Showing {apps.length} of {total}</div>
