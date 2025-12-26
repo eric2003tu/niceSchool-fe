@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Clock, FileText, Mail, Phone, Home, User, Calendar, BookOpen, Flag, Check, X, Clock4, Loader2, ChevronDown, ChevronUp, ExternalLink, Award, GraduationCap, CheckCircle, AlertCircle, CalendarDays, FileCheck, Star } from 'lucide-react';
+import { Clock, FileText, Mail, Phone, Home, User, Calendar, BookOpen, Flag, Check, X, Clock4, Loader2, ChevronDown, ChevronUp, ExternalLink, Award, GraduationCap, CheckCircle, AlertCircle, CalendarDays, FileCheck, Star, Bell, PartyPopper, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import api from '../../lib/api';
 
@@ -40,70 +40,79 @@ interface Application {
   updatedAt: string;
 }
 
-// Enhanced status configuration with emojis and better descriptions
+// Enhanced status configuration with emojis, better descriptions, and announcement messages
 const statusConfig = {
   DRAFT: {
     color: 'bg-gray-100 text-gray-800',
     icon: <FileText className="w-4 h-4" />,
     emoji: '📝',
     description: 'Still editing',
-    badgeColor: 'border-gray-300 bg-gray-50'
+    badgeColor: 'border-gray-300 bg-gray-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, your application to ${getProgramName(app.program)} is currently in draft. Please complete and submit it to begin the review process.`
   },
   SUBMITTED: {
     color: 'bg-blue-50 text-blue-700',
     icon: <CheckCircle className="w-4 h-4" />,
     emoji: '📤',
     description: 'Application submitted',
-    badgeColor: 'border-blue-200 bg-blue-50'
+    badgeColor: 'border-blue-200 bg-blue-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, thank you for submitting your application to study in our ${getProgramName(app.program)} program! Our admissions team has received your application and will begin reviewing it shortly.`
   },
   UNDER_REVIEW: {
     color: 'bg-purple-50 text-purple-700',
     icon: <Loader2 className="w-4 h-4 animate-spin" />,
     emoji: '🔍',
     description: 'Under review',
-    badgeColor: 'border-purple-200 bg-purple-50'
+    badgeColor: 'border-purple-200 bg-purple-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, our admissions team is currently reviewing your application for the ${getProgramName(app.program)} program. We appreciate your patience during this process.`
   },
   INTERVIEW_SCHEDULED: {
     color: 'bg-indigo-50 text-indigo-700',
     icon: <CalendarDays className="w-4 h-4" />,
     emoji: '🗓️',
     description: 'Interview scheduled',
-    badgeColor: 'border-indigo-200 bg-indigo-50'
+    badgeColor: 'border-indigo-200 bg-indigo-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, congratulations! Your application for the ${getProgramName(app.program)} program has progressed to the interview stage. Please check your email for scheduling details.`
   },
   ADMITTED: {
     color: 'bg-green-50 text-green-700',
     icon: <Award className="w-4 h-4" />,
     emoji: '🎉',
     description: 'Congratulations! Admitted',
-    badgeColor: 'border-green-200 bg-green-50'
+    badgeColor: 'border-green-200 bg-green-50',
+    announcement: (app: Application) => `🎉 CONGRATULATIONS ${app.personalInfo.firstName.toUpperCase()}! 🎉\n\nWe are thrilled to announce that you have been ADMITTED to study ${getProgramName(app.program)} at our institution for the ${app.academicYear} academic year! Your hard work and achievements have truly impressed our admissions committee. Welcome to our academic community!`
   },
   CONDITIONALLY_ADMITTED: {
     color: 'bg-emerald-50 text-emerald-700',
     icon: <CheckCircle className="w-4 h-4" />,
     emoji: '✅',
     description: 'Conditionally admitted',
-    badgeColor: 'border-emerald-200 bg-emerald-50'
+    badgeColor: 'border-emerald-200 bg-emerald-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, we are pleased to inform you that you have been CONDITIONALLY ADMITTED to the ${getProgramName(app.program)} program! Please review the specific conditions outlined in your admission letter and complete them by the specified deadline.`
   },
   WAITLISTED: {
     color: 'bg-amber-50 text-amber-700',
     icon: <Clock className="w-4 h-4" />,
     emoji: '⏳',
     description: 'On waitlist',
-    badgeColor: 'border-amber-200 bg-amber-50'
+    badgeColor: 'border-amber-200 bg-amber-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, your application for the ${getProgramName(app.program)} program has been placed on our WAITLIST. While we cannot offer you admission at this time, you remain a strong candidate should spaces become available.`
   },
   REJECTED: {
     color: 'bg-red-50 text-red-700',
     icon: <X className="w-4 h-4" />,
     emoji: '😔',
     description: 'Not admitted',
-    badgeColor: 'border-red-200 bg-red-50'
+    badgeColor: 'border-red-200 bg-red-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, thank you for your interest in our ${getProgramName(app.program)} program. After careful consideration, we regret to inform you that we cannot offer you admission for the ${app.academicYear} academic year. We encourage you to apply again in the future.`
   },
   WITHDRAWN: {
     color: 'bg-gray-100 text-gray-600',
     icon: <X className="w-4 h-4" />,
     emoji: '↩️',
     description: 'Application withdrawn',
-    badgeColor: 'border-gray-200 bg-gray-50'
+    badgeColor: 'border-gray-200 bg-gray-50',
+    announcement: (app: Application) => `Dear ${app.personalInfo.firstName}, your application for the ${getProgramName(app.program)} program has been marked as WITHDRAWN. If this was done in error or you wish to reactivate your application, please contact our admissions office.`
   }
 };
 
@@ -118,6 +127,14 @@ const statusPriority = {
   DRAFT: 7,
   REJECTED: 8,
   WITHDRAWN: 9
+};
+
+// Helper function to get program name
+const getProgramName = (program: any) => {
+  if (typeof program === 'object' && program !== null) {
+    return program.name || program.title || program.code || 'Unnamed Program';
+  }
+  return program || 'Unnamed Program';
 };
 
 export default function MyApplications() {
@@ -157,13 +174,6 @@ export default function MyApplications() {
       hour: '2-digit',
       minute: '2-digit'
     });
-  };
-
-  const getProgramName = (program: any) => {
-    if (typeof program === 'object' && program !== null) {
-      return program.name || program.title || program.code || 'Unnamed Program';
-    }
-    return program || 'Unnamed Program';
   };
 
   // Sort applications by status priority
@@ -257,6 +267,8 @@ export default function MyApplications() {
       <div className="space-y-5">
         {sortedApplications.map((app) => {
           const config = statusConfig[app.status];
+          const announcement = config.announcement(app);
+          
           return (
             <div key={app.id} className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-white">
               {/* Application Header */}
@@ -307,177 +319,234 @@ export default function MyApplications() {
 
               {/* Expanded Details */}
               {expandedApp === app.id && (
-                <div className="border-t border-gray-100 p-5 bg-gradient-to-b from-gray-50/50 to-white">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Personal Information Card */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
-                          <User className="w-5 h-5 text-emerald-700" />
-                        </div>
-                        <h4 className="font-bold text-gray-900 text-lg">Personal Information 👤</h4>
+                <div className="border-t border-gray-100 bg-gradient-to-b from-gray-50/50 to-white">
+                  {/* Status Announcement Banner */}
+                  <div className={`p-5 ${app.status === 'ADMITTED' ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-100' : 
+                    app.status === 'REJECTED' ? 'bg-gradient-to-r from-red-50 to-pink-50 border-b border-red-100' :
+                    'bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100'
+                  }`}>
+                    <div className="flex items-start space-x-4">
+                      <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
+                        app.status === 'ADMITTED' ? 'bg-green-100' :
+                        app.status === 'REJECTED' ? 'bg-red-100' :
+                        'bg-blue-100'
+                      }`}>
+                        {app.status === 'ADMITTED' ? (
+                          <PartyPopper className="w-6 h-6 text-green-600" />
+                        ) : app.status === 'REJECTED' ? (
+                          <AlertCircle className="w-6 h-6 text-red-600" />
+                        ) : (
+                          <Bell className="w-6 h-6 text-blue-600" />
+                        )}
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
-                          <Mail className="w-4 h-4 mr-3 text-gray-400" />
-                          <div>
-                            <p className="text-xs text-gray-500">Email</p>
-                            <p className="font-medium">{app.personalInfo.email}</p>
-                          </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 text-lg mb-2 flex items-center">
+                          {app.status === 'ADMITTED' ? '🎉 Admission Decision 🎉' : 
+                           app.status === 'REJECTED' ? '📄 Application Decision' : 
+                           '📢 Application Status Update'}
+                        </h3>
+                        <div className="text-gray-700 whitespace-pre-line bg-white/80 p-4 rounded-lg border border-gray-200/50">
+                          {announcement}
                         </div>
-                        <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
-                          <Phone className="w-4 h-4 mr-3 text-gray-400" />
-                          <div>
-                            <p className="text-xs text-gray-500">Phone</p>
-                            <p className="font-medium">{app.personalInfo.phone}</p>
+                        {app.status === 'ADMITTED' && (
+                          <div className="mt-4 flex flex-wrap gap-3">
+                            <button className="px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center">
+                              <CheckCircle className="w-5 h-5 mr-2" />
+                              Accept Offer 🎓
+                            </button>
+                            <button className="px-5 py-2.5 bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-medium rounded-xl transition-all shadow-sm hover:shadow-md flex items-center">
+                              <Calendar className="w-5 h-5 mr-2" />
+                              Schedule Campus Visit
+                            </button>
+                            <button className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-all shadow-sm hover:shadow-md flex items-center">
+                              <FileText className="w-5 h-5 mr-2" />
+                              View Admission Letter
+                            </button>
                           </div>
-                        </div>
-                        <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
-                          <Home className="w-4 h-4 mr-3 text-gray-400" />
-                          <div>
-                            <p className="text-xs text-gray-500">Address</p>
-                            <p className="font-medium">{app.personalInfo.address}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
-                          <Calendar className="w-4 h-4 mr-3 text-gray-400" />
-                          <div>
-                            <p className="text-xs text-gray-500">Date of Birth</p>
-                            <p className="font-medium">{new Date(app.personalInfo.dateOfBirth).toLocaleDateString()}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
-                          <Flag className="w-4 h-4 mr-3 text-gray-400" />
-                          <div>
-                            <p className="text-xs text-gray-500">Nationality</p>
-                            <p className="font-medium">{app.personalInfo.nationality}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Academic Information Card */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                          <BookOpen className="w-5 h-5 text-blue-700" />
-                        </div>
-                        <h4 className="font-bold text-gray-900 text-lg">Academic Information 🎓</h4>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="bg-blue-50/50 p-3 rounded-lg">
-                            <p className="text-xs text-gray-500">Institution</p>
-                            <p className="font-medium">{app.academicInfo.institution}</p>
-                          </div>
-                          <div className="bg-blue-50/50 p-3 rounded-lg">
-                            <p className="text-xs text-gray-500">Graduation Year</p>
-                            <p className="font-medium">{app.academicInfo.graduationYear}</p>
-                          </div>
-                        </div>
-                        <div className="bg-blue-50/50 p-3 rounded-lg">
-                          <p className="text-xs text-gray-500">Previous Education</p>
-                          <p className="font-medium">{app.academicInfo.previousEducation}</p>
-                        </div>
-                        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-xs text-gray-500">GPA Score</p>
-                              <p className="text-2xl font-bold text-gray-900">{app.academicInfo.gpa.toFixed(1)}</p>
-                            </div>
-                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
-                              <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Documents Card */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                          <FileCheck className="w-5 h-5 text-purple-700" />
-                        </div>
-                        <h4 className="font-bold text-gray-900 text-lg">Documents 📄</h4>
-                      </div>
-                      <div className="space-y-3">
-                        {Object.entries(app.documents).map(([key, value]) => (
-                          <div key={key} className="flex items-center justify-between p-3 bg-purple-50/50 rounded-lg hover:bg-purple-50 transition-colors">
-                            <div className="flex items-center">
-                              <FileText className="w-4 h-4 mr-3 text-purple-600" />
-                              <div>
-                                <p className="font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
-                              </div>
-                            </div>
-                            <a 
-                              href={value} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="px-3 py-1.5 bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 text-sm font-medium rounded-lg transition-colors flex items-center shadow-sm"
-                            >
-                              View <ExternalLink className="w-3 h-3 ml-1.5" />
-                            </a>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Personal Statement & Admin Notes Card */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="space-y-5">
-                        <div>
-                          <div className="flex items-center mb-3">
-                            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mr-3">
-                              <FileText className="w-5 h-5 text-amber-700" />
-                            </div>
-                            <h4 className="font-bold text-gray-900 text-lg">Personal Statement ✍️</h4>
-                          </div>
-                          <div className="bg-amber-50/50 p-4 rounded-lg border border-amber-100">
-                            <p className="text-gray-700 whitespace-pre-line">{app.personalStatement}</p>
-                          </div>
-                        </div>
-
-                        {app.adminNotes && (
-                          <div>
-                            <div className="flex items-center mb-3">
-                              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                                <AlertCircle className="w-5 h-5 text-gray-700" />
-                              </div>
-                              <h4 className="font-bold text-gray-900 text-lg">Admin Notes 📋</h4>
-                            </div>
-                            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                              <p className="text-gray-700">{app.adminNotes}</p>
-                            </div>
-                          </div>
+                        )}
+                        {app.status === 'CONDITIONALLY_ADMITTED' && (
+                          <button className="mt-4 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center">
+                            <ThumbsUp className="w-5 h-5 mr-2" />
+                            Review Conditions & Accept
+                          </button>
+                        )}
+                        {app.status === 'INTERVIEW_SCHEDULED' && (
+                          <button className="mt-4 px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center">
+                            <CalendarDays className="w-5 h-5 mr-2" />
+                            View Interview Details
+                          </button>
                         )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Timeline Footer */}
-                  <div className="mt-8 pt-6 border-t border-gray-200">
-                    <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
-                      <div className="flex items-center mb-3 sm:mb-0">
-                        <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3">
-                          <Calendar className="w-4 h-4 text-gray-600" />
+                  <div className="p-5">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Personal Information Card */}
+                      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
+                            <User className="w-5 h-5 text-emerald-700" />
+                          </div>
+                          <h4 className="font-bold text-gray-900 text-lg">Personal Information 👤</h4>
                         </div>
-                        <div>
-                          <p className="font-medium">Application Timeline</p>
-                          <p>Created: {formatDate(app.createdAt)}</p>
-                          {app.reviewedAt && <p>Reviewed: {formatDate(app.reviewedAt)}</p>}
+                        <div className="space-y-3">
+                          <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
+                            <Mail className="w-4 h-4 mr-3 text-gray-400" />
+                            <div>
+                              <p className="text-xs text-gray-500">Email</p>
+                              <p className="font-medium">{app.personalInfo.email}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
+                            <Phone className="w-4 h-4 mr-3 text-gray-400" />
+                            <div>
+                              <p className="text-xs text-gray-500">Phone</p>
+                              <p className="font-medium">{app.personalInfo.phone}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
+                            <Home className="w-4 h-4 mr-3 text-gray-400" />
+                            <div>
+                              <p className="text-xs text-gray-500">Address</p>
+                              <p className="font-medium">{app.personalInfo.address}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
+                            <Calendar className="w-4 h-4 mr-3 text-gray-400" />
+                            <div>
+                              <p className="text-xs text-gray-500">Date of Birth</p>
+                              <p className="font-medium">{new Date(app.personalInfo.dateOfBirth).toLocaleDateString()}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center p-3 bg-gray-50/50 rounded-lg">
+                            <Flag className="w-4 h-4 mr-3 text-gray-400" />
+                            <div>
+                              <p className="text-xs text-gray-500">Nationality</p>
+                              <p className="font-medium">{app.personalInfo.nationality}</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      
-                      <div className="flex items-center space-x-3">
-                        <span className={`px-4 py-2 rounded-lg font-medium flex items-center ${config.color}`}>
-                          {config.emoji} Current Status: {app.status.replace('_', ' ')}
-                        </span>
-                        {app.status === 'ADMITTED' && (
-                          <button className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all">
-                            Accept Offer 🎓
-                          </button>
-                        )}
+
+                      {/* Academic Information Card */}
+                      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                            <BookOpen className="w-5 h-5 text-blue-700" />
+                          </div>
+                          <h4 className="font-bold text-gray-900 text-lg">Academic Information 🎓</h4>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-blue-50/50 p-3 rounded-lg">
+                              <p className="text-xs text-gray-500">Institution</p>
+                              <p className="font-medium">{app.academicInfo.institution}</p>
+                            </div>
+                            <div className="bg-blue-50/50 p-3 rounded-lg">
+                              <p className="text-xs text-gray-500">Graduation Year</p>
+                              <p className="font-medium">{app.academicInfo.graduationYear}</p>
+                            </div>
+                          </div>
+                          <div className="bg-blue-50/50 p-3 rounded-lg">
+                            <p className="text-xs text-gray-500">Previous Education</p>
+                            <p className="font-medium">{app.academicInfo.previousEducation}</p>
+                          </div>
+                          <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-xs text-gray-500">GPA Score</p>
+                                <p className="text-2xl font-bold text-gray-900">{app.academicInfo.gpa.toFixed(1)}</p>
+                              </div>
+                              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+                                <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Documents Card */}
+                      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                            <FileCheck className="w-5 h-5 text-purple-700" />
+                          </div>
+                          <h4 className="font-bold text-gray-900 text-lg">Documents 📄</h4>
+                        </div>
+                        <div className="space-y-3">
+                          {Object.entries(app.documents).map(([key, value]) => (
+                            <div key={key} className="flex items-center justify-between p-3 bg-purple-50/50 rounded-lg hover:bg-purple-50 transition-colors">
+                              <div className="flex items-center">
+                                <FileText className="w-4 h-4 mr-3 text-purple-600" />
+                                <div>
+                                  <p className="font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                                </div>
+                              </div>
+                              <a 
+                                href={value} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="px-3 py-1.5 bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 text-sm font-medium rounded-lg transition-colors flex items-center shadow-sm"
+                              >
+                                View <ExternalLink className="w-3 h-3 ml-1.5" />
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Personal Statement & Admin Notes Card */}
+                      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                        <div className="space-y-5">
+                          <div>
+                            <div className="flex items-center mb-3">
+                              <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mr-3">
+                                <FileText className="w-5 h-5 text-amber-700" />
+                              </div>
+                              <h4 className="font-bold text-gray-900 text-lg">Personal Statement ✍️</h4>
+                            </div>
+                            <div className="bg-amber-50/50 p-4 rounded-lg border border-amber-100">
+                              <p className="text-gray-700 whitespace-pre-line">{app.personalStatement}</p>
+                            </div>
+                          </div>
+
+                          {app.adminNotes && (
+                            <div>
+                              <div className="flex items-center mb-3">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+                                  <AlertCircle className="w-5 h-5 text-gray-700" />
+                                </div>
+                                <h4 className="font-bold text-gray-900 text-lg">Admin Notes 📋</h4>
+                              </div>
+                              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <p className="text-gray-700">{app.adminNotes}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Timeline Footer */}
+                    <div className="mt-8 pt-6 border-t border-gray-200">
+                      <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
+                        <div className="flex items-center mb-3 sm:mb-0">
+                          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+                            <Calendar className="w-4 h-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <p className="font-medium">Application Timeline</p>
+                            <p>Created: {formatDate(app.createdAt)}</p>
+                            {app.reviewedAt && <p>Reviewed: {formatDate(app.reviewedAt)}</p>}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-3">
+                          <span className={`px-4 py-2 rounded-lg font-medium flex items-center ${config.color}`}>
+                            {config.emoji} Current Status: {app.status.replace('_', ' ')}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
