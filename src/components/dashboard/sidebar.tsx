@@ -35,33 +35,37 @@ interface SidebarItem {
 const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   STUDENT: [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
-  { icon: HiAcademicCap, label: "Academics", href: "#", 
-  children: [
-    { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department"},
-    { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" }
-  ]},
-  { icon: TiNews, label: "News", href: "/dashboard/news" },
-  { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
-  { icon: IoSchoolSharp, label: "Applications", href: "#", children: [
-    { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-    { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", 
+      children: [
+        { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department"},
+        { icon: Calendar, label: "Schedule", href: "/dashboard/schedules" },
+        { icon: HiAcademicCap, label: "Register Student", href: "/dashboard/academics/register-student" },
+      ]
+    },
+    { icon: TiNews, label: "News", href: "/dashboard/news" },
+    { icon: CgProfile, label: "Profile", href: "/dashboard/profile" },
+    { icon: IoSchoolSharp, label: "Applications", href: "#", children: [
+      { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+      { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
     ] },
     {icon: Contact, label: "Contact", href:"/dashboard/contact"},
   ],
   ADMIN: [
-  { icon: Home, label: "Dashboard", href: "/dashboard" },
-  { icon: HiAcademicCap, label: "Academics", href: "#", 
-  children: [
-    { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
-  ]},
-  { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
-  { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
-  { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
-  { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
-  { icon: Users, label: "Users", href: "/dashboard/users" },
-  { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
-  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
-  { icon: TiNews, label: "News", href: "#", children: [
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: HiAcademicCap, label: "Academics", href: "#", 
+      children: [
+        { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
+        { icon: HiAcademicCap, label: "Register Student", href: "/dashboard/academics/register-student" },
+      ]
+    },
+    { icon: HiAcademicCap, label: "Apply", href: "/dashboard/applications/apply" },
+    { icon: FaDoorOpen, label: "My Applications", href: "/dashboard/applications" },
+    { icon: Home, label: "All Applications", href: "/dashboard/all-applications" },
+    { icon: IoSchoolSharp, label: "Events", href: "/dashboard/events" },
+    { icon: Users, label: "Users", href: "/dashboard/users" },
+    { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
+    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+    { icon: TiNews, label: "News", href: "#", children: [
       { icon: TiNews, label: "Browse News", href: "/dashboard/news" },
       { icon: TiNews, label: "Publish News", href: "/dashboard/news/create-news" }
     ] },
