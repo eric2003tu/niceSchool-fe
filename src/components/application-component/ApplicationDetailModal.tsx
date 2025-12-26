@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import api from '@/lib/api';
 import { X, Check, XCircle, Clock4 } from 'lucide-react';
+import type { ApplicationStatus } from '@/components/application-component/Admin';
 
 export default function ApplicationDetailModal({ application, onClose, onStatusChange }: { application: any; onClose: () => void; onStatusChange?: (newStatus: string) => void }) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ export default function ApplicationDetailModal({ application, onClose, onStatusC
   })();
   const canManage = role === 'ADMIN' || role === 'FACULTY';
 
-  const handleChangeStatus = async (status: 'APPROVED' | 'REJECTED') => {
+  const handleChangeStatus = async (status: ApplicationStatus) => {
     if (!canManage) return;
     setLoading(true);
     try {
@@ -31,10 +32,25 @@ export default function ApplicationDetailModal({ application, onClose, onStatusC
 
   const statusBadge = (s: string) => {
     switch (s) {
-      case 'APPROVED': return <span className="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs">Approved</span>;
-      case 'REJECTED': return <span className="px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs">Rejected</span>;
-      case 'UNDER_REVIEW': return <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs">Under Review</span>;
-      default: return <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs">Pending</span>;
+      case 'ADMITTED': 
+      case 'CONDITIONALLY_ADMITTED': 
+        return <span className="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs">Admitted</span>;
+      case 'REJECTED': 
+        return <span className="px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs">Rejected</span>;
+      case 'UNDER_REVIEW': 
+        return <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs">Under Review</span>;
+      case 'SUBMITTED': 
+        return <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs">Submitted</span>;
+      case 'DRAFT': 
+        return <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-800 text-xs">Draft</span>;
+      case 'INTERVIEW_SCHEDULED': 
+        return <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-800 text-xs">Interview Scheduled</span>;
+      case 'WAITLISTED': 
+        return <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-800 text-xs">Waitlisted</span>;
+      case 'WITHDRAWN': 
+        return <span className="px-2 py-1 rounded-full bg-gray-200 text-gray-500 text-xs">Withdrawn</span>;
+      default: 
+        return <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs">{s}</span>;
     }
   };
 
@@ -79,7 +95,7 @@ export default function ApplicationDetailModal({ application, onClose, onStatusC
               </div>
               <div className="p-4 border rounded">
                 <div className="text-xs text-gray-500">Status</div>
-                <div className="font-semibold mt-1">{application.status}</div>
+                <div className="font-semibold mt-1">{application.status?.replace('_', ' ') || 'Unknown'}</div>
                 <div className="text-xs text-gray-400">{application.submittedAt ? `Submitted: ${new Date(application.submittedAt).toLocaleString()}` : 'Not submitted'}</div>
               </div>
             </div>
@@ -129,8 +145,22 @@ export default function ApplicationDetailModal({ application, onClose, onStatusC
               {canManage && (
                 <>
                   <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Add admin notes (optional)" className="flex-1 p-2 border rounded h-24" />
-                  <button onClick={() => handleChangeStatus('REJECTED')} disabled={loading} className="px-4 py-2 bg-red-600 text-white rounded flex items-center space-x-2"><XCircle className="w-4 h-4" /><span>Reject</span></button>
-                  <button onClick={() => handleChangeStatus('APPROVED')} disabled={loading} className="px-4 py-2 bg-green-600 text-white rounded flex items-center space-x-2"><Check className="w-4 h-4" /><span>Approve</span></button>
+                  <button 
+                    onClick={() => handleChangeStatus('REJECTED' as ApplicationStatus)} 
+                    disabled={loading} 
+                    className="px-4 py-2 bg-red-600 text-white rounded flex items-center space-x-2"
+                  >
+                    <XCircle className="w-4 h-4" />
+                    <span>Reject</span>
+                  </button>
+                  <button 
+                    onClick={() => handleChangeStatus('ADMITTED' as ApplicationStatus)} 
+                    disabled={loading} 
+                    className="px-4 py-2 bg-green-600 text-white rounded flex items-center space-x-2"
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>Admit</span>
+                  </button>
                 </>
               )}
             </div>

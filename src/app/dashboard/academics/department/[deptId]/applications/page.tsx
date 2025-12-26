@@ -6,7 +6,7 @@ import BackButton from '@/components/ui/BackButton';
 interface Props { params: { deptId: string } }
 
 export default async function Page({ params }: Props) {
-  const { deptId } = params;
+  const { deptId } = await params;
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">

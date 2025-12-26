@@ -7,7 +7,7 @@ const getBaseURL = () => {
       ?   'http://localhost:3001/api'           // Local backend
       :   'https://niceschool-be-1.onrender.com/api'; // Render backend
   }
-  return 'https://niceschool-be-1.onrender.com/api'; // Default for SSR
+  return 'http://localhost:3001/api'; // Default for SSR
 };
 
 // Axios instance

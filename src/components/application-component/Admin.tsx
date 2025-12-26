@@ -1,17 +1,30 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { JSX } from 'react';
 import { useRouter } from 'next/navigation';
 import { Clock, FileText, Mail, Phone, Home, User, Calendar, BookOpen, Flag, Check, X, Clock4, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { ApplicationCRUD } from './ApplicationCRUD';
 import api from '@/lib/api';
+import { isValidApplicationStatus, mapToValidStatus, getStatusDisplayName } from '@/lib/application-utils';
+
+export type ApplicationStatus =
+  | 'DRAFT'
+  | 'SUBMITTED'
+  | 'UNDER_REVIEW'
+  | 'INTERVIEW_SCHEDULED'
+  | 'ADMITTED'
+  | 'CONDITIONALLY_ADMITTED'
+  | 'WAITLISTED'
+  | 'REJECTED'
+  | 'WITHDRAWN';
 
 export interface Application {
   id: string;
   applicantId: string;
   program: string | { name: string };
   academicYear: string;
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'UNDER_REVIEW';
+  status: ApplicationStatus;
   personalInfo: {
     email: string;
     phone: string;
@@ -41,18 +54,28 @@ export interface Application {
   updatedAt: string;
 }
 
-const statusColors = {
-  PENDING: 'bg-yellow-100 text-yellow-800',
-  APPROVED: 'bg-green-100 text-green-800',
+const statusColors: Record<ApplicationStatus, string> = {
+  DRAFT: 'bg-gray-100 text-gray-800',
+  SUBMITTED: 'bg-yellow-100 text-yellow-800',
+  UNDER_REVIEW: 'bg-blue-100 text-blue-800',
+  INTERVIEW_SCHEDULED: 'bg-purple-100 text-purple-800',
+  ADMITTED: 'bg-green-100 text-green-800',
+  CONDITIONALLY_ADMITTED: 'bg-green-50 text-green-700',
+  WAITLISTED: 'bg-orange-100 text-orange-800',
   REJECTED: 'bg-red-100 text-red-800',
-  UNDER_REVIEW: 'bg-blue-100 text-blue-800'
+  WITHDRAWN: 'bg-gray-200 text-gray-500',
 };
 
-const statusIcons = {
-  PENDING: <Clock4 className="w-4 h-4" />,
-  APPROVED: <Check className="w-4 h-4" />,
+const statusIcons: Record<ApplicationStatus, JSX.Element> = {
+  DRAFT: <FileText className="w-4 h-4" />,
+  SUBMITTED: <Clock4 className="w-4 h-4" />,
+  UNDER_REVIEW: <Loader2 className="w-4 h-4 animate-spin" />,
+  INTERVIEW_SCHEDULED: <Calendar className="w-4 h-4" />,
+  ADMITTED: <Check className="w-4 h-4" />,
+  CONDITIONALLY_ADMITTED: <Check className="w-4 h-4 text-green-400" />,
+  WAITLISTED: <Clock className="w-4 h-4" />,
   REJECTED: <X className="w-4 h-4" />,
-  UNDER_REVIEW: <Loader2 className="w-4 h-4 animate-spin" />
+  WITHDRAWN: <X className="w-4 h-4 text-gray-400" />,
 };
 
 export default function Admin() {
@@ -65,10 +88,37 @@ export default function Admin() {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
+        // Don't send any status filter to avoid invalid statuses
         const res = await api.get('/admissions/applications');
-        // API returns { data, total, page, limit } in some endpoints; support both
-        const payload = res?.data?.data ?? res?.data ?? [];
-        setApplications(payload);
+        
+        // Handle different response formats
+        let rawData: any[] = [];
+        
+        if (res.data && res.data.data) {
+          // Response has pagination format { data, total, page, limit }
+          rawData = res.data.data;
+        } else if (Array.isArray(res.data)) {
+          // Response is directly an array
+          rawData = res.data;
+        } else if (res.data) {
+          // Response might be an object containing array
+          rawData = Object.values(res.data);
+        }
+        
+        // Clean and validate application data
+        const cleanedData = rawData.map((app: any) => {
+          // Ensure status is valid
+          const status = isValidApplicationStatus(app.status) 
+            ? app.status 
+            : mapToValidStatus(app.status);
+          
+          return {
+            ...app,
+            status,
+          };
+        });
+        
+        setApplications(cleanedData);
       } catch (err: any) {
         setError(err?.message || 'An unknown error occurred');
       } finally {
@@ -79,23 +129,40 @@ export default function Admin() {
     fetchApplications();
   }, []);
 
-const handleUpdateApplication = async (updatedApp: Application) => {
-  try {
-    const authToken = localStorage.getItem('authToken');
-  await api.patch(`/admissions/applications/${updatedApp.id}/status`, { status: updatedApp.status });
-  setApplications(prev => prev.map(app => app.id === updatedApp.id ? updatedApp : app));
-  } catch (err) {
-    setError(err instanceof Error ? err.message : 'Failed to update application');
-  }
-};
+  const handleUpdateApplication = async (updatedApp: Application) => {
+    try {
+      // Ensure the status is valid before sending
+      if (!isValidApplicationStatus(updatedApp.status)) {
+        throw new Error(`Invalid status: ${updatedApp.status}`);
+      }
+
+      // Prepare the request body according to UpdateStatusDto
+      const requestBody = {
+        status: updatedApp.status,
+        ...(updatedApp.adminNotes && { adminNotes: updatedApp.adminNotes })
+      };
+
+      await api.patch(`/admissions/applications/${updatedApp.id}/status`, requestBody);
+      
+      // Update local state
+      setApplications(prev => prev.map(app =>
+        app.id === updatedApp.id
+          ? { ...updatedApp }
+          : app
+      ));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update application');
+      throw err;
+    }
+  };
 
   const handleDeleteApplication = async (id: string) => {
     try {
-      const authToken = localStorage.getItem('authToken');
-    await api.delete(`/admissions/applications/${id}`);
-    setApplications(prev => prev.filter(app => app.id !== id));
+      await api.delete(`/admissions/applications/${id}`);
+      setApplications(prev => prev.filter(app => app.id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete application');
+      throw err;
     }
   };
 
@@ -153,6 +220,9 @@ const handleUpdateApplication = async (updatedApp: Application) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Applications Management</h1>
+        <div className="text-sm text-gray-500">
+          Showing {applications.length} application{applications.length !== 1 ? 's' : ''}
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -170,7 +240,7 @@ const handleUpdateApplication = async (updatedApp: Application) => {
                     </h3>
                     <span className={`px-2 py-1 text-xs rounded-full ${statusColors[app.status]} flex items-center space-x-1`}>
                       {statusIcons[app.status]}
-                      <span>{app.status.replace('_', ' ')}</span>
+                      <span>{getStatusDisplayName(app.status)}</span>
                     </span>
                   </div>
                   <p className="text-sm text-gray-500 mt-1">
