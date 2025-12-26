@@ -9,7 +9,7 @@ import api from '@/lib/api';
 export interface Application {
   id: string;
   applicantId: string;
-  program: string;
+  program: string | { name: string };
   academicYear: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'UNDER_REVIEW';
   personalInfo: {
