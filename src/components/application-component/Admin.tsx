@@ -165,7 +165,9 @@ const handleUpdateApplication = async (updatedApp: Application) => {
               >
                 <div>
                   <div className="flex items-center space-x-3">
-                    <h3 className="font-medium text-gray-900">{app.program}</h3>
+                    <h3 className="font-medium text-gray-900">
+                      {typeof app.program === 'string' ? app.program : app.program?.name || 'Unknown Program'}
+                    </h3>
                     <span className={`px-2 py-1 text-xs rounded-full ${statusColors[app.status]} flex items-center space-x-1`}>
                       {statusIcons[app.status]}
                       <span>{app.status.replace('_', ' ')}</span>
@@ -182,7 +184,6 @@ const handleUpdateApplication = async (updatedApp: Application) => {
                   <ChevronDown className="w-5 h-5 text-gray-400" />
                 )}
               </div>
-              
               <ApplicationCRUD 
                 application={app} 
                 onUpdate={handleUpdateApplication}
