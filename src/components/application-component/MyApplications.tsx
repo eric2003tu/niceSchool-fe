@@ -148,7 +148,11 @@ export default function MyApplications() {
             >
               <div>
                 <div className="flex items-center space-x-3">
-                  <h3 className="font-medium text-gray-900">{app.program}</h3>
+                  <h3 className="font-medium text-gray-900">{
+                    typeof app.program === 'object' && app.program !== null
+                      ? ((app.program as any).name || (app.program as any).title || (app.program as any).code || '[No Name]')
+                      : app.program
+                  }</h3>
                   <span className={`px-2 py-1 text-xs rounded-full ${statusColors[app.status]} flex items-center space-x-1`}>
                     {statusIcons[app.status]}
                     <span>{app.status.replace('_', ' ')}</span>

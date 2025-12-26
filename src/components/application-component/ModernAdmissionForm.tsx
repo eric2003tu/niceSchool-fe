@@ -17,8 +17,6 @@ import ReviewStep from "@/components/application-component/ReviewStep";
 interface FormData {
   program: string;
   programId?: string;
-  course?: string;
-  courseId?: string;
   department?: { id?: string; name?: string };
   academicYear: string;
   departmentId?: string;
@@ -63,12 +61,10 @@ const ModernAdmissionForm: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({
     program: "",
-  programId: "",
-  course: "",
-  courseId: "",
+    programId: "",
     academicYear: "",
-  departmentId: "",
-  department: { id: '', name: '' },
+    departmentId: "",
+    department: { id: '', name: '' },
 
     personalInfo: {
       firstName: "",
@@ -136,47 +132,56 @@ const ModernAdmissionForm: React.FC = () => {
     e.preventDefault();
 
     try {
-  // map formData to backend shape
-  const payload = {
-    programId: formData.programId || '',
-    departmentId: formData.department?.id || formData.departmentId || '',
-    courseId: formData.courseId || '',
-    program: { id: formData.programId || '', name: formData.program || '' },
-    department: { id: formData.department?.id || formData.departmentId || '', name: formData.department?.name || '' },
-    course: { id: formData.courseId || '', name: formData.course || '' },
-    academicYear: formData.academicYear,
-    personalInfo: formData.personalInfo,
-    academicInfo: formData.academicInfo,
-    documents: formData.documents,
-    personalStatement: formData.personalStatement,
-  };
-  // helper: remove undefined and ensure plain object values for nested objects
-  const clean = (obj: any) => {
-    if (obj == null) return obj;
-    if (typeof obj !== 'object') return obj;
-    const out: any = {};
-    for (const [k, v] of Object.entries(obj)) {
-      if (v === undefined) continue;
-      if (v == null) { out[k] = v; continue; }
-      if (typeof v === 'object') out[k] = clean(v);
-      else out[k] = v;
-    }
-    return out;
-  };
+      // map formData to backend shape
+      const payload = {
+        programId: formData.programId || '',
+        departmentId: formData.department?.id || formData.departmentId || '',
+        program: { id: formData.programId || '', name: formData.program || '' },
+        department: { id: formData.department?.id || formData.departmentId || '', name: formData.department?.name || '' },
+        academicYear: formData.academicYear,
+        personalInfo: formData.personalInfo,
+        academicInfo: formData.academicInfo,
+        documents: formData.documents,
+        personalStatement: formData.personalStatement,
+      };
+      // helper: remove undefined and ensure plain object values for nested objects
+      const clean = (obj: any) => {
+        if (obj == null) return obj;
+        if (typeof obj !== 'object') return obj;
+        const out: any = {};
+        for (const [k, v] of Object.entries(obj)) {
+          if (v === undefined) continue;
+          if (v == null) { out[k] = v; continue; }
+          if (typeof v === 'object') out[k] = clean(v);
+          else out[k] = v;
+        }
+        return out;
+      };
 
-  const sanitized = JSON.parse(JSON.stringify(clean(payload)));
-  // debug log payload (dev) so you can inspect what the backend receives
-  // eslint-disable-next-line no-console
-  console.debug('Submitting application payload:', sanitized);
-  const response = await api.post('/admissions/apply', sanitized);
+      const sanitized = JSON.parse(JSON.stringify(clean(payload)));
+      // debug log payload (dev) so you can inspect what the backend receives
+      // eslint-disable-next-line no-console
+      console.debug('Submitting application payload:', sanitized);
+      const response = await api.post('/admissions/apply', sanitized);
       alert('Application submitted successfully!');
       // Optionally reset form or redirect user here
     } catch (error: any) {
-      // show more detailed server response when available
-      const serverMsg = error?.response?.data || error?.response?.data?.message || error.message || String(error);
+      // Always log the full error for debugging
       // eslint-disable-next-line no-console
-      console.error('Application submit error:', error?.response || error);
-      alert(`Error submitting application:\n${JSON.stringify(serverMsg, null, 2)}`);
+      console.error('Application submit error (full):', error);
+      let serverMsg = 'Unknown error';
+      if (error?.response) {
+        if (typeof error.response.data === 'string') {
+          serverMsg = error.response.data;
+        } else if (error.response.data && typeof error.response.data === 'object') {
+          serverMsg = JSON.stringify(error.response.data, null, 2);
+        } else if (error.response.statusText) {
+          serverMsg = error.response.statusText;
+        }
+      } else if (error?.message) {
+        serverMsg = error.message;
+      }
+      alert(`Error submitting application:\n${serverMsg}`);
     }
   };
 
@@ -192,8 +197,7 @@ const ModernAdmissionForm: React.FC = () => {
     1: [
   "departmentId",
   "program",
-  "course",
-      "academicYear",
+  "academicYear",
       "personalInfo.firstName",
       "personalInfo.lastName",
       "personalInfo.email",
@@ -244,17 +248,12 @@ const ModernAdmissionForm: React.FC = () => {
               {/* department select fetched from backend */}
               <DepartmentSelect
                 departmentId={formData.departmentId}
-                onChange={(sel: { id: string; name: string }) => setFormData(prev => ({ ...prev, departmentId: sel.id, department: { id: sel.id, name: sel.name }, program: '', programId: '', course: '', courseId: '' }))}
+                onChange={(sel: { id: string; name: string }) => setFormData(prev => ({ ...prev, departmentId: sel.id, department: { id: sel.id, name: sel.name }, program: '', programId: '' }))}
               />
               <ProgramSelect
                 departmentId={formData.departmentId}
                 programId={formData.programId}
-                onChange={(sel: { id: string; name: string }) => setFormData(prev => ({ ...prev, program: sel.name, programId: sel.id, course: '', courseId: '' }))}
-              />
-              <CourseSelect
-                programId={formData.programId}
-                courseId={formData.courseId}
-                onChange={(sel: { id: string; name: string }) => setFormData(prev => ({ ...prev, course: sel.name, courseId: sel.id }))}
+                onChange={(sel: { id: string; name: string }) => setFormData(prev => ({ ...prev, program: sel.name, programId: sel.id }))}
               />
               <PersonalInfoStep formData={formData} handleChange={handleChange} />
             </div>
