@@ -102,7 +102,7 @@ export default function RegisterStudentPage() {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("http://localhost:3001/api/academics/register", {
+      const res = await fetch("https://niceschool-be-1.onrender.com/api/academics/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

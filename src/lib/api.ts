@@ -4,10 +4,10 @@ import axios from 'axios';
 const getBaseURL = () => {
   if (typeof window !== 'undefined') {
     return window.location.hostname === 'localhost'
-      ?   'ttp://localhost:3001/hapi'           // Local backend
+      ?   'http://localhost:3001/api'           // Local backend
       :   'https://niceschool-be-1.onrender.com/api'; // Render backend
   }
-  return 'http://localhost:3001/api'; // Default for SSR
+  return 'https://niceschool-be-1.onrender.com/api'; // Default for SSR
 };
 
 // Axios instance

@@ -39,7 +39,7 @@ export default function StudentDetailPage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`http://localhost:3001/api/academics/students/admitted-registered-enrolled/${id}`);
+        const res = await fetch(`https://niceschool-be-1.onrender.com/api/academics/students/admitted-registered-enrolled/${id}`);
         if (!res.ok) throw new Error("Failed to fetch student");
         const data = await res.json();
         setStudent(data);

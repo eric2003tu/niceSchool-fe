@@ -59,7 +59,7 @@ const AdmittedRegisteredEnrolledStudentsPage: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch("http://localhost:3001/api/academics/students/admitted-registered-enrolled");
+        const res = await fetch("https://niceschool-be-1.onrender.com/api/academics/students/admitted-registered-enrolled");
         if (!res.ok) throw new Error("Failed to fetch students");
         const data = await res.json();
         setStudents(data.data || []);
