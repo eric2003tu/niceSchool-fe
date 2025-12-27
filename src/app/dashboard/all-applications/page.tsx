@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   Table,
   TableBody,
@@ -229,7 +229,7 @@ export default function ApplicationsPage() {
         ...(departmentFilter !== 'all' && { department: departmentFilter }),
       });
 
-      const response = await fetch(`http://localhost:3001/api/admissions/applications`, {
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/admissions/applications`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'accept': '*/*'

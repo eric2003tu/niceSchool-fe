@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   Table,
   TableBody,
@@ -124,7 +124,7 @@ export default function ProgramsPage() {
 
   const fetchPrograms = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/academics/all-programs');
+      const response = await fetch('https://niceschool-be-1.onrender.com/api/academics/all-programs');
       const data: ProgramsResponse = await response.json();
       setPrograms(data.data);
       setFilteredPrograms(data.data);

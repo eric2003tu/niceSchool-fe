@@ -114,7 +114,7 @@ export default function DepartmentsPage() {
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/academics/departments');
+      const response = await fetch('https://niceschool-be-1.onrender.com/api/academics/departments');
       const data: DepartmentsResponse = await response.json();
       setDepartments(data.data);
       setFilteredDepartments(data.data);

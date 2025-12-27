@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   User,
   Mail,
@@ -287,7 +287,7 @@ export default function ApplicantDetailPage() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:3001/api/admissions/applicants/${id}`, {
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/admissions/applicants/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'accept': '*/*'

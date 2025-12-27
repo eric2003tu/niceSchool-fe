@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   GraduationCap,
   Building2,
@@ -124,7 +124,7 @@ export default function ProgramDetailPage() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:3001/api/academics/programs/${id}`);
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/academics/programs/${id}`);
       
       if (!response.ok) {
         throw new Error(`Failed to fetch program: ${response.status}`);

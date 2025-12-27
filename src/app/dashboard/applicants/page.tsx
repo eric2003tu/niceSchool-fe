@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   Table,
   TableBody,
@@ -179,7 +179,7 @@ export default function ApplicantsPage() {
   const fetchApplicants = async () => {
     try {
       setLoading(true);
-      const response = await fetch( `http://localhost:3001/api/admissions/applicants?page=${currentPage}&limit=${itemsPerPage}`, {
+      const response = await fetch( `https://niceschool-be-1.onrender.com/api/admissions/applicants?page=${currentPage}&limit=${itemsPerPage}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'accept': '*/*'

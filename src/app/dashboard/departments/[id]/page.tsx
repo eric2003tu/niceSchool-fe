@@ -164,7 +164,7 @@ export default function DepartmentDetailPage() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:3001/api/academics/departments/${id}`);
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/academics/departments/${id}`);
       
       if (!response.ok) {
         throw new Error(`Failed to fetch department: ${response.status}`);
@@ -208,7 +208,7 @@ export default function DepartmentDetailPage() {
 
     try {
       // API endpoint might be different, adjust based on your API structure
-      const response = await fetch(`http://localhost:3001/api/academics/programs`, {
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/academics/programs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -251,7 +251,7 @@ export default function DepartmentDetailPage() {
 
   const handleDeleteProgram = async (programId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/academics/programs/${programId}`, {
+      const response = await fetch(`https://niceschool-be-1.onrender.com/api/academics/programs/${programId}`, {
         method: 'DELETE',
       });
 

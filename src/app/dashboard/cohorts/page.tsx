@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/login/Card';
 import {
   Table,
   TableBody,
@@ -118,7 +118,7 @@ export default function CohortsPage() {
 
   const fetchCohorts = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/academics/all-cohorts');
+      const response = await fetch('https://niceschool-be-1.onrender.com/api/academics/all-cohorts');
       const data: CohortsResponse = await response.json();
       setCohorts(data.data);
       setFilteredCohorts(data.data);
