@@ -472,7 +472,7 @@ export default function ProgramsPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/dashboard/departments/${program.departmentId}`}>
+                      <Link href={`/dashboard/programs/${program.id}`}>
                         <ExternalLink className="h-4 w-4" />
                       </Link>
                     </Button>
