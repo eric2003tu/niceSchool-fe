@@ -56,6 +56,7 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
     { icon: IoSchoolSharp, label: "All Departments", href: "/dashboard/departments" },
     {icon: Calendar, label: "All Programs", href: "/dashboard/programs" },
     {icon: PiStudent, label: "All Courses", href: "/dashboard/courses" },
+    {icon: PiStudent, label: "Cohorts", href: "/dashboard/cohorts" },
     { icon: HiAcademicCap, label: "Academics", href: "#", 
       children: [
         { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
