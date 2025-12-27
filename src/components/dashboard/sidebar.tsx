@@ -8,6 +8,7 @@ import { TiNews } from "react-icons/ti";
 import { CgProfile } from "react-icons/cg";
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from "react";
+import { PiStudent } from "react-icons/pi";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -54,6 +55,7 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
     { icon: Home, label: "Dashboard", href: "/dashboard" },
     { icon: IoSchoolSharp, label: "All Departments", href: "/dashboard/departments" },
     {icon: Calendar, label: "All Programs", href: "/dashboard/programs" },
+    {icon: PiStudent, label: "All Courses", href: "/dashboard/courses" },
     { icon: HiAcademicCap, label: "Academics", href: "#", 
       children: [
         { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
