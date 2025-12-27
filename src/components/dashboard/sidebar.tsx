@@ -53,6 +53,7 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   ADMIN: [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
     { icon: IoSchoolSharp, label: "All Departments", href: "/dashboard/departments" },
+    {icon: Calendar, label: "All Programs", href: "/dashboard/programs" },
     { icon: HiAcademicCap, label: "Academics", href: "#", 
       children: [
         { icon: IoSchoolSharp, label: "Departments", href: "/dashboard/academics/department" },
